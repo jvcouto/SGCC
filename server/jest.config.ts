@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { pathsToModuleNameMapper } from 'ts-jest/utils';
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable max-len */
+import { pathsToModuleNameMapper } from 'ts-jest';
 import { compilerOptions } from './tsconfig.json';
 
 /*
@@ -18,7 +19,7 @@ export default {
   // cacheDirectory: "/tmp/jest_rs",
 
   // Automatically clear mock calls, instances and results before every test
-  clearMocks: true,
+  // clearMocks: false,
 
   // Indicates whether the coverage information should be collected while executing the test
   // collectCoverage: false,
@@ -141,7 +142,7 @@ export default {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  // testEnvironment: "jest-environment-node",
+  // testEnvironment: 'jest-environment-node',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -151,8 +152,8 @@ export default {
 
   // The glob patterns Jest uses to detect test files
   // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
+  //   '**/__tests__/**/*.[jt]s?(x)',
+  //   '**/?(*.)+(spec|test).[tj]s?(x)',
   // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped

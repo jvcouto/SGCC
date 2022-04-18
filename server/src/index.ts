@@ -2,17 +2,11 @@ import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
-import dataSource from '@config/dbConfig';
+import '@config/dbConnection';
 import routes from './routes';
-import Logger from './utils/logger';
+import Logger from './utils/Logger';
 
 dotenv.config();
-
-dataSource.initialize().then(() => {
-  Logger.info('Orm connection initialized!');
-}).catch((err) => {
-  Logger.info(`Error during Data orm initialization: ${err}`);
-});
 
 const app = express();
 app.use(cors());

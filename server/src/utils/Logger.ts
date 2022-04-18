@@ -14,6 +14,10 @@ class Logger {
     static info(msg: string) {
       Logger.logger.info(msg);
     }
+
+    static error(msg: string) {
+      Logger.logger.error(msg);
+    }
 }
 
 export default Logger;
