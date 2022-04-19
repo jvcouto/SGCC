@@ -17,8 +17,8 @@ abstract class AbstractCrudController<T, RT> {
     return this.responseParser(data);
   }
 
-  findAll(req): RT {
-  }
+  // findAll(req): RT {
+  // }
 }
 
 export default AbstractCrudController;
