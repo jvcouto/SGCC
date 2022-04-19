@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { Request } from 'express';
-import { getRepository } from 'typeorm';
+import { Request } from "express";
+import { getRepository } from "typeorm";
 
 abstract class AbstractCrudController<T, RT> {
-  protected abstract Entity: new (data?: T) => T
+  protected abstract Entity: new (data?: T) => T;
 
-  protected abstract responseParser(Entity: T): RT
+  protected abstract responseParser(Entity: T): RT;
 
   async create(req: Request): Promise<RT> {
     const newEntity = new this.Entity(req.body);

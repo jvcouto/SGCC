@@ -1,8 +1,12 @@
 import {
-  PrimaryGeneratedColumn, CreateDateColumn, BeforeInsert, BeforeUpdate,
-} from 'typeorm';
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  BeforeInsert,
+  BeforeUpdate,
+  UpdateDateColumn,
+} from "typeorm";
 
-import { IsOptional } from 'class-validator';
+import { IsOptional } from "class-validator";
 
 abstract class AbstractBaseEntity {
   @PrimaryGeneratedColumn()
@@ -10,17 +14,17 @@ abstract class AbstractBaseEntity {
 
   @IsOptional()
   @CreateDateColumn({
-    name: 'created_at',
-    type: 'timestamp',
+    name: "created_at",
+    type: "timestamp",
   })
-  createdAt!: Date
+  createdAt!: Date;
 
   @IsOptional()
-  @CreateDateColumn({
-    name: 'updated_at',
-    type: 'timestamp',
+  @UpdateDateColumn({
+    name: "updated_at",
+    type: "timestamp",
   })
-  updatedAt!: Date
+  updatedAt!: Date;
 
   @BeforeInsert()
   private setCreatedAt(): void {
@@ -29,7 +33,7 @@ abstract class AbstractBaseEntity {
 
   @BeforeUpdate()
   private setUpdatedAt(): void {
-    this.createdAt = new Date();
+    this.updatedAt = new Date();
   }
 }
 
