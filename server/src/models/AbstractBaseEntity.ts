@@ -1,9 +1,8 @@
 import {
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   BeforeInsert,
   BeforeUpdate,
-  UpdateDateColumn,
+  Column,
 } from "typeorm";
 
 import { IsOptional } from "class-validator";
@@ -13,14 +12,14 @@ abstract class AbstractBaseEntity {
   id!: number;
 
   @IsOptional()
-  @CreateDateColumn({
+  @Column({
     name: "created_at",
     type: "timestamp",
   })
   createdAt!: Date;
 
   @IsOptional()
-  @UpdateDateColumn({
+  @Column({
     name: "updated_at",
     type: "timestamp",
   })

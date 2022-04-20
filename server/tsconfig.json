@@ -18,7 +18,8 @@
         "./src/@types/"
     ],
     "types": ["reflect-metadata", "jest", "@types/jest"],                             
-    "resolveJsonModule": true,                       
+    "resolveJsonModule": true,
+    "moduleResolution": "node",              
     "allowJs": true,                                  
     "outDir": "./dist/",                                   
     "removeComments": true,                           

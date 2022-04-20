@@ -1,20 +1,25 @@
-import { BeforeInsert, Column, Entity } from "typeorm";
-import { IsString } from "class-validator";
+import { Column, Entity } from "typeorm";
+import { IsString, IsNotEmpty, IsEmail } from "class-validator";
 import AbstractBaseEntity from "./AbstractBaseEntity";
 
 @Entity("teacher")
 class Teacher extends AbstractBaseEntity {
+  @IsNotEmpty()
+  @IsString()
   @Column({
     length: 128,
   })
   name!: string;
 
+  @IsNotEmpty()
   @IsString()
   @Column({
     length: 128,
   })
   course!: string;
 
+  @IsEmail()
+  @IsNotEmpty()
   @IsString()
   @Column({
     length: 50,
@@ -22,6 +27,8 @@ class Teacher extends AbstractBaseEntity {
   })
   email!: string;
 
+  @IsNotEmpty()
+  @IsString()
   @Column({
     length: 256,
   })
