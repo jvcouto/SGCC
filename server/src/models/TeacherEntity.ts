@@ -1,9 +1,13 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, Generated } from "typeorm";
 import { IsString, IsNotEmpty, IsEmail } from "class-validator";
 import AbstractBaseEntity from "./AbstractBaseEntity";
 
 @Entity("teacher")
 class Teacher extends AbstractBaseEntity {
+  @Column({ name: "uuid", type: "uuid" })
+  @Generated("uuid")
+  uuid!: string;
+
   @IsNotEmpty()
   @IsString()
   @Column({

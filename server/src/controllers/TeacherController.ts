@@ -13,7 +13,7 @@ class TeacherController {
 
     const errors = await validate(teacherData);
 
-    if (errors) {
+    if (errors.length > 0) {
       Logger.error("validation failed.");
       const formatError = errors.map((e) => e.constraints);
       return res.status(400).json({
