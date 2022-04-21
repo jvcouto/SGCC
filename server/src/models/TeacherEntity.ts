@@ -1,6 +1,7 @@
-import { Column, Entity, Generated } from "typeorm";
+import { Column, Entity, Generated, JoinColumn, ManyToOne } from "typeorm";
 import { IsString, IsNotEmpty, IsEmail } from "class-validator";
 import AbstractBaseEntity from "./AbstractBaseEntity";
+import Course from "./CourseEntity";
 
 @Entity("teacher")
 class Teacher extends AbstractBaseEntity {
@@ -15,12 +16,10 @@ class Teacher extends AbstractBaseEntity {
   })
   name!: string;
 
+  @ManyToOne(() => Course)
+  @JoinColumn({ name: "course_id" })
   @IsNotEmpty()
-  @IsString()
-  @Column({
-    length: 128,
-  })
-  course!: string;
+  courseId!: string;
 
   @IsEmail()
   @IsNotEmpty()

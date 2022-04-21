@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS "course" (
+    "id" BIGSERIAL PRIMARY KEY,
+    "name" VARCHAR(128) NOT NULL,
+    "created_at" TIMESTAMP NULL DEFAULT NULL,
+    "updated_at" TIMESTAMP NULL DEFAULT NULL
+);

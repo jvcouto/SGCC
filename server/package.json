@@ -10,7 +10,7 @@
     "start": "node dist/index.js",
     "typeorm": "yarn ts-node ./node_modules/typeorm/cli.js",
     "db:reset": "yarn typeorm schema:drop && yarn typeorm migration:run",
-    "db:reset:populate": "yarn db:reset && ts-node src/database/dataset/PopulateApply.ts"
+    "db:reset:populate": "yarn db:reset && ts-node -r tsconfig-paths/register src/database/dataset/PopulateApply.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
