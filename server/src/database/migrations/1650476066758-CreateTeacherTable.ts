@@ -3,7 +3,7 @@
 
 import { MigrationInterface, QueryRunner } from "typeorm";
 import path from "path";
-import DBUtils from "../DBUtils";
+import DBUtils from "@utils/DBUtils";
 
 export class CreateTeacherTable1650476066758 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

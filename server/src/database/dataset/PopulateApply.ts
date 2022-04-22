@@ -1,7 +1,7 @@
 import DBConnection from "@config/DBConnection";
 import Logger from "@utils/Logger";
 import path from "path";
-import DBUtils from "../DBUtils";
+import DBUtils from "@utils/DBUtils";
 
 // eslint-disable-next-line no-void
 void (async () => {
