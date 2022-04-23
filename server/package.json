@@ -49,5 +49,8 @@
     "pino": "^7.10.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "0.2.6"
+  },
+  "versions":{
+    "node": "v16.14.2"
   }
 }

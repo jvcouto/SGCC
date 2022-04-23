@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS "teacher" (
     "updated_at" TIMESTAMP NULL DEFAULT NULL
 );
 
-CREATE INDEX ON techer USING btree ("course_id")
+CREATE INDEX ON "teacher" USING btree ("course_id")
