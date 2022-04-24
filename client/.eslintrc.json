@@ -8,6 +8,7 @@
     "extends": [
         "plugin:react/recommended",
         "airbnb",
+        "airbnb-typescript",
         "prettier"
     ],
     "parser": "@typescript-eslint/parser",
@@ -16,7 +17,8 @@
             "jsx": true
         },
         "ecmaVersion": 12,
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "client/tsconfig.json"
     },
     "plugins": [
         "react",
