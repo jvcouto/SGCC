@@ -5,4 +5,4 @@ server/src/@types
 
 client/node_modules
 client/.next
-client/**/*.js
+client/*.js
