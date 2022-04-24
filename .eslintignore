@@ -1,6 +1,7 @@
 server/node_modules
 server/dist/
 server/data/
+server/src/@types
 
 client/node_modules
 client/.next
