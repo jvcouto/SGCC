@@ -1,65 +1,39 @@
 import React from "react";
-import Head from "next/head";
+import { AxiosError } from "axios";
+import { message } from "antd";
+import api from "../services/api";
 
-import { Form, Input, Button, Checkbox } from "antd";
+import Login from "../components/login/login";
 
-import LoginWrapper from "../components/LoginWrapper";
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+interface APIReponseData {
+  message?: string;
+}
 
 function Home() {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  const onFinish = (values: LoginFormData) => {
+    api
+      .post("auth", { ...values })
+      .then((response) => {
+        console.log(response);
+
+        // colocar no context de login
+      })
+      .catch((error: AxiosError<APIReponseData>) => {
+        const { message: APIMessage } = error.response.data;
+        message.error(APIMessage);
+      });
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+  const onFinishFailed = () => {
+    message.error(`Algo deu errado, por favor tente novamente!`);
   };
 
-  return (
-    <LoginWrapper>
-      <Head>
-        <title>PCA</title>
-      </Head>
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{ offset: 8, span: 16 }}
-        >
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </LoginWrapper>
-  );
+  return <Login onFinish={onFinish} onFinishFailed={onFinishFailed} />;
 }
 
 export default Home;

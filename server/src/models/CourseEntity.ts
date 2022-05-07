@@ -9,7 +9,7 @@ class Course extends AbstractBaseEntity {
   @Column({ length: 128 })
   name!: string;
 
-  constructor(course: Course) {
+  constructor(course?: Course) {
     super();
     Object.assign(this, course);
   }

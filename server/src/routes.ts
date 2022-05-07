@@ -1,18 +1,18 @@
 import { Router } from "express";
 import TeacherConctroller from "@controllers/TeacherController";
 import AuthController from "@controllers/AuthController";
+import CourseController from "@controllers/CourseController";
 
-import authMiddlware from "./Middewares/authMiddleware";
+import authMiddleware from "./Middewares/authMiddleware";
 
 const routes = Router();
 
-routes.get("/", async (req, res) => {
-  res.json({ message: "Public Route" });
-});
 routes.post("/auth", new AuthController().authenticate);
 routes.post("/teacher/register", new TeacherConctroller().register);
 
-routes.use(authMiddlware);
+routes.get("/courses", new CourseController().findAll);
+
+routes.use(authMiddleware);
 
 routes.get("/teste", async (req, res) => {
   res.json({ message: "With auth route" });

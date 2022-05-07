@@ -2,7 +2,7 @@ import Logger from "@utils/Logger";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-const authMiddlware = (req: Request, res: Response, next: NextFunction) => {
+const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -26,4 +26,4 @@ const authMiddlware = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default authMiddlware;
+export default authMiddleware;

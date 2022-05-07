@@ -6,8 +6,4 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
-
-  body {
-    background: ${(props) => props.theme.colors.secondary};
-  }
 `;
