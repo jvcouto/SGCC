@@ -1,32 +1,26 @@
 import React from "react";
-import { AxiosError } from "axios";
 import { message } from "antd";
-import api from "../services/api";
-
 import Login from "../components/login/login";
+import { useAuth } from "../contexts/AuthContext";
 
 interface LoginFormData {
   email: string;
   password: string;
 }
 
-interface APIReponseData {
-  message?: string;
-}
-
 function Home() {
-  const onFinish = (values: LoginFormData) => {
-    api
-      .post("auth", { ...values })
-      .then((response) => {
-        console.log(response);
-
-        // colocar no context de login
-      })
-      .catch((error: AxiosError<APIReponseData>) => {
-        const { message: APIMessage } = error.response.data;
+  const { signIn } = useAuth();
+  const onFinish = async (values: LoginFormData) => {
+    try {
+      await signIn(values);
+    } catch (error) {
+      if (error.response.data.data?.message) {
+        const { message: APIMessage } = error.response.data.data;
         message.error(APIMessage);
-      });
+      } else {
+        message.error(error.message);
+      }
+    }
   };
 
   const onFinishFailed = () => {
