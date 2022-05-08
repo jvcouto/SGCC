@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { message } from "antd";
+import Router from "next/router";
+import { parseCookies } from "nookies";
 import Login from "../components/login/login";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -28,6 +30,21 @@ function Home() {
   };
 
   return <Login onFinish={onFinish} onFinishFailed={onFinishFailed} />;
+}
+
+export async function getServerSideProps(ctx: any) {
+  const { "PCA-Token": token } = parseCookies(ctx);
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
 }
 
 export default Home;

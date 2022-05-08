@@ -10,7 +10,7 @@ function Dashboard() {
 
 export default Dashboard;
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps(ctx: any) {
   const { "PCA-Token": token } = parseCookies(ctx);
 
   if (!token) {

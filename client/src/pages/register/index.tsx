@@ -2,6 +2,7 @@ import React from "react";
 import { message } from "antd";
 import { AxiosError } from "axios";
 
+import { parseCookies } from "nookies";
 import Register from "../../components/login/register";
 import api from "../../services/api";
 
@@ -47,7 +48,18 @@ function RegisterPage(props: StaticPropsType) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(ctx: any) {
+  const { "PCA-Token": token } = parseCookies(ctx);
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
   try {
     const res = await api.get("/courses");
     const courses = res.data.data;
