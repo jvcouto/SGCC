@@ -41,23 +41,25 @@ class AuthController {
     if (teacher) {
       if (await bcrypt.compare(password, teacher.password)) {
         const token = jwt.sign(
-          { id: teacher.uuid },
+          { uuid: teacher.uuid },
           process.env.JWT_TOKEN as string,
           {
-            expiresIn: "1d",
+            expiresIn: "1h",
           }
         );
 
         return res.status(200).json({
-          name: teacher.name,
-          email: teacher.email,
-          role: "Teacher",
-          token,
+          data: {
+            name: teacher.name,
+            email: teacher.email,
+            role: "Teacher",
+            token,
+          },
         });
       }
 
       return res.status(401).json({
-        message: "Wrong Email or Password!",
+        data: { message: "Wrong Email or Password!" },
       });
     }
 
