@@ -27,7 +27,7 @@ class TeacherController {
 
     if (existingTeacher) {
       return res.status(409).json({
-        message: "Error: Duplicated Entry!",
+        message: "Error: Duplicated Entry! - Email",
       });
     }
 
