@@ -3,11 +3,12 @@ import { message } from "antd";
 import { AxiosError } from "axios";
 
 import { parseCookies } from "nookies";
-import Register from "../../components/login/register";
+import Router from "next/router";
+import Register from "../../components/Login/register";
 import api from "../../services/api";
 
 interface APIReponseData {
-  message?: string;
+  data: { message?: string };
 }
 
 export interface StaticPropsType {
@@ -26,9 +27,10 @@ const onFinish = (values: any) => {
     })
     .then(() => {
       message.success(`Cadastrado com sucesso!`);
+      Router.push("/");
     })
     .catch((error: AxiosError<APIReponseData>) => {
-      const { message: APIMessage } = error.response.data;
+      const { message: APIMessage } = error.response.data.data;
       message.error(APIMessage);
     });
 };
@@ -54,7 +56,7 @@ export async function getServerSideProps(ctx: any) {
   if (token) {
     return {
       redirect: {
-        destination: "/dashboard",
+        destination: "/teacher",
         permanent: false,
       },
     };

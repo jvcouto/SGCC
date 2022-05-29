@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { message } from "antd";
-import Router from "next/router";
 import { parseCookies } from "nookies";
-import Login from "../components/login/login";
+import Login from "../components/Login/login";
 import { useAuth } from "../contexts/AuthContext";
 
 interface LoginFormData {
@@ -38,7 +37,7 @@ export async function getServerSideProps(ctx: any) {
   if (token) {
     return {
       redirect: {
-        destination: "/dashboard",
+        destination: "/teacher",
         permanent: false,
       },
     };

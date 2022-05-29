@@ -17,6 +17,8 @@ routes.get("/courses", new CourseController().findAll);
 
 routes.use(authMiddleware);
 
+routes.patch("/teacher/:id", new TeacherConctroller().update);
+
 routes.get("/teste", async (req, res) => {
   res.json({ message: "With auth route" });
 });

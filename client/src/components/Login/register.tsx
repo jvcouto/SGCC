@@ -34,6 +34,18 @@ function Register(props: RegisterProps) {
 
   return (
     <S.LoginBox>
+      <div className="box-top-register">
+        <Title
+          level={1}
+          style={{
+            color: "white",
+            margin: "0 0 4rem 0 ",
+            textAlign: "center",
+          }}
+        >
+          Registrar
+        </Title>
+      </div>
       <S.form
         form={form}
         name="basic"
@@ -44,18 +56,8 @@ function Register(props: RegisterProps) {
         autoComplete="off"
         requiredMark="optional"
       >
-        <Title
-          level={1}
-          style={{
-            color: "#d4cdcd",
-            margin: "0 0 4rem 0 ",
-            textAlign: "center",
-          }}
-        >
-          Registrar
-        </Title>
-
         <Form.Item
+          className="teste"
           labelAlign="left"
           name="name"
           rules={[{ required: true, message: "Insira o seu nome!" }]}

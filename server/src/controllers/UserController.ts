@@ -25,6 +25,7 @@ class UserController {
       if (teacher) {
         res.status(200).send({
           data: {
+            id: teacher.id,
             name: teacher.name,
             email: teacher.email,
             role: "Teacher",

@@ -50,6 +50,7 @@ class AuthController {
 
         return res.status(200).json({
           data: {
+            id: teacher.id,
             name: teacher.name,
             email: teacher.email,
             role: "Teacher",
@@ -64,7 +65,7 @@ class AuthController {
     }
 
     return res.status(401).json({
-      message: "Wrong Email or Password!",
+      data: { message: "Wrong Email or Password!" },
     });
   };
 }

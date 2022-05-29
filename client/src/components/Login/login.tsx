@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Form, Input, Button } from "antd";
-
+import Image from "next/image";
 import Link from "next/link";
 import * as S from "./login.style";
 
@@ -14,6 +14,10 @@ function Login(props: HomeProps) {
   const { onFinish, onFinishFailed } = props;
   return (
     <S.LoginBox>
+      <div className="box-top-login">
+        <Image src="/logo.png" height="200" width="250" layout="fixed" />
+      </div>
+
       <S.form
         name="basic"
         layout="vertical"

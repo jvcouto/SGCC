@@ -9,7 +9,7 @@ const api = axios.create({
 
 if (token) {
   // eslint-disable-next-line @typescript-eslint/dot-notation
-  api.defaults.headers["Authorization"] = `Baerer ${token}`;
+  api.defaults.headers["Authorization"] = `Bearer ${token}`;
 }
 
 export default api;

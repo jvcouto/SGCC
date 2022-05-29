@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 import Router from "next/router";
 import api from "../services/api";
 
@@ -9,10 +9,17 @@ interface LoginDataProps {
 }
 
 interface AuthApiResponse {
-  data: { name: string; email: string; role: string; token?: string };
+  data: {
+    id: number;
+    name: string;
+    email: string;
+    role: string;
+    token?: string;
+  };
 }
 
 interface User {
+  id: number;
   name: string;
   email: string;
   role: string;
@@ -23,6 +30,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   user: User;
+  logOut(): void;
 }
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -36,8 +44,8 @@ export function AuthProvider({ children }) {
     const { "PCA-Token": token } = parseCookies();
     if (token) {
       api.get<AuthApiResponse>(`/user?token=${token}`).then((response) => {
-        const { email, name, role } = response.data.data;
-        setUser({ name, email, role });
+        const { id, email, name, role } = response.data.data;
+        setUser({ id, name, email, role });
         setIsAuthenticated(true);
       });
     }
@@ -45,23 +53,29 @@ export function AuthProvider({ children }) {
 
   async function signIn(data: LoginDataProps) {
     const response = await api.post<AuthApiResponse>("/auth", data);
-    const { name, email, role, token } = response.data.data;
+    const { id, name, email, role, token } = response.data.data;
     setCookie(undefined, "PCA-Token", token, {
       maxAge: 60 * 60 * 6, // 6 hour
     });
-    setUser({ name, email, role });
+    setUser({ id, name, email, role });
 
     // eslint-disable-next-line @typescript-eslint/dot-notation
-    api.defaults.headers["Authorization"] = `Baerer ${token}`;
+    api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
     setIsAuthenticated(true);
-    Router.push("/dashboard");
+    Router.push("/teacher");
+  }
+
+  function logOut() {
+    setUser(null);
+    Router.push("/");
+    destroyCookie(undefined, "PCA-Token");
   }
 
   return (
     <AuthContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{ isAuthenticated, setIsAuthenticated, signIn, user }}
+      value={{ isAuthenticated, setIsAuthenticated, signIn, user, logOut }}
     >
       {children}
     </AuthContext.Provider>
@@ -70,6 +84,6 @@ export function AuthProvider({ children }) {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  const { isAuthenticated, setIsAuthenticated, signIn, user } = context;
-  return { isAuthenticated, setIsAuthenticated, signIn, user };
+  const { isAuthenticated, setIsAuthenticated, signIn, user, logOut } = context;
+  return { isAuthenticated, setIsAuthenticated, signIn, user, logOut };
 };
