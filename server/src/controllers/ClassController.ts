@@ -1,13 +1,15 @@
-/* eslint-disable no-unused-vars */
+import SchoolClass from "@models/SchoolClassEntity";
 import Logger from "@utils/Logger";
 import { validate } from "class-validator";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
+import bcrypt from "bcryptjs";
+import AbstractController from "./AbstractController";
 
-abstract class AbstractController<T> {
-  protected abstract Entity: new (data?: T) => T;
+class ClassController extends AbstractController<SchoolClass> {
+  protected Entity = SchoolClass;
 
-  protected abstract relations: string[];
+  protected relations = ["schoolClassStudens"];
 
   create = async (req: Request, res: Response): Promise<any> => {
     const newEntity = new this.Entity(req.body);
@@ -24,6 +26,10 @@ abstract class AbstractController<T> {
 
     const entityRepository = getRepository(this.Entity);
 
+    newEntity.schoolClassStudens.forEach((e) => {
+      e.password = bcrypt.hashSync(e.password, 10);
+    });
+
     const data = await entityRepository.save(newEntity);
 
     return res.status(200).send({
@@ -32,14 +38,6 @@ abstract class AbstractController<T> {
       },
     });
   };
-
-  findAll = async (req: Request, res: Response) => {
-    const entityRepository = getRepository(this.Entity);
-
-    const entities = await entityRepository.find({ relations: this.relations });
-
-    return res.send({ data: entities });
-  };
 }
 
-export default AbstractController;
+export default ClassController;
