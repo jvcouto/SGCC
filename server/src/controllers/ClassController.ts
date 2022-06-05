@@ -9,12 +9,12 @@ import AbstractController from "./AbstractController";
 class ClassController extends AbstractController<SchoolClass> {
   protected Entity = SchoolClass;
 
-  protected relations = ["schoolClassStudens"];
+  protected relations = ["schoolClassStudens", "teacher"];
 
   create = async (req: Request, res: Response): Promise<any> => {
-    const newEntity = new this.Entity(req.body);
+    const newClass = new this.Entity(req.body);
 
-    const errors = await validate({ newEntity });
+    const errors = await validate({ newClass });
 
     if (errors.length > 0) {
       Logger.error("validation failed.");
@@ -24,13 +24,13 @@ class ClassController extends AbstractController<SchoolClass> {
       });
     }
 
-    const entityRepository = getRepository(this.Entity);
+    const classRepository = getRepository(this.Entity);
 
-    newEntity.schoolClassStudens.forEach((e) => {
+    newClass.schoolClassStudens.forEach((e) => {
       e.password = bcrypt.hashSync(e.password, 10);
     });
 
-    const data = await entityRepository.save(newEntity);
+    const data = await classRepository.save(newClass);
 
     return res.status(200).send({
       data: {

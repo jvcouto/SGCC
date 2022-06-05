@@ -36,7 +36,9 @@ abstract class AbstractController<T> {
   findAll = async (req: Request, res: Response) => {
     const entityRepository = getRepository(this.Entity);
 
-    const entities = await entityRepository.find({ relations: this.relations });
+    const entities = await entityRepository.find({
+      relations: this.relations,
+    });
 
     return res.send({ data: entities });
   };

@@ -8,8 +8,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import AbstractBaseEntity from "./AbstractBaseEntity";
-import Teacher from "./TeacherEntity";
-import Student from "./StudentEntity";
+import User from "./UserEntity";
 
 @Entity("school_class")
 class SchoolClass extends AbstractBaseEntity {
@@ -18,12 +17,12 @@ class SchoolClass extends AbstractBaseEntity {
   @Column({ length: 128 })
   name!: string;
 
-  @ManyToOne(() => Teacher)
+  @ManyToOne(() => User)
   @JoinColumn({ name: "teacher_id" })
   @IsNotEmpty()
-  teacherId!: string;
+  teacher!: string;
 
-  @ManyToMany(() => Student, { cascade: true })
+  @ManyToMany(() => User, { cascade: true })
   @JoinTable({
     name: "school_class_students",
     joinColumn: {
@@ -36,7 +35,7 @@ class SchoolClass extends AbstractBaseEntity {
     },
   })
   @IsNotEmpty()
-  schoolClassStudens!: Student[];
+  schoolClassStudens!: User[];
 
   constructor(schoolClass?: SchoolClass) {
     super();
