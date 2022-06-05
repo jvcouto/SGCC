@@ -26,13 +26,15 @@ function TeacherPage() {
   const { user } = useAuth();
   const onFinish = async (data: ChangePassWordFormData) => {
     api
-      .patch(`teacher/${user.id}`, data)
+      .patch(`user/${user.id}`, data)
       .then(() => {
         message.success(`Senha alterada com sucesso!`);
       })
-      .catch((error: AxiosError<APIReponseData>) => {
-        const { message: APIMessage } = error.response.data.data;
-        message.error(APIMessage);
+      .catch((error: AxiosError<any>) => {
+        const errors = error.response.data?.data;
+        Object.keys(error.response.data?.data).forEach((e) => {
+          message.error(`${JSON.stringify(errors[e])}`);
+        });
       });
   };
 

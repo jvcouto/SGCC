@@ -7,10 +7,6 @@ import Router from "next/router";
 import Register from "../../components/Login/register";
 import api from "../../services/api";
 
-interface APIReponseData {
-  data: { message?: string };
-}
-
 export interface StaticPropsType {
   courses: {
     id: number;
@@ -22,16 +18,21 @@ export interface StaticPropsType {
 
 const onFinish = (values: any) => {
   api
-    .post("teacher/register", {
+    .post("/register", {
       ...values,
+      roleId: {
+        id: 2,
+      },
     })
     .then(() => {
       message.success(`Cadastrado com sucesso!`);
       Router.push("/");
     })
-    .catch((error: AxiosError<APIReponseData>) => {
-      const { message: APIMessage } = error.response.data.data;
-      message.error(APIMessage);
+    .catch((error: AxiosError<any>) => {
+      const errors = error.response.data?.data;
+      Object.keys(error.response.data?.data).forEach((e) => {
+        message.error(`${JSON.stringify(errors[e])}`);
+      });
     });
 };
 

@@ -17,21 +17,19 @@ interface ChangeEmailFormData {
   email: string;
 }
 
-interface APIReponseData {
-  data: { message?: string };
-}
-
 function TeacherPage() {
   const { user } = useAuth();
   const onFinish = async (data: ChangeEmailFormData) => {
     api
-      .patch(`teacher/${user.id}`, data)
+      .patch(`user/${user.id}`, data)
       .then(() => {
         message.success(`Email alterado com sucesso!`);
       })
-      .catch((error: AxiosError<APIReponseData>) => {
-        const { message: APIMessage } = error.response.data.data;
-        message.error(APIMessage);
+      .catch((error: AxiosError<any>) => {
+        const errors = error.response.data?.data;
+        Object.keys(error.response.data?.data).forEach((e) => {
+          message.error(`${JSON.stringify(errors[e])}`);
+        });
       });
   };
 

@@ -76,7 +76,7 @@ function Dashboard(props: TeacherDashboardProps) {
           textAlign: "center",
         }}
       >
-        PCA ©2020 Created by jvcouto
+        PCA ©2022 Created by jvcouto
       </Footer>
     </S.MainLayout>
   );
