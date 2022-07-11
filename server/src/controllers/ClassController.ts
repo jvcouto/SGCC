@@ -12,31 +12,32 @@ class ClassController extends AbstractController<SchoolClass> {
   protected relations = ["schoolClassStudens", "teacher"];
 
   create = async (req: Request, res: Response): Promise<any> => {
-    const newClass = new this.Entity(req.body);
+    console.log(req.body);
+    //   const newClass = new this.Entity(req.body);
 
-    const errors = await validate({ newClass });
+    //   const errors = await validate({ newClass });
 
-    if (errors.length > 0) {
-      Logger.error("validation failed.");
-      const formatError = errors.map((e) => e.constraints);
-      return res.status(400).json({
-        data: { ...formatError },
-      });
-    }
+    //   if (errors.length > 0) {
+    //     Logger.error("validation failed.");
+    //     const formatError = errors.map((e) => e.constraints);
+    //     return res.status(400).json({
+    //       data: { ...formatError },
+    //     });
+    //   }
 
-    const classRepository = getRepository(this.Entity);
+    //   const classRepository = getRepository(this.Entity);
 
-    newClass.schoolClassStudens.forEach((e) => {
-      e.password = bcrypt.hashSync(e.password, 10);
-    });
+    //   newClass.schoolClassStudens.forEach((e) => {
+    //     e.password = bcrypt.hashSync(e.password, 10);
+    //   });
 
-    const data = await classRepository.save(newClass);
+    //   const data = await classRepository.save(newClass);
 
-    return res.status(200).send({
-      data: {
-        data,
-      },
-    });
+    //   return res.status(200).send({
+    //     data: {
+    //       data,
+    //     },
+    //   });
   };
 }
 

@@ -20,5 +20,7 @@ routes.use(authMiddleware);
 routes.patch("/user/:id", new UserController().update);
 
 routes.get("/classes", new ClassController().findAll);
+routes.post("/classes", new ClassController().create);
+routes.patch("/classes/:id", new ClassController().update);
 
 export default routes;

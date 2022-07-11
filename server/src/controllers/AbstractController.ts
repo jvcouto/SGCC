@@ -42,6 +42,30 @@ abstract class AbstractController<T> {
 
     return res.send({ data: entities });
   };
+
+  update = async (req: Request, res: Response) => {
+    const entityRepository = getRepository(this.Entity);
+
+    const oldEntity = (await entityRepository.findOne(req.params.id, {
+      relations: this.relations,
+    })) as T;
+
+    const newEntity = new this.Entity({ ...oldEntity, ...req.body });
+
+    const errors = await validate({ newEntity });
+
+    if (errors.length > 0) {
+      Logger.error("validation failed.");
+      const formatError = errors.map((e) => e.constraints);
+      return res.status(400).json({
+        data: { ...formatError },
+      });
+    }
+
+    const data = await entityRepository.save(newEntity);
+
+    return res.send({ data });
+  };
 }
 
 export default AbstractController;

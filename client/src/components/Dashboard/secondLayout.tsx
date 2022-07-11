@@ -22,7 +22,7 @@ function TeacherDashboard(props: TeacherDashboardProp) {
           mode="inline"
           defaultSelectedKeys={[selectedKey]}
           defaultOpenKeys={[selectOpenKey]}
-          style={{ height: "100%", borderRight: 0, padding: "5px" }}
+          style={{ height: "100.1%", borderRight: 0, padding: "5px" }}
           items={siderItens}
         />
       </Sider>
