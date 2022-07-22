@@ -73,7 +73,8 @@ function TeacherCreateClassContent(props: TeacherCreateClassContentProps) {
                     rules={[
                       {
                         required: true,
-                        message: "Por favor insira o email do aluno!",
+                        type: "email",
+                        message: "Insira um email válido!",
                       },
                     ]}
                   >
