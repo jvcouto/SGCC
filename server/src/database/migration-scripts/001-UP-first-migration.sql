@@ -55,3 +55,18 @@ CREATE TABLE IF NOT EXISTS "school_class_students" (
 
 CREATE INDEX ON "school_class_students" USING btree ("school_class_id");
 CREATE INDEX ON "school_class_students" USING btree ("student_id");
+
+
+CREATE TABLE IF NOT EXISTS "question_type" (
+    "id" BIGSERIAL PRIMARY KEY,
+    "name" VARCHAR(128) NOT NULL,
+    "created_at" TIMESTAMP NULL DEFAULT NULL,
+    "updated_at" TIMESTAMP NULL DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "essay_questions" (
+    "id" BIGSERIAL PRIMARY KEY,
+    "statement" VARCHAR(512) NOT NULL,
+    "created_at" TIMESTAMP NULL DEFAULT NULL,
+    "updated_at" TIMESTAMP NULL DEFAULT NULL
+);

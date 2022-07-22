@@ -25,3 +25,6 @@ INSERT INTO school_class_students (school_class_id, student_id, created_at) VALU
 (2, 4, '2022-04-23 21:11:54.649');
 
 
+INSERT INTO question_type (name) VALUES
+('Dissertativa');
+
