@@ -3,6 +3,8 @@ import AbstractCrudController from "./AbstractController";
 
 class CourseController extends AbstractCrudController<Course> {
   protected Entity = Course;
+
+  protected relations = [];
 }
 
 export default CourseController;

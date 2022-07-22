@@ -1,59 +1,35 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import Teacher from "@models/TeacherEntity";
-import Student from "@models/StudentEntity";
+import User from "@models/UserEntity";
 import { getRepository } from "typeorm";
 
 class AuthController {
   authenticate = async (req: Request, res: Response) => {
-    const teacherRepository = getRepository(Teacher);
-    // const studentRepository = getRepository(Student);
+    const userRepository = getRepository(User);
 
     const { email, password } = req.body;
 
-    const teacher = await teacherRepository.findOne({
+    const user = await userRepository.findOne({
       where: { email },
     });
 
-    // const student = await studentRepository.findOne({
-    //   where: { email },
-    // });
-
-    // if (teacher) {
-    //   if (await bcrypt.compare(password, student.password)) {
-    //     const token = jwt.sign(
-    //       { id: teacher.id },
-    //       process.env.JWT_TOKEN as string,
-    //       {
-    //         expiresIn: "1d",
-    //       }
-    //     );
-
-    //     return res.status(200).json({
-    //       name: teacher.name,
-    //       email: teacher.email,
-    //       role: "Teacher",
-    //       token,
-    //     });
-    //   }
-
-    if (teacher) {
-      if (await bcrypt.compare(password, teacher.password)) {
+    if (user) {
+      if (await bcrypt.compare(password, user.password)) {
         const token = jwt.sign(
-          { uuid: teacher.uuid },
+          { uuid: user.uuid },
           process.env.JWT_TOKEN as string,
           {
-            expiresIn: "1h",
+            expiresIn: "7h",
           }
         );
 
         return res.status(200).json({
           data: {
-            id: teacher.id,
-            name: teacher.name,
-            email: teacher.email,
-            role: "Teacher",
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.roleId,
             token,
           },
         });

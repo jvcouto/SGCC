@@ -7,7 +7,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
   if (!authorization) {
     return res.status(401).json({
-      message: "Not Authenticated",
+      data: { message: "Not Authenticated" },
     });
   }
 
@@ -21,7 +21,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {
     Logger.error(error as string);
     return res.status(401).json({
-      message: "Not Authenticated",
+      data: { message: "Not Authenticated" },
     });
   }
 };

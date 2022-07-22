@@ -15,12 +15,10 @@ function Home() {
     try {
       await signIn(values);
     } catch (error) {
-      if (error.response.data.data?.message) {
-        const { message: APIMessage } = error.response.data.data;
-        message.error(APIMessage);
-      } else {
-        message.error(error.message);
-      }
+      const errors = error.response.data?.data;
+      Object.keys(error.response.data?.data).forEach((e) => {
+        message.error(`${JSON.stringify(errors[e])}`);
+      });
     }
   };
 

@@ -4,12 +4,11 @@ import { Form, Typography } from "antd";
 export const LoginBox = styled.div`
   background: rgba(134, 138, 143, 0.4);
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: scroll;
+  height: 100vh;
+  min-height: 720px;
 
   div.box-top-login {
     background: rgba(3, 8, 82, 0.9);

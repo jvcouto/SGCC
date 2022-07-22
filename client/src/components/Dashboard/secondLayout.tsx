@@ -22,16 +22,16 @@ function TeacherDashboard(props: TeacherDashboardProp) {
           mode="inline"
           defaultSelectedKeys={[selectedKey]}
           defaultOpenKeys={[selectOpenKey]}
-          style={{ height: "100%", borderRight: 0, padding: "5px" }}
+          style={{ height: "100.1%", borderRight: 0, padding: "5px" }}
           items={siderItens}
         />
       </Sider>
-      <Layout style={{ padding: "0 24px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
+      <Layout style={{ padding: "24px 24px 0px 24px" }}>
+        {/* <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
+        </Breadcrumb> */}
         <Content
           style={{
             margin: 0,

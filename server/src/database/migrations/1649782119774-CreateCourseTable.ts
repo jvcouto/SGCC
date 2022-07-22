@@ -5,23 +5,17 @@ import path from "path";
 import { MigrationInterface, QueryRunner } from "typeorm";
 import DBUtils from "../DBUtils";
 
-export class CreateCourseTable1649782119774 implements MigrationInterface {
+export class FirstMigration1649782119774 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const sql = DBUtils.readSQLFile(
-      path.resolve(
-        __dirname,
-        "../migration-scripts/001-UP-create-course-table.sql"
-      )
+      path.resolve(__dirname, "../migration-scripts/001-UP-first-migration.sql")
     );
     await queryRunner.query(sql);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     const sql = DBUtils.readSQLFile(
-      path.resolve(
-        __dirname,
-        "../migration-scripts/001-UP-create-course-table.sql"
-      )
+      path.resolve(__dirname, "../migration-scripts/001-UP-first-migration.sql")
     );
     await queryRunner.query(sql);
   }

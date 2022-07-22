@@ -1,10 +1,17 @@
 import { Column, Entity, Generated, JoinColumn, ManyToOne } from "typeorm";
-import { IsString, IsNotEmpty, IsEmail } from "class-validator";
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  IsBoolean,
+  IsOptional,
+} from "class-validator";
 import AbstractBaseEntity from "./AbstractBaseEntity";
 import Course from "./CourseEntity";
+import UserRole from "./UserRoleEntity";
 
-@Entity("teacher")
-class Teacher extends AbstractBaseEntity {
+@Entity("user")
+class User extends AbstractBaseEntity {
   @Column({ name: "uuid", type: "uuid" })
   @Generated("uuid")
   uuid!: string;
@@ -30,6 +37,11 @@ class Teacher extends AbstractBaseEntity {
   })
   email!: string;
 
+  @ManyToOne(() => UserRole)
+  @JoinColumn({ name: "role_id" })
+  @IsNotEmpty()
+  roleId!: string;
+
   @IsNotEmpty()
   @IsString()
   @Column({
@@ -37,13 +49,18 @@ class Teacher extends AbstractBaseEntity {
   })
   password!: string;
 
-  constructor(teacher?: Teacher) {
+  @IsOptional()
+  @IsBoolean()
+  @Column({ name: "first_login" })
+  firstLogin!: boolean;
+
+  constructor(user?: User) {
     super();
 
-    if (teacher) {
-      Object.assign(this, teacher);
+    if (user) {
+      Object.assign(this, user);
     }
   }
 }
 
-export default Teacher;
+export default User;

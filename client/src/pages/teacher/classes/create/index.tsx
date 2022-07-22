@@ -2,23 +2,18 @@ import React from "react";
 import { parseCookies } from "nookies";
 import { message } from "antd";
 import { AxiosError } from "axios";
-import Dashboard from "../../../components/Dashboard";
-import TeacherDashboard from "../../../components/Dashboard/secondLayout";
-import TeacherListClassesContent from "../../../components/Dashboard/Teacher/classes";
-import TeacherPages from "../../../config/teacherPages";
+import Dashboard from "../../../../components/Dashboard";
+import TeacherDashboard from "../../../../components/Dashboard/secondLayout";
+import TeacherCreateClassContent from "../../../../components/Dashboard/Teacher/classes/CreateForm";
+import TeacherPages from "../../../../config/teacherPages";
 
-import siderItensTeacherClasses from "../../../config/classesTeacherSubMenu";
+import siderItensTeacherClasses from "../../../../config/classesTeacherSubMenu";
 
-import api from "../../../services/api";
-import { ClassProps } from "../../../ultis/ApiResposeTypes/Classes";
+import api from "../../../../services/api";
 
-interface TeacherClassPageProps {
-  classes: ClassProps[];
-}
-
-const onConfirmDelete = (values: any) => {
+const onCreateClass = (values: any) => {
   api
-    .patch(`/classes/${values.id}`, {
+    .post(`/classes`, {
       ...values,
     })
     .then(() => {
@@ -32,19 +27,15 @@ const onConfirmDelete = (values: any) => {
     });
 };
 
-function TeacherClassesPage(props: TeacherClassPageProps) {
-  const { classes } = props;
+function TeacherClassesPage() {
   return (
     <Dashboard pages={TeacherPages} selectedKey="tab-4">
       <TeacherDashboard
         siderItens={siderItensTeacherClasses}
-        selectOpenKey="subKey-1"
-        selectedKey="subKey-1"
+        selectOpenKey="subKey-2"
+        selectedKey="subKey-2"
       >
-        <TeacherListClassesContent
-          classes={classes}
-          onConfirmDelete={onConfirmDelete}
-        />
+        <TeacherCreateClassContent onCreateClass={onCreateClass} />
       </TeacherDashboard>
     </Dashboard>
   );
@@ -67,15 +58,7 @@ export async function getServerSideProps(ctx: any) {
   // eslint-disable-next-line @typescript-eslint/dot-notation
   api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-  try {
-    const res = await api.get("/classes");
-    const classes = res.data.data;
-    return {
-      props: {
-        classes,
-      },
-    };
-  } catch (e) {
-    // later
-  }
+  return {
+    props: {},
+  };
 }

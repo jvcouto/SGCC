@@ -68,8 +68,8 @@ export function AuthProvider({ children }) {
 
   function logOut() {
     setUser(null);
-    Router.push("/");
     destroyCookie(undefined, "PCA-Token");
+    Router.push("/");
   }
 
   return (
