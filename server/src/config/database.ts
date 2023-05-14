@@ -1,7 +1,7 @@
 import { createConnection } from "typeorm";
-import Logger from "@utils/Logger";
+import Logger from "@utils/logger";
 
-class DBConnection {
+class Database {
   static async createConnection() {
     const connection = await createConnection();
     Logger.info("TypeORM initialized!!");
@@ -9,4 +9,4 @@ class DBConnection {
   }
 }
 
-export default DBConnection;
+export default Database;

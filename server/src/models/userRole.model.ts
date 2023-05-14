@@ -1,12 +1,12 @@
 import { IsNotEmpty, IsString } from "class-validator";
 import { Column, Entity } from "typeorm";
-import AbstractBaseEntity from "./AbstractBaseEntity";
+import AbstractBaseModel from "./abstractBase.model";
 
 @Entity("user_role")
-class UserRole extends AbstractBaseEntity {
+class UserRole extends AbstractBaseModel {
   @IsNotEmpty()
   @IsString()
-  @Column({ length: 128 })
+  @Column({ length: 64 })
   name!: string;
 
   constructor(role?: UserRole) {

@@ -4,9 +4,9 @@
     "lib": ["es2019"],                                                                       
     "experimentalDecorators": true,                   
     "emitDecoratorMetadata": true,                    
-    "module": "commonjs",                                
+    "module": "commonjs",
     "rootDir": "./src",                                                      
-    "baseUrl": ".",                                  
+    "baseUrl": ".",
     "paths": {
       "@controllers/*": ["./src/controllers/*"],
       "@models/*": ["./src/models/*"],
@@ -17,7 +17,7 @@
         "./node-modules/@types/",
         "./src/@types/"
     ],
-    "types": ["reflect-metadata", "jest", "@types/jest"],                             
+    "types": ["reflect-metadata", "jest", "@types/jest"],
     "resolveJsonModule": true,
     "moduleResolution": "node",              
     "allowJs": true,                                  

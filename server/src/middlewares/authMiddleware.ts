@@ -1,4 +1,4 @@
-import Logger from "@utils/Logger";
+import Logger from "@utils/logger";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
