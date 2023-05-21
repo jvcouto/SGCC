@@ -1,25 +1,18 @@
 import { User } from "@models/index";
-import { Request } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import AuthenticateFailError from "src/errors/authenticateFailError";
 
-interface iMakeAuthenticate {
-  findOneByKey: (param: {
-    key: string;
-    value: string;
-  }) => Promise<User | undefined>;
-}
+type ifindOneByKey = (key: string, value: string) => Promise<User | undefined>;
 
-export default function makeAuthenticate({ findOneByKey }: iMakeAuthenticate) {
-  return async function authenticate({ body }: Partial<Request>) {
-    const { email, password } = body;
+export default class MakeAuthenticate {
+  constructor(private findOneByKey: ifindOneByKey) {
+    this.findOneByKey = findOneByKey;
+  }
 
-    const user = await findOneByKey({
-      key: "email",
-      value: email,
-    });
+  public async authenticate(email: string, password: string) {
+    const user = await this.findOneByKey("email", email);
 
     if (!user) {
       throw new AuthenticateFailError("User not found");
@@ -27,24 +20,24 @@ export default function makeAuthenticate({ findOneByKey }: iMakeAuthenticate) {
 
     if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign(
-        { uuid: user.id },
+        { uuid: user.id, userRoles: user.userRoles },
         process.env.JWT_TOKEN as string,
         {
           expiresIn: process.env.JWT_EXPIRE,
         }
       );
 
-      const data = {
+      const resData = {
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.userRoles,
+        roles: user.userRoles,
         token,
       };
 
-      return { data };
+      return { data: resData };
     }
 
     throw new AuthenticateFailError("Wrong username or password");
-  };
+  }
 }
