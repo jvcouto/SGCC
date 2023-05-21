@@ -1,7 +1,7 @@
 import findOneByKey from "src/data-access/users/findOneByKey";
-import makeAuthenticate from "./authenticate";
+import MakeAuthenticate from "./authenticate";
 
-const authenticate = makeAuthenticate({ findOneByKey });
+const { authenticate } = new MakeAuthenticate(findOneByKey);
 
 const userService = { authenticate };
 
