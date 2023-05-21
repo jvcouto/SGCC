@@ -1,28 +1,27 @@
 import Logger from "@utils/logger";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import NotAuthenticatedError from "src/errors/notAuthenticatedError";
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(401).json({
-      data: { message: "Not Authenticated" },
-    });
+    const message = "Token not provided";
+    Logger.error(message);
+    throw new NotAuthenticatedError(message);
   }
 
   const token = authorization.replace("Bearer", "").trim();
 
   try {
     const data = jwt.verify(token, process.env.JWT_TOKEN as string) as any;
-    const { uuid } = data;
-    req.userUUID = uuid;
+    const { uuid, userRoles } = data;
+    req.user = { uuid, userRoles };
     return next();
   } catch (error) {
     Logger.error(error as string);
-    return res.status(401).json({
-      data: { message: "Not Authenticated" },
-    });
+    throw new NotAuthenticatedError("User Not Authenticated");
   }
 };
 

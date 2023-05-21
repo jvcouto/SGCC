@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import express from "express";
+import express, { Express } from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import db from "@config/database";
@@ -8,14 +8,22 @@ import Logger from "./utils/logger";
 
 dotenv.config();
 
-db.createConnection();
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use("/", routes);
 
-app.listen(process.env.NODE_PORT, () => {
-  Logger.info(`Escutando na porta: ${process.env.NODE_PORT}`);
-});
+const startServer = async (server: Express) => {
+  await db.createConnection();
+
+  server.listen(process.env.NODE_PORT, () => {
+    Logger.info(`Escutando na porta: ${process.env.NODE_PORT}`);
+  });
+
+  return server;
+};
+
+const server = startServer(app);
+
+export default { server };

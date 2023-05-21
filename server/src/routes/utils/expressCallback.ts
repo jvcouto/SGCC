@@ -10,7 +10,7 @@ export default (controller: CallableFunction) =>
       ip: req.ip,
       method: req.method,
       path: req.path,
-      user: req.userUUID,
+      user: req.user,
       source: {
         ip: req.ip,
         browser: req.get("User-Agent"),
@@ -19,6 +19,7 @@ export default (controller: CallableFunction) =>
         "Content-Type": req.get("Content-Type"),
         Referer: req.get("referer"),
         "User-Agent": req.get("User-Agent"),
+        authorization: req.get("authorization"),
       },
     };
 
