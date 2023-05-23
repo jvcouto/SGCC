@@ -6,4 +6,8 @@ const publicRoutes = Router();
 
 publicRoutes.route("/login").post(expressCallback(userController.authenticate));
 
+publicRoutes
+  .route("/register-admin")
+  .post(expressCallback(userController.register));
+
 export default publicRoutes;

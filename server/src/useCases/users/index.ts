@@ -1,10 +1,11 @@
 import findOneByKey from "src/data-access/users/findOneByKey";
+import saveUser from "src/data-access/users/save";
 import MakeAuthenticate from "./authenticate";
+import MakeRegister from "./register";
 
-const { authenticate } = new MakeAuthenticate(findOneByKey);
+const authenticate = MakeAuthenticate(findOneByKey);
 
-const userService = { authenticate };
+const register = MakeRegister(findOneByKey, saveUser);
 
-export default userService;
-
-export { authenticate };
+export default { authenticate, register };
+export { authenticate, register };

@@ -8,11 +8,6 @@ class UserRole extends AbstractBaseModel {
   @IsString()
   @Column({ length: 64 })
   name!: string;
-
-  constructor(role?: UserRole) {
-    super();
-    Object.assign(this, role);
-  }
 }
 
 export default UserRole;

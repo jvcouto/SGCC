@@ -5,7 +5,13 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { IsString, IsNotEmpty, IsEmail, IsBoolean } from "class-validator";
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  IsBoolean,
+  IsOptional,
+} from "class-validator";
 
 import UserRole from "./userRole.model";
 
@@ -23,7 +29,6 @@ class User {
 
   @IsEmail()
   @IsNotEmpty()
-  @IsString()
   @Column({
     length: 128,
     unique: true,
@@ -32,7 +37,7 @@ class User {
 
   @ManyToMany(() => UserRole)
   @JoinTable()
-  userRoles!: UserRole[];
+  roles!: UserRole[];
 
   @IsNotEmpty()
   @IsString()
@@ -41,15 +46,10 @@ class User {
   })
   password!: string;
 
+  @IsOptional()
   @IsBoolean()
   @Column({ name: "fisrt_login", default: true })
   firstLogin!: boolean;
-
-  constructor(user?: User) {
-    if (user) {
-      Object.assign(this, user);
-    }
-  }
 }
 
 export default User;

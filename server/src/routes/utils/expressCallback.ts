@@ -1,5 +1,5 @@
+import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 import { Request, Response } from "express";
-import GenericCustomError from "src/errors/abstractCustomError";
 
 export default (controller: CallableFunction) =>
   (req: Request, res: Response) => {
@@ -32,10 +32,10 @@ export default (controller: CallableFunction) =>
         };
         res.status(response.status).json(body);
       })
-      .catch((e: GenericCustomError) => {
-        res.status(e.status).json({
-          code: e.code,
-          message: e.message,
+      .catch((e: any) => {
+        res.status(e.status ?? HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+          code: e.code ?? "INTERNAL_SERVER_ERROR",
+          message: e.message ?? "Something went wrong on server",
         });
       });
   };

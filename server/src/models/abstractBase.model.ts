@@ -22,6 +22,7 @@ abstract class AbstractBaseEntity {
   @Column({
     name: "updated_at",
     type: "timestamp",
+    nullable: true,
   })
   updatedAt!: Date;
 
