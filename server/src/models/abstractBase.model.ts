@@ -7,7 +7,7 @@ import {
 
 import { IsOptional } from "class-validator";
 
-abstract class AbstractBaseEntity {
+abstract class AbstractBaseModel {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -37,4 +37,4 @@ abstract class AbstractBaseEntity {
   }
 }
 
-export default AbstractBaseEntity;
+export default AbstractBaseModel;

@@ -1,35 +1,44 @@
+import User from "@models/user.model";
 import bcrypt from "bcryptjs";
 import { validate } from "class-validator";
 import Logger from "@utils/logger";
 import RegisterError from "src/errors/registerError";
-import User from "@models/user.model";
+import USER_ROLES from "@utils/constants/userRoles";
 
-export default class RegisterUseCase {
+export default class UpdateUseCase {
   constructor(
-    private readonly findOneByKey: any,
-    private readonly saveUser: any
+    private readonly findOneByKey: Function,
+    private readonly saveUser: Function
   ) {}
 
-  async register({
+  async update({
+    id,
     name,
     email,
     password,
   }: {
+    id: string;
     name: string;
     email: string;
     password: string;
   }) {
-    const user = await this.findOneByKey(email, "email");
+    const user = await this.findOneByKey(id);
 
-    if (user) {
-      Logger.error("validation failed.");
-      throw new RegisterError("Email already in use!");
+    if (!user) {
+      const errorMessage = "User not found!";
+      Logger.error(errorMessage);
+      throw new RegisterError(errorMessage);
     }
 
     const newUserData = {
       name,
       email,
       password: bcrypt.hashSync(password, 10),
+      roles: [
+        {
+          id: USER_ROLES.COURSE_ADMIN,
+        },
+      ],
     };
 
     const newUser = Object.assign(new User(), newUserData);

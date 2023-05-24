@@ -1,10 +1,10 @@
 import { Router } from "express";
-import userController from "@controllers/user.controller";
 import authMiddleware from "../middlewares/authMiddleware";
-import expressCallback from "../utils/expressCallback";
+import userRoutes from "./users.route";
 
 const routes = Router();
 
 routes.use(authMiddleware);
+routes.use(userRoutes);
 
 export default routes;

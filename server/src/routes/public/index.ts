@@ -1,13 +1,15 @@
 import { Router } from "express";
-import userController from "@controllers/user.controller";
+import MakeUserController from "@controllers/user.controller";
 import expressCallback from "../utils/expressCallback";
 
 const publicRoutes = Router();
 
-publicRoutes.route("/login").post(expressCallback(userController.authenticate));
+publicRoutes
+  .route("/login")
+  .post(expressCallback(MakeUserController().authenticate));
 
 publicRoutes
-  .route("/register-admin")
-  .post(expressCallback(userController.register));
+  .route("/register")
+  .post(expressCallback(MakeUserController().register));
 
 export default publicRoutes;

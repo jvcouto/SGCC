@@ -1,8 +1,8 @@
 import {
   Column,
   Entity,
-  JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import {
@@ -12,8 +12,8 @@ import {
   IsBoolean,
   IsOptional,
 } from "class-validator";
-
-import UserRole from "./userRole.model";
+import Course from "./course.model";
+import CourseAdmin from "./courseAdmin.model";
 
 @Entity("user")
 class User {
@@ -35,10 +35,6 @@ class User {
   })
   email!: string;
 
-  @ManyToMany(() => UserRole)
-  @JoinTable()
-  roles!: UserRole[];
-
   @IsNotEmpty()
   @IsString()
   @Column({
@@ -48,8 +44,22 @@ class User {
 
   @IsOptional()
   @IsBoolean()
+  @Column({ name: "sys_admin", default: false, nullable: false })
+  sysAdmin!: boolean;
+
+  @IsOptional()
+  @IsBoolean()
   @Column({ name: "fisrt_login", default: true })
   firstLogin!: boolean;
+
+  @ManyToMany(() => Course, (course) => course.collegeMembers)
+  colleges!: Course[];
+
+  @ManyToMany(() => Course, (course) => course.teachers)
+  teaching!: Course[];
+
+  @OneToMany(() => CourseAdmin, (courseAdmins) => courseAdmins.user)
+  public courseAdmins!: CourseAdmin[];
 }
 
 export default User;
