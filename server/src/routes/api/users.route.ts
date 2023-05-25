@@ -4,6 +4,6 @@ import expressCallback from "../utils/expressCallback";
 
 const routes = Router();
 
-routes.route("/logout").post(expressCallback(MakeUserController().logout));
+routes.route("/:id").patch(expressCallback(MakeUserController().update));
 
 export default routes;

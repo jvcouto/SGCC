@@ -26,4 +26,4 @@ const startServer = async (server: Express) => {
 
 const server = startServer(app);
 
-export default { server };
+export default server;

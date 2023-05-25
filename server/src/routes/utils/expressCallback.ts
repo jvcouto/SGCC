@@ -1,4 +1,5 @@
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
+import Logger from "@utils/logger";
 import { Request, Response } from "express";
 
 export default (controller: CallableFunction) =>
@@ -33,6 +34,7 @@ export default (controller: CallableFunction) =>
         res.status(response.status).json(body);
       })
       .catch((e: any) => {
+        Logger.error(e);
         res.status(e.status ?? HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
           code: e.code ?? "INTERNAL_SERVER_ERROR",
           message: e.message ?? "Something went wrong on server",

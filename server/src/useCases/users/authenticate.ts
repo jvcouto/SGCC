@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import AuthenticateFailError from "src/errors/authenticateFailError";
 
-export default class AuthenticateUserCase {
+export default class AuthenticateUseCase {
   constructor(private readonly findOneByKey: Function) {}
 
   async authenticate(email: string, password: string) {

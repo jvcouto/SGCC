@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import { validate } from "class-validator";
 import Logger from "@utils/logger";
 import RegisterError from "src/errors/registerError";
-import USER_ROLES from "@utils/constants/userRoles";
 
 export default class UpdateUseCase {
   constructor(
@@ -11,17 +10,7 @@ export default class UpdateUseCase {
     private readonly saveUser: Function
   ) {}
 
-  async update({
-    id,
-    name,
-    email,
-    password,
-  }: {
-    id: string;
-    name: string;
-    email: string;
-    password: string;
-  }) {
+  async update(id: string | undefined, userData: any) {
     const user = await this.findOneByKey(id);
 
     if (!user) {
@@ -30,33 +19,35 @@ export default class UpdateUseCase {
       throw new RegisterError(errorMessage);
     }
 
-    const newUserData = {
-      name,
-      email,
-      password: bcrypt.hashSync(password, 10),
-      roles: [
-        {
-          id: USER_ROLES.COURSE_ADMIN,
-        },
-      ],
-    };
+    if (user.newPassword) {
+      if (!(await bcrypt.compare(userData.password, user.password))) {
+        //erro validando as senhas antigas
+      }
+      userData.password = bcrypt.hashSync(userData.newPassword, 10);
 
-    const newUser = Object.assign(new User(), newUserData);
+      delete userData.newPasswordRepeat;
+      delete userData.newPassword;
+    }
 
-    const errors = await validate(newUser);
+    const updatedUser = Object.assign(new User(), {
+      ...user,
+      ...userData,
+    });
+
+    const errors = await validate(updatedUser);
 
     if (errors.length > 0) {
-      Logger.error("validation failed.");
+      Logger.error("Update validation data failed");
       const formatedError = errors.map((error) => error.constraints);
       Logger.error(JSON.stringify(formatedError));
-      throw new RegisterError("Something went wrong during registration");
+      throw new RegisterError("Error updating the user");
     }
 
     try {
-      return this.saveUser(newUser);
+      return this.saveUser(updatedUser);
     } catch (error: any) {
       Logger.error(error.message);
-      throw new RegisterError("Something went wrong in register!");
+      throw new RegisterError("Some error occurred updating the engineer!");
     }
   }
 }

@@ -1,13 +1,11 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, ManyToOne } from "typeorm";
 import { IsBoolean } from "class-validator";
 import Course from "./course.model";
 import User from "./user.model";
+import AbstractBaseModel from "./abstractBase.model";
 
 @Entity()
-class CourseAdmin {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+class CourseAdmin extends AbstractBaseModel {
   @Column()
   public courseId!: number;
 

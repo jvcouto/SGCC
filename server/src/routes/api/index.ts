@@ -5,6 +5,6 @@ import userRoutes from "./users.route";
 const routes = Router();
 
 routes.use(authMiddleware);
-routes.use(userRoutes);
+routes.use("/user", userRoutes);
 
 export default routes;
