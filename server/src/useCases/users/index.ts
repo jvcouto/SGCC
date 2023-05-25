@@ -1,5 +1,5 @@
-import findOneByKey from "src/data-access/users/findOneByKey";
-import saveUser from "src/data-access/users/save";
+import findOneByKey from "@dataAccess/users/findOneByKey";
+import saveUser from "@dataAccess/users/save";
 import AuthenticateUseCase from "./authenticate";
 import ResgisterUseCase from "./register";
 import UpdateUserCase from "./update";

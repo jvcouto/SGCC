@@ -11,7 +11,10 @@
       "@controllers/*": ["./src/controllers/*"],
       "@models/*": ["./src/models/*"],
       "@config/*": ["./src/config/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@useCases/*": ["./src/useCases/*"],
+      "@dataAccess/*": ["./src/data-access/*"],
+      "@errors/*": ["./src/errors/*"]
     },
     "typeRoots": [  
         "./node-modules/@types/",

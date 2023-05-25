@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { validate } from "class-validator";
 import Logger from "@utils/logger";
-import RegisterError from "src/errors/registerError";
+import RegisterError from "@errors/registerError";
 import User from "@models/user.model";
 
 export default class RegisterUseCase {
