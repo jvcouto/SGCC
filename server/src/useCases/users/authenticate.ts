@@ -1,7 +1,8 @@
+import Logger from "@utils/logger";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import AuthenticateFailError from "src/errors/authenticateFailError";
+import AuthenticateFailError from "@errors/authenticateFailError";
 
 export default class AuthenticateUseCase {
   constructor(private readonly findOneByKey: Function) {}
@@ -10,7 +11,9 @@ export default class AuthenticateUseCase {
     const user = await this.findOneByKey(email, "email");
 
     if (!user) {
-      throw new AuthenticateFailError("User not found");
+      const message = "User not found";
+      Logger.info(message);
+      throw new AuthenticateFailError(message);
     }
 
     if (await bcrypt.compare(password, user.password)) {
@@ -32,6 +35,8 @@ export default class AuthenticateUseCase {
       return { data: resData };
     }
 
-    throw new AuthenticateFailError("Wrong username or password");
+    const message = "Wrong username or password";
+    Logger.info(message);
+    throw new AuthenticateFailError(message);
   }
 }
