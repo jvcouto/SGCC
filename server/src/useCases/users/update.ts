@@ -2,7 +2,10 @@ import User from "@models/user.model";
 import bcrypt from "bcryptjs";
 import { validate } from "class-validator";
 import Logger from "@utils/logger";
-import RegisterError from "@errors/registerError";
+
+import EntityNotFound from "@errors/entityNotFoundError";
+import InvalidAttributeError from "@errors/invalidAttributeError";
+import InternalServerError from "@errors/serverError";
 
 export default class UpdateUseCase {
   constructor(
@@ -16,7 +19,7 @@ export default class UpdateUseCase {
     if (!user) {
       const errorMessage = "User not found!";
       Logger.error(errorMessage);
-      throw new RegisterError(errorMessage);
+      throw new EntityNotFound(errorMessage);
     }
 
     if (user.newPassword) {
@@ -40,14 +43,16 @@ export default class UpdateUseCase {
       Logger.error("Update validation data failed");
       const formatedError = errors.map((error) => error.constraints);
       Logger.error(JSON.stringify(formatedError));
-      throw new RegisterError("Error updating the user");
+      throw new InvalidAttributeError("Error updating the user");
     }
 
     try {
       return this.saveUser(updatedUser);
     } catch (error: any) {
       Logger.error(error.message);
-      throw new RegisterError("Some error occurred updating the engineer!");
+      throw new InternalServerError(
+        "Some error occurred updating the engineer!"
+      );
     }
   }
 }

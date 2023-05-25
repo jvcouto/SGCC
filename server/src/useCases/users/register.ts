@@ -1,8 +1,12 @@
 import bcrypt from "bcryptjs";
 import { validate } from "class-validator";
-import Logger from "@utils/logger";
-import RegisterError from "@errors/registerError";
 import User from "@models/user.model";
+
+import DuplicatedEntityError from "@errors/duplicatedEntityError";
+import InvalidAttributeError from "@errors/invalidAttributeError";
+
+import Logger from "@utils/logger";
+import InternalServerError from "@errors/serverError";
 
 export default class RegisterUseCase {
   constructor(
@@ -23,7 +27,7 @@ export default class RegisterUseCase {
 
     if (user) {
       Logger.error("validation failed.");
-      throw new RegisterError("Email already in use!");
+      throw new DuplicatedEntityError("Email already in use!");
     }
 
     const newUserData = {
@@ -40,14 +44,16 @@ export default class RegisterUseCase {
       Logger.error("validation failed.");
       const formatedError = errors.map((error) => error.constraints);
       Logger.error(JSON.stringify(formatedError));
-      throw new RegisterError("Something went wrong during registration");
+      throw new InvalidAttributeError(
+        "Something went wrong during registration"
+      );
     }
 
     try {
       return this.saveUser(newUser);
     } catch (error: any) {
       Logger.error(error.message);
-      throw new RegisterError("Something went wrong in register!");
+      throw new InternalServerError("Something went wrong in registration!");
     }
   }
 }
