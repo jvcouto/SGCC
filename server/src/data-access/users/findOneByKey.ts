@@ -1,7 +1,10 @@
 import User from "@models/user.model";
 import { getRepository } from "typeorm";
 
-export default async function findOneByKey(value: string, key: string = "id") {
+export default async function findOneUserByKey(
+  value: string,
+  key: string = "id"
+) {
   const userRepository = getRepository(User);
 
   let queryObject = {};

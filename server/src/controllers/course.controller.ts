@@ -1,13 +1,13 @@
 import { Request } from "express";
+import { createCourse } from "@useCases/course";
 
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
-import { createCourse } from "@useCases/course";
 
 export default function MakeCourseController() {
   const create = async (httpRequest: Partial<Request>) => {
-    const userData = await createCourse.create(httpRequest.body);
+    const courseData = await createCourse.create(httpRequest.body);
 
-    return { status: HTTP_STATUS_CODES.CREATED, data: userData };
+    return { status: HTTP_STATUS_CODES.CREATED, data: courseData };
   };
 
   return Object.freeze({
