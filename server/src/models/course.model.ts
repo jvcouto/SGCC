@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsString } from "class-validator";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import User from "./user.model";
-import CourseAdmin from "./courseAdmin.model";
+
 @Entity("course")
 class Course extends AbstractBaseModel {
   @IsNotEmpty()
@@ -18,8 +18,9 @@ class Course extends AbstractBaseModel {
   @JoinTable()
   teachers!: User[];
 
-  @OneToMany(() => CourseAdmin, (courseAdmins) => courseAdmins.course)
-  public courseAdmins!: CourseAdmin[];
+  @ManyToMany(() => User)
+  @JoinTable()
+  admins!: User[];
 }
 
 export default Course;
