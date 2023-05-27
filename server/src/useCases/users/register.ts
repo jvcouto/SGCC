@@ -8,7 +8,7 @@ import InvalidAttributeError from "@errors/invalidAttributeError";
 import Logger from "@utils/logger";
 import InternalServerError from "@errors/serverError";
 
-export default class RegisterUseCase {
+export default class RegisterUser {
   constructor(
     private readonly findOneByKey: any,
     private readonly saveUser: any
@@ -41,19 +41,16 @@ export default class RegisterUseCase {
     const errors = await validate(newUser);
 
     if (errors.length > 0) {
-      Logger.error("validation failed.");
       const formatedError = errors.map((error) => error.constraints);
       Logger.error(JSON.stringify(formatedError));
-      throw new InvalidAttributeError(
-        "Something went wrong during registration"
-      );
+      throw new InvalidAttributeError("Error on user registration");
     }
 
     try {
       return this.saveUser(newUser);
     } catch (error: any) {
       Logger.error(error.message);
-      throw new InternalServerError("Something went wrong in registration!");
+      throw new InternalServerError("Error on user save");
     }
   }
 }

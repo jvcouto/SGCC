@@ -1,13 +1,13 @@
 import findOneByKey from "@dataAccess/users/findOneByKey";
 import saveUser from "@dataAccess/users/save";
-import AuthenticateUseCase from "./authenticate";
-import ResgisterUseCase from "./register";
-import UpdateUserCase from "./update";
+import AuthenticateUser from "./authenticate";
+import RegisterUser from "./register";
+import UpdateUser from "./update";
 
-const authenticateUseCase = new AuthenticateUseCase(findOneByKey);
+const authenticateUser = new AuthenticateUser(findOneByKey);
 
-const registerUseCase = new ResgisterUseCase(findOneByKey, saveUser);
+const registerUser = new RegisterUser(findOneByKey, saveUser);
 
-const updateUserCase = new UpdateUserCase(findOneByKey, saveUser);
+const updateUser = new UpdateUser(findOneByKey, saveUser);
 
-export { authenticateUseCase, registerUseCase, updateUserCase };
+export { authenticateUser, registerUser, updateUser };

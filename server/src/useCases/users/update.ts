@@ -7,7 +7,7 @@ import EntityNotFound from "@errors/entityNotFoundError";
 import InvalidAttributeError from "@errors/invalidAttributeError";
 import InternalServerError from "@errors/serverError";
 
-export default class UpdateUseCase {
+export default class UpdateUser {
   constructor(
     private readonly findOneByKey: Function,
     private readonly saveUser: Function
@@ -40,7 +40,6 @@ export default class UpdateUseCase {
     const errors = await validate(updatedUser);
 
     if (errors.length > 0) {
-      Logger.error("Update validation data failed");
       const formatedError = errors.map((error) => error.constraints);
       Logger.error(JSON.stringify(formatedError));
       throw new InvalidAttributeError("Error updating the user");
@@ -50,9 +49,7 @@ export default class UpdateUseCase {
       return this.saveUser(updatedUser);
     } catch (error: any) {
       Logger.error(error.message);
-      throw new InternalServerError(
-        "Some error occurred updating the engineer!"
-      );
+      throw new InternalServerError("Some error occurred updating the user!");
     }
   }
 }

@@ -7,7 +7,7 @@ import CourseAdmin from "./courseAdmin.model";
 class Course extends AbstractBaseModel {
   @IsNotEmpty()
   @IsString()
-  @Column({ length: 128 })
+  @Column({ length: 128, unique: true })
   name!: string;
 
   @ManyToMany(() => User)

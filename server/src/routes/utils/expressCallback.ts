@@ -24,6 +24,8 @@ export default (controller: CallableFunction) =>
       },
     };
 
+    Logger.info(`${req.method} - ${req.originalUrl}`);
+
     controller(httpRequest)
       .then((response: { status: number; data: any; meta: any }) => {
         res.set("Content-Type", "application/json");
