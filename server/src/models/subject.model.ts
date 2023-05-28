@@ -1,10 +1,10 @@
-import { Column, Entity, Index, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, Unique } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import { IsNotEmpty, IsString } from "class-validator";
 import Course from "./course.model";
 
 @Entity("subject")
-@Index(["name", "course"], { unique: true })
+@Unique(["name", "course"])
 class Subject extends AbstractBaseModel {
   @IsString()
   @IsNotEmpty()
