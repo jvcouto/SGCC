@@ -35,11 +35,13 @@ class User {
   password!: string;
 
   @IsOptional()
+  @IsNotEmpty()
   @IsBoolean()
-  @Column({ name: "sys_admin", default: false, nullable: false })
+  @Column({ name: "sys_admin", default: false })
   sysAdmin!: boolean;
 
   @IsOptional()
+  @IsNotEmpty()
   @IsBoolean()
   @Column({ name: "fisrt_login", default: true })
   firstLogin!: boolean;

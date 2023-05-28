@@ -1,8 +1,6 @@
-// disciplina sera por curso
-
 import { Column, Entity } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
-import { IsDate, IsNotEmpty, IsString } from "class-validator";
+import { IsDate, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 @Entity("semester")
 class Semester extends AbstractBaseModel {
@@ -11,10 +9,12 @@ class Semester extends AbstractBaseModel {
   @Column({ length: 32, unique: true })
   code!: string;
 
+  @IsOptional()
   @IsDate()
   @Column({ type: "date", nullable: true })
   startDate!: string;
 
+  @IsOptional()
   @IsDate()
   @Column({ type: "date", nullable: true })
   endDate!: string;
