@@ -22,7 +22,7 @@ export default class UpdateUser {
       throw new EntityNotFound(errorMessage);
     }
 
-    if (user.newPassword) {
+    if (userData.newPassword) {
       if (!(await bcrypt.compare(userData.password, user.password))) {
         //erro validando as senhas antigas
       }
@@ -32,12 +32,11 @@ export default class UpdateUser {
       delete userData.newPassword;
     }
 
-    const updatedUser = Object.assign(new User(), {
-      ...user,
-      ...userData,
-    });
+    const updatedFields = Object.assign(new User(), { id, ...userData });
 
-    const errors = await validate(updatedUser);
+    const errors = await validate(updatedFields, {
+      skipUndefinedProperties: true,
+    });
 
     if (errors.length > 0) {
       const formatedError = errors.map((error) => error.constraints);
@@ -46,10 +45,10 @@ export default class UpdateUser {
     }
 
     try {
-      return this.saveUser(updatedUser);
+      return this.saveUser(updatedFields);
     } catch (error: any) {
       Logger.error(error.message);
-      throw new InternalServerError("Some error occurred updating the user!");
+      throw new InternalServerError("Error updating the user");
     }
   }
 }
