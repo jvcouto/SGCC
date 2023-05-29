@@ -11,7 +11,8 @@ class Subject extends AbstractBaseModel {
   @Column({ length: 128 })
   name!: string;
 
-  @ManyToOne(() => Course, (course) => course.subjects)
+  @IsNotEmpty()
+  @ManyToOne(() => Course, (course) => course.subjects, { nullable: false })
   course!: Course;
 }
 
