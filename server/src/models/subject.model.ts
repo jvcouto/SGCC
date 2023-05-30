@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, Unique } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
 import Course from "./course.model";
 
 @Entity("subject")
@@ -10,6 +10,26 @@ class Subject extends AbstractBaseModel {
   @IsNotEmpty()
   @Column({ length: 128 })
   name!: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Column()
+  workload!: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Column()
+  theoreticalWorkload!: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Column()
+  praticalWorkload!: number;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  @Column()
+  optionalSubject!: boolean;
 
   @IsNotEmpty()
   @ManyToOne(() => Course, (course) => course.subjects, { nullable: false })

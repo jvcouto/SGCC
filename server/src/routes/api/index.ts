@@ -4,7 +4,7 @@ import userRoutes from "./users.route";
 import courseRoutes from "./course.route";
 import subjectRoutes from "./subject.route";
 import semesterRoutes from "./semester.route";
-import subjectRequestRoutes from "./subjectRequest.route";
+import subjectOfferRoutes from "./subjectOffer.route";
 
 const routes = Router();
 
@@ -13,6 +13,6 @@ routes.use("/user", userRoutes);
 routes.use("/course", courseRoutes);
 routes.use("/subject", subjectRoutes);
 routes.use("/semester", semesterRoutes);
-routes.use("/subjectRequest", subjectRequestRoutes);
+routes.use("/subjectOffer", subjectOfferRoutes);
 
 export default routes;
