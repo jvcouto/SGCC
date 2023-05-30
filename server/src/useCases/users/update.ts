@@ -3,9 +3,9 @@ import bcrypt from "bcryptjs";
 import { validate } from "class-validator";
 import Logger from "@utils/logger";
 
-import EntityNotFound from "@errors/entityNotFoundError";
-import InvalidAttributeError from "@errors/invalidAttributeError";
-import InternalServerError from "@errors/serverError";
+import EntityNotFound from "@errors/entityNotFound.error";
+import InvalidAttributeError from "@errors/invalidAttribute.error";
+import InternalServerError from "@errors/server.error";
 
 export default class UpdateUser {
   constructor(

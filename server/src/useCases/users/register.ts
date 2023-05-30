@@ -2,11 +2,11 @@ import bcrypt from "bcryptjs";
 import { validate } from "class-validator";
 import User from "@models/user.model";
 
-import DuplicatedEntityError from "@errors/duplicatedEntityError";
-import InvalidAttributeError from "@errors/invalidAttributeError";
+import DuplicatedEntityError from "@errors/duplicatedEntity.error";
+import InvalidAttributeError from "@errors/invalidAttribute.error";
+import InternalServerError from "@errors/server.error";
 
 import Logger from "@utils/logger";
-import InternalServerError from "@errors/serverError";
 
 export default class RegisterUser {
   constructor(

@@ -2,7 +2,7 @@ import Logger from "@utils/logger";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import AuthenticateFailError from "@errors/authenticateFailError";
+import AuthenticateFailError from "@errors/authenticateFail.error";
 
 export default class AuthenticateUser {
   constructor(private readonly findOneByKey: Function) {}

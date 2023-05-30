@@ -1,7 +1,7 @@
 import { validate } from "class-validator";
 import Logger from "@utils/logger";
-import InvalidAttributeError from "@errors/invalidAttributeError";
-import InternalServerError from "@errors/serverError";
+import InvalidAttributeError from "@errors/invalidAttribute.error";
+import InternalServerError from "@errors/server.error";
 import SubjectOffer from "@models/subjectOffer.model";
 
 export default class CreateSubjectOffer {
