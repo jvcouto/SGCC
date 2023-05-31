@@ -4,13 +4,21 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   Unique,
 } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import User from "./user.model";
 import Semester from "./semester.model";
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from "class-validator";
 import Subject from "./subject.model";
+import SubjectApprovalHistory from "./subjectApprovalHistory.model";
 
 @Entity("subjectOffer")
 @Unique(["class", "subject", "semester"])
@@ -31,8 +39,14 @@ class SubjectOffer extends AbstractBaseModel {
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  @Column({ length: 128 })
+  @Column({ length: 128, nullable: true })
   teachingPlan!: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsBoolean()
+  @Column({ default: false })
+  teachingPlanApproved!: boolean;
 
   @IsNotEmpty()
   @ManyToOne(() => Semester, { nullable: false })
@@ -41,6 +55,12 @@ class SubjectOffer extends AbstractBaseModel {
   @IsNotEmpty()
   @ManyToOne(() => Subject, { nullable: false })
   subject!: Subject;
+
+  @OneToMany(
+    () => SubjectApprovalHistory,
+    (subjectApprovalHistory) => subjectApprovalHistory.subjectOffer
+  )
+  subjectApprovalHistory!: SubjectOffer;
 
   @ManyToMany(() => User)
   @JoinTable()

@@ -19,9 +19,10 @@ export default class CreateCourse {
     }
 
     try {
-      return this.saveCourse(newCourse);
+      const createdCourse = await this.saveCourse(newCourse);
+      return createdCourse;
     } catch (error: any) {
-      Logger.error(error.message);
+      Logger.error(error);
       throw new InternalServerError("Error on course creation");
     }
   }

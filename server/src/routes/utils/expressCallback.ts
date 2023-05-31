@@ -36,7 +36,7 @@ export default (controller: CallableFunction) =>
         res.status(response.status).json(body);
       })
       .catch((e: any) => {
-        Logger.error(e);
+        Logger.error(e.message);
         res.status(e.status ?? HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
           code: e.code ?? "INTERNAL_SERVER_ERROR",
           message: e.message ?? "Something went wrong on server",
