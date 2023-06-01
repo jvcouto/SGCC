@@ -10,7 +10,7 @@ import InternalServerError from "@errors/server.error";
 export default class UpdateUser {
   constructor(
     private readonly findOneByKey: Function,
-    private readonly saveUser: Function
+    private readonly saveUser: (user: User) => Promise<User>
   ) {}
 
   async update(id: string | undefined, userData: any) {
@@ -32,7 +32,10 @@ export default class UpdateUser {
       delete userData.newPassword;
     }
 
-    const updatedFields = Object.assign(new User(), { id, ...userData });
+    const updatedFields = Object.assign(new User(), {
+      id,
+      ...userData,
+    }) as User;
 
     const errors = await validate(updatedFields, {
       skipUndefinedProperties: true,
@@ -45,7 +48,7 @@ export default class UpdateUser {
     }
 
     try {
-      return this.saveUser(updatedFields);
+      return await this.saveUser(updatedFields);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error updating the user");

@@ -11,15 +11,15 @@ class Course extends AbstractBaseModel {
   @Column({ length: 128, unique: true })
   name!: string;
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, (user) => user.colleges)
   @JoinTable()
   collegeMembers!: User[];
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, (user) => user.teaching)
   @JoinTable()
   teachers!: User[];
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, (user) => user.administrating)
   @JoinTable()
   admins!: User[];
 

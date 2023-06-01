@@ -1,3 +1,4 @@
+import GenericCustomError from "@errors/abstractCustom.error";
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 import Logger from "@utils/logger";
 import { Request, Response } from "express";
@@ -36,10 +37,14 @@ export default (controller: CallableFunction) =>
         res.status(response.status).json(body);
       })
       .catch((e: any) => {
-        Logger.error(e.message);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        e instanceof GenericCustomError
+          ? Logger.error(e.message)
+          : Logger.error(e);
         res.status(e.status ?? HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
           code: e.code ?? "INTERNAL_SERVER_ERROR",
-          message: e.message ?? "Something went wrong on server",
+          message:
+            e instanceof GenericCustomError ? e.message : "Error on server",
         });
       });
   };

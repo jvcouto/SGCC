@@ -5,7 +5,9 @@ import InternalServerError from "@errors/server.error";
 import Course from "@models/course.model";
 
 export default class CreateCourse {
-  constructor(private readonly saveCourse: any) {}
+  constructor(
+    private readonly saveCourse: (course: Course) => Promise<Course>
+  ) {}
 
   async create(courseData: any) {
     const newCourse = Object.assign(new Course(), courseData);
@@ -19,8 +21,7 @@ export default class CreateCourse {
     }
 
     try {
-      const createdCourse = await this.saveCourse(newCourse);
-      return createdCourse;
+      return await this.saveCourse(newCourse);
     } catch (error: any) {
       Logger.error(error);
       throw new InternalServerError("Error on course creation");

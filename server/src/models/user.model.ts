@@ -31,6 +31,7 @@ class User {
   @IsString()
   @Column({
     length: 256,
+    select: false,
   })
   password!: string;
 

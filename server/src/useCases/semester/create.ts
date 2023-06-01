@@ -5,7 +5,9 @@ import InternalServerError from "@errors/server.error";
 import Semester from "@models/semester.model";
 
 export default class CreateSemester {
-  constructor(private readonly saveSemester: any) {}
+  constructor(
+    private readonly saveSemester: (semester: Semester) => Promise<Semester>
+  ) {}
 
   async create(semestarData: any) {
     const newSemester = Object.assign(new Semester(), semestarData);
@@ -19,7 +21,7 @@ export default class CreateSemester {
     }
 
     try {
-      return this.saveSemester(newSemester);
+      return await this.saveSemester(newSemester);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error on semester creation");

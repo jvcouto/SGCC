@@ -11,7 +11,7 @@ import Logger from "@utils/logger";
 export default class RegisterUser {
   constructor(
     private readonly findOneByKey: any,
-    private readonly saveUser: any
+    private readonly saveUser: (user: User) => Promise<User>
   ) {}
 
   async register({
@@ -47,9 +47,9 @@ export default class RegisterUser {
     }
 
     try {
-      return this.saveUser(newUser);
+      return await this.saveUser(newUser);
     } catch (error: any) {
-      Logger.error(error.message);
+      Logger.error(error);
       throw new InternalServerError("Error on user save");
     }
   }

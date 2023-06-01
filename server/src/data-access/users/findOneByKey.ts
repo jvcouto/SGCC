@@ -7,12 +7,10 @@ export default async function findOneUserByKey(
 ) {
   const userRepository = getRepository(User);
 
-  let queryObject = {};
+  const queryOptions = {
+    where: key === "email" ? { email: value } : { id: value },
+    relations: ["colleges", "teaching", "administrating"],
+  };
 
-  if (key === "email") {
-    queryObject = { email: value };
-  } else {
-    queryObject = { id: value };
-  }
-  return userRepository.findOne(queryObject);
+  return userRepository.findOne(queryOptions);
 }
