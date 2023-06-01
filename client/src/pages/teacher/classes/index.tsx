@@ -9,7 +9,7 @@ import TeacherPages from "../../../config/teacherPages";
 
 import siderItensTeacherClasses from "../../../config/classesTeacherSubMenu";
 
-import api from "../../../services/api";
+import api from "../../../services/request.service";
 import { ClassProps } from "../../../ultis/ApiResposeTypes/Classes";
 
 interface TeacherClassPageProps {

@@ -9,7 +9,7 @@ import TeacherDashboard from "../../../components/Dashboard/secondLayout";
 import TeacherClassesContent from "../../../components/Dashboard/Teacher/classes";
 import TeacherPages from "../../../config/teacherPages";
 
-import api from "../../../services/api";
+import api from "../../../services/request.service";
 
 const sidersOptions = [
   {

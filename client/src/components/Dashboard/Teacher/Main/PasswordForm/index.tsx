@@ -16,7 +16,7 @@ function ChangePassowordForm(props: ChangePassowordFormProps) {
 
   const handleSubmit = async (values: any) => {
     if (values.newPassword !== values.newPasswordRepeat) {
-      return message.error("Senhas nao conferem");
+      return message.error("Senhas não conferem, por favor tente novamente!");
     }
     onFinish(values);
     form.resetFields();

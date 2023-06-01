@@ -1,38 +1,19 @@
 import React from "react";
 import { message } from "antd";
-import { AxiosError } from "axios";
 
 import { parseCookies } from "nookies";
 import Router from "next/router";
-import Register from "../../components/Login/register";
-import api from "../../services/api";
-
-export interface StaticPropsType {
-  courses: {
-    id: number;
-    name: string;
-    updatedAt: Date;
-    createdAt: Date;
-  }[];
-}
+import Register from "../../components/Login/Register";
+import api from "../../services/request.service";
 
 const onFinish = (values: any) => {
   api
-    .post("/register", {
+    .post("public/register", {
       ...values,
-      roleId: {
-        id: 2,
-      },
     })
     .then(() => {
-      message.success(`Cadastrado com sucesso!`);
+      message.success(`Cadastro realizado com sucesso!`);
       Router.push("/");
-    })
-    .catch((error: AxiosError<any>) => {
-      const errors = error.response.data?.data;
-      Object.keys(error.response.data?.data).forEach((e) => {
-        message.error(`${JSON.stringify(errors[e])}`);
-      });
     });
 };
 
@@ -40,40 +21,23 @@ const onFinishFailed = () => {
   message.error(`Algo deu errado, por favor tente novamente!`);
 };
 
-function RegisterPage(props: StaticPropsType) {
-  const { courses } = props;
-  return (
-    <Register
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      courses={courses}
-    />
-  );
+function RegisterPage() {
+  return <Register onFinish={onFinish} onFinishFailed={onFinishFailed} />;
 }
 
 export async function getServerSideProps(ctx: any) {
-  const { "PCA-Token": token } = parseCookies(ctx);
+  const { sgcc: token } = parseCookies(ctx);
 
   if (token) {
     return {
       redirect: {
-        destination: "/teacher",
+        destination: "/dashboard",
         permanent: false,
       },
     };
   }
 
-  try {
-    const res = await api.get("/courses");
-    const courses = res.data.data;
-    return {
-      props: {
-        courses,
-      },
-    };
-  } catch (e) {
-    // later
-  }
+  return { props: {} };
 }
 
 export default RegisterPage;

@@ -1,28 +1,21 @@
 import React from "react";
-import { Form, Input, Button, Select, Typography, message } from "antd";
+import { Form, Input, Button, Typography, message } from "antd";
 
 import Link from "next/link";
 
-import * as S from "./login.style";
+import * as S from "../login.style";
 
 interface RegisterProps {
   onFinish: (values: any) => void;
   onFinishFailed: (values: any) => void;
-  courses: {
-    id: number;
-    name: string;
-    updatedAt: Date;
-    createdAt: Date;
-  }[];
 }
 
 function Register(props: RegisterProps) {
-  const { onFinish, onFinishFailed, courses } = props;
+  const { onFinish, onFinishFailed } = props;
 
   const [form] = Form.useForm();
 
   const { Title } = Typography;
-  const { Option } = Select;
 
   const handleSubmit = async (values: any) => {
     if (values.password !== values.repeatPassword) {
@@ -43,7 +36,7 @@ function Register(props: RegisterProps) {
             textAlign: "center",
           }}
         >
-          Registrar
+          Cadastro
         </Title>
       </div>
       <S.form
@@ -77,27 +70,6 @@ function Register(props: RegisterProps) {
           ]}
         >
           <Input placeholder="Insira seu email" />
-        </Form.Item>
-
-        <Form.Item
-          labelAlign="left"
-          name="courseId"
-          rules={[{ required: true, message: "Selecione seu curso!" }]}
-        >
-          <Select
-            showSearch
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-            placeholder="Selecione seu curso"
-            allowClear
-          >
-            {courses.map((course) => (
-              <Option key={course.id} value={course.id}>
-                {course.name}
-              </Option>
-            ))}
-          </Select>
         </Form.Item>
 
         <Form.Item

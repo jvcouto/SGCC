@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import * as S from "../../styles/dashboard.style";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/authContext";
 
 interface TeacherDashboardProps {
   pages: {

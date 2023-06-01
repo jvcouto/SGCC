@@ -1,21 +1,26 @@
 import React from "react";
 
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import * as S from "./login.style";
+import * as S from "../login.style";
 
 interface HomeProps {
   onFinish: (values: any) => void;
   onFinishFailed: (values: any) => void;
+  semesters: {
+    id: number;
+    code: string;
+  }[];
 }
 
 function Login(props: HomeProps) {
-  const { onFinish, onFinishFailed } = props;
+  const { onFinish, onFinishFailed, semesters } = props;
+
   return (
     <S.LoginBox>
       <div className="box-top-login">
-        <Image src="/logo.png" height="200" width="250" layout="fixed" />
+        <Image src="/logo.png" height="200" width="260" layout="fixed" />
       </div>
 
       <S.form
@@ -51,6 +56,23 @@ function Login(props: HomeProps) {
             style={{ borderRadius: 10 }}
           />
         </Form.Item>
+
+        <Form.Item
+          labelAlign="left"
+          name="semester"
+          rules={[{ required: true, message: "Selecione o semestre!" }]}
+        >
+          <Select
+            showSearch
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            placeholder="Selecione o semestre"
+            allowClear
+            options={semesters.map((e) => ({ value: e.id, label: e.code }))}
+          />
+        </Form.Item>
+
         <Form.Item>
           <div style={{ display: "flex" }}>
             <Button type="primary" htmlType="submit">

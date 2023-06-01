@@ -7,7 +7,7 @@ import TeacherMainContent from "../../components/Dashboard/Teacher/Main";
 import TeacherPages from "../../config/teacherPages";
 import siderItensTeacherMain from "../../config/mainTeacherSubMenu";
 
-import api from "../../services/api";
+import api from "../../services/request.service";
 
 function TeacherPage() {
   return (

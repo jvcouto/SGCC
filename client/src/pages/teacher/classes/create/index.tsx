@@ -9,7 +9,7 @@ import TeacherPages from "../../../../config/teacherPages";
 
 import siderItensTeacherClasses from "../../../../config/classesTeacherSubMenu";
 
-import api from "../../../../services/api";
+import api from "../../../../services/request.service";
 
 const onCreateClass = (values: any) => {
   api

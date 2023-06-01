@@ -9,8 +9,8 @@ import TeacherPages from "../../../config/teacherPages";
 import siderItensTeacherMain from "../../../config/mainTeacherSubMenu";
 import ChangePassowordForm from "../../../components/Dashboard/Teacher/Main/PasswordForm";
 
-import api from "../../../services/api";
-import { useAuth } from "../../../contexts/AuthContext";
+import api from "../../../services/request.service";
+import { useAuth } from "../../../contexts/authContext";
 
 interface ChangePassWordFormData {
   password: string;

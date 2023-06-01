@@ -1,47 +1,62 @@
 import React from "react";
 import { message } from "antd";
 import { parseCookies } from "nookies";
-import Login from "../components/Login/login";
-import { useAuth } from "../contexts/AuthContext";
+import Login from "../components/Login/Login";
+import { useAuth } from "../contexts/authContext";
+import api from "../services/request.service";
 
 interface LoginFormData {
   email: string;
   password: string;
+  semester: number;
 }
 
-function Home() {
+interface ServerSideProps {
+  semesters: {
+    id: number;
+    code: string;
+  }[];
+}
+
+function Home(props: ServerSideProps) {
+  const { semesters } = props;
   const { signIn } = useAuth();
   const onFinish = async (values: LoginFormData) => {
-    try {
-      await signIn(values);
-    } catch (error) {
-      const errors = error.response.data?.data;
-      Object.keys(error.response.data?.data).forEach((e) => {
-        message.error(`${JSON.stringify(errors[e])}`);
-      });
-    }
+    await signIn(values);
   };
 
   const onFinishFailed = () => {
     message.error(`Algo deu errado, por favor tente novamente!`);
   };
 
-  return <Login onFinish={onFinish} onFinishFailed={onFinishFailed} />;
+  return (
+    <Login
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      semesters={semesters}
+    />
+  );
 }
 
 export async function getServerSideProps(ctx: any) {
-  const { "PCA-Token": token } = parseCookies(ctx);
+  const { sgcc: token } = parseCookies(ctx);
 
   if (token) {
     return {
       redirect: {
-        destination: "/teacher",
+        destination: "/dashboard",
         permanent: false,
       },
     };
   }
 
-  return { props: {} };
+  const res = await api.get("/public/list/semesters");
+  const semesters = res.data.data;
+  return {
+    props: {
+      semesters,
+    },
+  };
 }
 
 export default Home;

@@ -9,8 +9,8 @@ import TeacherPages from "../../../config/teacherPages";
 import siderItensTeacherMain from "../../../config/mainTeacherSubMenu";
 import ChangeEmailForm from "../../../components/Dashboard/Teacher/Main/EmailForm";
 
-import api from "../../../services/api";
-import { useAuth } from "../../../contexts/AuthContext";
+import api from "../../../services/request.service";
+import { useAuth } from "../../../contexts/authContext";
 
 interface ChangeEmailFormData {
   password: string;
