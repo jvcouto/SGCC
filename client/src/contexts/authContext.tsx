@@ -14,7 +14,7 @@ interface AuthApiResponse {
     id: number;
     name: string;
     email: string;
-    roles: string[];
+    roles: number[];
     token?: string;
     semester: number;
   };
@@ -24,7 +24,7 @@ interface User {
   id: number;
   name: string;
   email: string;
-  roles: string[];
+  roles: number[];
 }
 
 interface AuthContextType {
@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
 
   useEffect(() => {
-    const { sggc: token } = parseCookies();
+    const { sgcc: token } = parseCookies();
     if (token) {
       api
         .get<AuthApiResponse>(`api/user/current`)

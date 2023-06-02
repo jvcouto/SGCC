@@ -1,7 +1,7 @@
 import React from "react";
 import { message } from "antd";
 import { parseCookies } from "nookies";
-import Login from "../components/Login/Login";
+import Login from "../components/login/loginForm";
 import { useAuth } from "../contexts/authContext";
 import api from "../services/request.service";
 
@@ -18,7 +18,7 @@ interface ServerSideProps {
   }[];
 }
 
-function Home(props: ServerSideProps) {
+function LoginPage(props: ServerSideProps) {
   const { semesters } = props;
   const { signIn } = useAuth();
   const onFinish = async (values: LoginFormData) => {
@@ -59,4 +59,4 @@ export async function getServerSideProps(ctx: any) {
   };
 }
 
-export default Home;
+export default LoginPage;

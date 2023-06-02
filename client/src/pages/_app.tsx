@@ -1,15 +1,26 @@
 import "antd/dist/antd.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import React from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { ThemeProvider } from "styled-components";
+import { NextPage } from "next";
 import { AuthProvider } from "../contexts/authContext";
 
 import GlobalStyle from "../styles/global";
 import theme from "../styles/theme";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  return getLayout(
     <ThemeProvider theme={theme}>
       <Head>
         <title>PCA</title>

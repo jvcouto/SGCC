@@ -4,25 +4,13 @@ import Link from "next/link";
 
 import Image from "next/image";
 
-import * as S from "../../styles/dashboard.style";
+import * as S from "./layouts.style";
 import { useAuth } from "../../contexts/authContext";
-
-interface TeacherDashboardProps {
-  pages: {
-    label: string;
-    path: string;
-    key: string;
-  }[];
-  children: any;
-  selectedKey: string;
-}
 
 const { Header, Footer } = Layout;
 
 // eslint-disable-next-line react/prop-types
-function Dashboard(props: TeacherDashboardProps) {
-  const { children, pages, selectedKey } = props;
-
+function MainLayout({ children }) {
   const { logOut } = useAuth();
 
   return (
@@ -41,9 +29,15 @@ function Dashboard(props: TeacherDashboardProps) {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={[`${selectedKey}`]}
+          defaultSelectedKeys={[`semesters`]}
         >
-          {pages.map((e) => (
+          {[
+            {
+              label: "Semestres",
+              path: "/semesters",
+              key: "semesters",
+            },
+          ].map((e) => (
             <Menu.Item key={e.key}>
               <Link href={e.path}>{e.label}</Link>
             </Menu.Item>
@@ -76,10 +70,10 @@ function Dashboard(props: TeacherDashboardProps) {
           textAlign: "center",
         }}
       >
-        PCA ©2022 Created by jvcouto
+        SGCC ©{new Date().getFullYear()} Created by jvcouto
       </Footer>
     </S.MainLayout>
   );
 }
 
-export default Dashboard;
+export default MainLayout;

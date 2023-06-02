@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Form } from "antd";
 
-const PasswordForm = styled(Form)`
+const SForm = styled(Form)`
   max-width: 27rem;
   width: 25vw;
   min-width: 22rem;
@@ -13,4 +13,4 @@ const PasswordForm = styled(Form)`
   }
 `;
 
-export default PasswordForm;
+export default SForm;

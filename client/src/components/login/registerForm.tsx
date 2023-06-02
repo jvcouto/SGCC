@@ -3,7 +3,7 @@ import { Form, Input, Button, Typography, message } from "antd";
 
 import Link from "next/link";
 
-import * as S from "../login.style";
+import * as S from "./login.style";
 
 interface RegisterProps {
   onFinish: (values: any) => void;

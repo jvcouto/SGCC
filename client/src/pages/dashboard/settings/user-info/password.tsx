@@ -1,20 +1,39 @@
-import { Form, Input, Button, message } from "antd";
-import React from "react";
-import PageContent from "../../../../../styles/content.style";
+import React, { ReactElement } from "react";
+import { parseCookies } from "nookies";
 
-import PasswordForm from "./password.style";
+import { Button, Form, Input, message } from "antd";
 
-interface ChangePassowordFormProps {
-  onFinish: (values: any) => void;
-  onFinishFailed: (errorInfo: any) => void;
+import MainLayout from "../../../../components/layouts/mainLayout";
+import SecondLayout from "../../../../components/layouts/secondLayout";
+
+import api from "../../../../services/request.service";
+import { useAuth } from "../../../../contexts/authContext";
+
+import PageContent from "../../../../styles/content.style";
+import SForm from "./userInfoForm.style";
+import SettingsSiderItens from "../../../../components/siders/settings/settingsSider";
+
+interface ChangePassWordFormData {
+  password: string;
+  newPassword: string;
+  newPasswordRepeat: string;
 }
 
-function ChangePassowordForm(props: ChangePassowordFormProps) {
-  const { onFinish, onFinishFailed } = props;
+const onFinishFailed = () => {
+  message.error(`Algo deu errado, por favor tente novamente!`);
+};
 
+const onFinish = async (data: ChangePassWordFormData) => {
+  const { user } = useAuth();
+  api.patch(`user/${user.id}`, data).then(() => {
+    message.success(`Senha a com sucesso!`);
+  });
+};
+
+function ChangeUserPasswordPage() {
   const [form] = Form.useForm();
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: ChangePassWordFormData) => {
     if (values.newPassword !== values.newPasswordRepeat) {
       return message.error("Senhas não conferem, por favor tente novamente!");
     }
@@ -24,7 +43,7 @@ function ChangePassowordForm(props: ChangePassowordFormProps) {
 
   return (
     <PageContent>
-      <PasswordForm
+      <SForm
         form={form}
         name="basic"
         layout="vertical"
@@ -75,9 +94,35 @@ function ChangePassowordForm(props: ChangePassowordFormProps) {
             </Button>
           </div>
         </Form.Item>
-      </PasswordForm>
+      </SForm>
     </PageContent>
   );
 }
 
-export default ChangePassowordForm;
+ChangeUserPasswordPage.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <MainLayout>
+      <SecondLayout siderContent={<SettingsSiderItens />}>{page}</SecondLayout>
+    </MainLayout>
+  );
+};
+
+export default ChangeUserPasswordPage;
+
+export async function getServerSideProps(ctx: any) {
+  const { sgcc: token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  api.defaults.headers["Authorization"] = `Bearer ${token}`;
+
+  return { props: {} };
+}

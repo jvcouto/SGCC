@@ -3,7 +3,7 @@ import React from "react";
 import { Form, Input, Button, Select } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import * as S from "../login.style";
+import * as S from "./login.style";
 
 interface HomeProps {
   onFinish: (values: any) => void;

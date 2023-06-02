@@ -1,20 +1,9 @@
 import React from "react";
-import {
-  LaptopOutlined,
-  SettingOutlined,
-  MailOutlined,
-  KeyOutlined,
-} from "@ant-design/icons";
+import { SettingOutlined, MailOutlined, KeyOutlined } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import Router from "next/router";
 
 const sidersOptions = [
-  {
-    label: "Overview",
-    path: "/teacher", // fazer ainda
-    icon: LaptopOutlined,
-    key: "subKey-1",
-  },
   {
     label: "Minha Conta",
     icon: SettingOutlined,
@@ -22,13 +11,13 @@ const sidersOptions = [
     subOptions: [
       {
         label: "Alterar email",
-        path: "/teacher/config/email",
+        path: "/dashboard/settings/user-info/email",
         icon: MailOutlined,
         key: "subKeyOption-1",
       },
       {
         label: "Alterar senha",
-        path: "/teacher/config/password",
+        path: "/dashboard/settings/user-info/password",
         icon: KeyOutlined,
         key: "subKeyOption-2",
       },
@@ -36,11 +25,10 @@ const sidersOptions = [
   },
 ];
 
-const siderItensTeacherMain: MenuProps["items"] = sidersOptions.map((e) => ({
+const configSiderItems: MenuProps["items"] = sidersOptions.map((e) => ({
   key: e.key,
   label: e.label,
   icon: React.createElement(e.icon),
-  onClick: e.path && (() => Router.push(e.path)),
   children:
     e.subOptions &&
     e.subOptions.map((eSub) => ({
@@ -51,4 +39,4 @@ const siderItensTeacherMain: MenuProps["items"] = sidersOptions.map((e) => ({
     })),
 }));
 
-export default siderItensTeacherMain;
+export default configSiderItems;

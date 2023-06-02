@@ -3,7 +3,7 @@ import { message } from "antd";
 
 import { parseCookies } from "nookies";
 import Router from "next/router";
-import Register from "../../components/Login/Register";
+import Register from "../../components/login/registerForm";
 import api from "../../services/request.service";
 
 const onFinish = (values: any) => {
