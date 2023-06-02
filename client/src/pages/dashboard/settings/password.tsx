@@ -3,15 +3,15 @@ import { parseCookies } from "nookies";
 
 import { Button, Form, Input, message } from "antd";
 
-import MainLayout from "../../../../components/layouts/mainLayout";
-import SecondLayout from "../../../../components/layouts/secondLayout";
+import MainLayout from "../../../components/layouts/mainLayout";
+import SecondLayout from "../../../components/layouts/secondLayout";
 
-import api from "../../../../services/request.service";
-import { useAuth } from "../../../../contexts/authContext";
+import api from "../../../services/request.service";
+import { useAuth } from "../../../contexts/authContext";
 
-import PageContent from "../../../../styles/content.style";
+import PageContent from "../../../styles/content.style";
 import SForm from "./userInfoForm.style";
-import SettingsSiderItens from "../../../../components/siders/settings/settingsSider";
+import SettingsSiderItens from "../../../components/siders/settings/settingsSider";
 
 interface ChangePassWordFormData {
   password: string;
@@ -19,19 +19,19 @@ interface ChangePassWordFormData {
   newPasswordRepeat: string;
 }
 
-const onFinishFailed = () => {
-  message.error(`Algo deu errado, por favor tente novamente!`);
-};
-
-const onFinish = async (data: ChangePassWordFormData) => {
-  const { user } = useAuth();
-  api.patch(`user/${user.id}`, data).then(() => {
-    message.success(`Senha a com sucesso!`);
-  });
-};
-
 function ChangeUserPasswordPage() {
   const [form] = Form.useForm();
+  const { user } = useAuth();
+
+  const onFinishFailed = () => {
+    message.error(`Algo deu errado, por favor tente novamente!`);
+  };
+
+  const onFinish = async (data: ChangePassWordFormData) => {
+    api.patch(`/api/user/${user.id}`, data).then(() => {
+      message.success(`Senha a com sucesso!`);
+    });
+  };
 
   const handleSubmit = async (values: ChangePassWordFormData) => {
     if (values.newPassword !== values.newPasswordRepeat) {

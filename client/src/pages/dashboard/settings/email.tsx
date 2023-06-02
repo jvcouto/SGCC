@@ -2,14 +2,14 @@ import React, { ReactElement } from "react";
 import { parseCookies } from "nookies";
 import { Form, Input, Button, message } from "antd";
 
-import MainLayout from "../../../../components/layouts/mainLayout";
-import SecondLayout from "../../../../components/layouts/secondLayout";
-import SettingsSiderItens from "../../../../components/siders/settings/settingsSider";
+import MainLayout from "../../../components/layouts/mainLayout";
+import SecondLayout from "../../../components/layouts/secondLayout";
+import SettingsSiderItens from "../../../components/siders/settings/settingsSider";
 
-import { useAuth } from "../../../../contexts/authContext";
-import api from "../../../../services/request.service";
+import { useAuth } from "../../../contexts/authContext";
+import api from "../../../services/request.service";
 
-import PageContent from "../../../../styles/content.style";
+import PageContent from "../../../styles/content.style";
 import SForm from "./userInfoForm.style";
 
 interface ChangeEmailFormData {
@@ -17,19 +17,19 @@ interface ChangeEmailFormData {
   email: string;
 }
 
-const onFinishFailed = () => {
-  message.error(`Algo deu errado, por favor tente novamente!`);
-};
-
-const onFinish = async (data: ChangeEmailFormData) => {
-  const { user } = useAuth();
-  api.patch(`user/${user.id}`, data).then(() => {
-    message.success(`Email alterado com sucesso!`);
-  });
-};
-
 function ChangeUserEmailPage() {
   const [form] = Form.useForm();
+  const { user } = useAuth();
+
+  const onFinishFailed = () => {
+    message.error(`Algo deu errado, por favor tente novamente!`);
+  };
+
+  const onFinish = async (data: ChangeEmailFormData) => {
+    api.patch(`/api/user/${user.id}`, data).then(() => {
+      message.success(`Email alterado com sucesso!`);
+    });
+  };
 
   const handleSubmit = async (values: any) => {
     onFinish(values);
