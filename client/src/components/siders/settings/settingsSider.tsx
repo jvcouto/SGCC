@@ -8,7 +8,7 @@ function SettingsSiderItens() {
       mode="inline"
       defaultSelectedKeys={["subKeyOption-1"]}
       defaultOpenKeys={["subKey-2"]}
-      style={{ height: "100.1%", borderRight: 0, padding: "5px" }}
+      style={{ height: "100%", borderRight: 0, padding: "5px" }}
       items={configSiderItems}
     />
   );
