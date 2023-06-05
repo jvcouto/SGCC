@@ -23,7 +23,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return getLayout(
     <ThemeProvider theme={theme}>
       <Head>
-        <title>PCA</title>
+        <title>
+          SGCC - Sistema para Gerenciamento de Coordenação de Cursos
+        </title>
       </Head>
       <AuthProvider>
         <Component {...pageProps} />

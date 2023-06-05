@@ -11,7 +11,7 @@ const PageContent = styled(Content)`
   min-height: 280;
   height: 100%;
   background: white;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export default PageContent;

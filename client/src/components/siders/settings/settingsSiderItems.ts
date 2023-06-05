@@ -11,13 +11,13 @@ const sidersOptions = [
     subOptions: [
       {
         label: "Alterar email",
-        path: "/dashboard/settings/user-info/email",
+        path: "/dashboard/settings/email",
         icon: MailOutlined,
         key: "subKeyOption-1",
       },
       {
         label: "Alterar senha",
-        path: "/dashboard/settings/user-info/password",
+        path: "/dashboard/settings/password",
         icon: KeyOutlined,
         key: "subKeyOption-2",
       },

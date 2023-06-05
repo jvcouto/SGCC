@@ -16,6 +16,7 @@ if (token) {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (!error.response) message.error("Server unavailable");
     message.error(error.response.data.message);
     return Promise.reject(error);
   }

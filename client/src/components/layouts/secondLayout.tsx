@@ -1,6 +1,5 @@
 import { Breadcrumb, Layout, Menu } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import Sider from "antd/lib/layout/Sider";
 import React, { ReactElement } from "react";
 import * as S from "./layouts.style";
 
@@ -13,7 +12,7 @@ interface SecondLayoutProps {
 function SecondLayout({ children, siderContent }: SecondLayoutProps) {
   return (
     <S.SecondLayout>
-      <Sider width={200}>{siderContent}</Sider>
+      <S.LayoutSider width={300}>{siderContent}</S.LayoutSider>
       <Layout style={{ padding: "24px 24px 0px 24px" }}>
         {/* <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Semestre</Breadcrumb.Item>

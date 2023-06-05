@@ -1,17 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu, Button } from "antd";
 import Link from "next/link";
-
 import Image from "next/image";
+
+import { LogoutOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
+import api from "../../services/request.service";
+
+import { getDefaultUserPage, getRolePages, getSelectedKey } from "./pages";
 
 import * as S from "./layouts.style";
 import { useAuth } from "../../contexts/authContext";
 
 const { Header, Footer } = Layout;
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  roles: number[];
+}
+
+interface AuthApiResponse {
+  data: {
+    id: number;
+    name: string;
+    email: string;
+    roles: number[];
+    token: string;
+    semester: number;
+  };
+}
 
 // eslint-disable-next-line react/prop-types
 function MainLayout({ children }) {
-  const { logOut } = useAuth();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { user } = useAuth();
+  const { asPath } = useRouter();
+
+  const handleclick = () => {
+    console.log(asPath);
+  };
+
+  useEffect(() => {
+    api.get<AuthApiResponse>(`api/user/current`).then((response) => {
+      const { id, email, name, roles } = response.data.data;
+      setCurrentUser({ id, name, email, roles });
+    });
+  }, []);
 
   return (
     <S.MainLayout>
@@ -29,15 +64,9 @@ function MainLayout({ children }) {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={[`semesters`]}
+          defaultSelectedKeys={[getSelectedKey(asPath.split("/")[2])]}
         >
-          {[
-            {
-              label: "Semestres",
-              path: "/semesters",
-              key: "semesters",
-            },
-          ].map((e) => (
+          {getRolePages(currentUser?.roles).map((e) => (
             <Menu.Item key={e.key}>
               <Link href={e.path}>{e.label}</Link>
             </Menu.Item>
@@ -58,8 +87,12 @@ function MainLayout({ children }) {
               alignItems: "center",
             }}
           >
-            <Button ghost style={{ border: "transparent" }} onClick={logOut}>
-              <Image src="/logout.png" height="25" width="25" />
+            <Button
+              ghost
+              style={{ border: "transparent" }}
+              onClick={handleclick}
+            >
+              <LogoutOutlined />
             </Button>
           </div>
         </div>

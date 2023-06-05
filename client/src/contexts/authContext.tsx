@@ -74,9 +74,9 @@ export function AuthProvider({ children }) {
 
         setIsAuthenticated(true);
         setSelectedSemester(semester);
-        Router.push("/dashboard");
+        Router.push("/dashboard/settings/email");
       })
-      .catch();
+      .catch((e) => {});
   }
 
   function logOut() {
@@ -113,6 +113,7 @@ export const useAuth = () => {
     logOut,
     selectedSemester,
   } = context;
+
   return {
     isAuthenticated,
     setIsAuthenticated,
