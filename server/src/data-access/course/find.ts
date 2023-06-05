@@ -1,13 +1,17 @@
 import Course from "@models/course.model";
-import { getRepository } from "typeorm";
+import { FindManyOptions, getRepository } from "typeorm";
 
-const DEFAULT_PAGE_SIZE = 5;
+import DEFAULT_PAGE_SIZE from "@utils/constants/paginationOptions";
 
 export default async function findCourses(query: any) {
   const repository = getRepository(Course);
 
-  return repository.findAndCount({
-    skip: query.page * DEFAULT_PAGE_SIZE,
-    take: DEFAULT_PAGE_SIZE,
-  });
+  const queryOptions: FindManyOptions<Course> = {};
+
+  if (query.page) {
+    queryOptions.skip = query.page * DEFAULT_PAGE_SIZE;
+    queryOptions.take = DEFAULT_PAGE_SIZE;
+  }
+
+  return repository.findAndCount(queryOptions);
 }

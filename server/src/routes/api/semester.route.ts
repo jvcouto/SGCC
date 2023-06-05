@@ -8,4 +8,8 @@ semesterRoutes
   .route("/")
   .post(expressCallback(MakeSemesterController().create));
 
+semesterRoutes
+  .route("/:id")
+  .get(expressCallback(MakeSemesterController().findOne));
+
 export default semesterRoutes;

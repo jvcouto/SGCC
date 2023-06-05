@@ -1,8 +1,17 @@
 import Semester from "@models/semester.model";
-import { getRepository } from "typeorm";
+import { FindManyOptions, getRepository } from "typeorm";
 
-export default async function findSemesters() {
+import DEFAULT_PAGE_SIZE from "@utils/constants/paginationOptions";
+
+export default async function findSemesters(query: any) {
   const repository = getRepository(Semester);
 
-  return repository.find();
+  const queryOptions: FindManyOptions<Semester> = {};
+
+  if (query.page) {
+    queryOptions.skip = query.page * DEFAULT_PAGE_SIZE;
+    queryOptions.take = DEFAULT_PAGE_SIZE;
+  }
+
+  return repository.findAndCount(queryOptions);
 }
