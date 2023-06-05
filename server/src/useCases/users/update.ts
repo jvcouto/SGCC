@@ -10,6 +10,7 @@ import InternalServerError from "@errors/server.error";
 export default class UpdateUser {
   constructor(
     private readonly findOneByKey: Function,
+    private readonly getUserPassword: Function,
     private readonly saveUser: (user: User) => Promise<User>
   ) {}
 
@@ -22,12 +23,16 @@ export default class UpdateUser {
       throw new EntityNotFound(errorMessage);
     }
 
-    if (userData.newPassword) {
-      if (!(await bcrypt.compare(userData.password, user.password))) {
-        //erro validando as senhas antigas
+    if (userData.password) {
+      const { password: userPassword } = await this.getUserPassword(user.id);
+      if (!(await bcrypt.compare(userData.password, userPassword))) {
+        throw new InvalidAttributeError("Invalid Password");
       }
-      userData.password = bcrypt.hashSync(userData.newPassword, 10);
+      delete userData.password;
+    }
 
+    if (userData.newPassword) {
+      userData.password = bcrypt.hashSync(userData.newPassword, 10);
       delete userData.newPasswordRepeat;
       delete userData.newPassword;
     }

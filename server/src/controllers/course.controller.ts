@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { createCourse } from "@useCases/course";
+import { createCourse, findCourse, listCourses } from "@useCases/course";
 
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 
@@ -10,7 +10,31 @@ export default function MakeCourseController() {
     return { status: HTTP_STATUS_CODES.CREATED, data: courseData };
   };
 
+  const list = async (httpRequest: Partial<Request>) => {
+    const [data, count] = await listCourses.list(httpRequest.query);
+
+    return {
+      status: HTTP_STATUS_CODES.OK,
+      data: data,
+      meta: {
+        total: count,
+        page: httpRequest.query?.page,
+        pageSize: httpRequest.query?.page_size,
+      },
+    };
+  };
+
+  const findOne = async (httpRequest: Partial<Request>) => {
+    const course = await findCourse.findOne(
+      httpRequest.params?.id as unknown as number
+    );
+
+    return { status: HTTP_STATUS_CODES.OK, data: course };
+  };
+
   return Object.freeze({
     create,
+    list,
+    findOne,
   });
 }

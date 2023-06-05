@@ -13,7 +13,7 @@ const authenticateUser = new AuthenticateUser(
 
 const registerUser = new RegisterUser(findOneUserByKey, saveUser);
 
-const updateUser = new UpdateUser(findOneUserByKey, saveUser);
+const updateUser = new UpdateUser(findOneUserByKey, getUserPassword, saveUser);
 
 const getAuthenticatedUserInfo = new GetAuthenticatedUserInfo(findOneUserByKey);
 

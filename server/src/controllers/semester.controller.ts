@@ -9,7 +9,7 @@ export default function MakeSemesterController() {
     return { status: HTTP_STATUS_CODES.CREATED, data: semesterData };
   };
 
-  const list = async (httpRequest: Partial<Request>) => {
+  const list = async () => {
     const semestersData = await listSemesters.list();
 
     return { status: HTTP_STATUS_CODES.CREATED, data: semestersData };

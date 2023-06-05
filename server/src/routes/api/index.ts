@@ -10,9 +10,9 @@ const routes = Router();
 
 routes.use(authMiddleware);
 routes.use("/user", userRoutes);
-routes.use("/course", courseRoutes);
-routes.use("/subject", subjectRoutes);
-routes.use("/semester", semesterRoutes);
+routes.use("/courses", courseRoutes);
+routes.use("/subjects", subjectRoutes);
+routes.use("/semesters", semesterRoutes);
 routes.use("/subjectOffer", subjectOfferRoutes);
 
 export default routes;
