@@ -1,7 +1,6 @@
 import React from "react";
 import { Avatar, Button, Collapse, Descriptions, List } from "antd";
 import { text } from "stream/consumers";
-import courseInfo from "./courseInfo";
 
 const { Panel } = Collapse;
 

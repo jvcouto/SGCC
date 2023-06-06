@@ -1,8 +1,10 @@
-import { Card, Divider, List, Skeleton } from "antd";
+import { Button, Card, Divider, List, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Link from "next/link";
 import api from "../../../services/request.service";
+import AlternateList from "../../_ui/styles/alterCard.style";
+import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
 
 interface ICourses {
   id: string;
@@ -48,6 +50,17 @@ function CourseSider() {
         overflow: "auto",
       }}
     >
+      <AddButtonWrapper>
+        <Button
+          style={{
+            width: "90%",
+          }}
+          type="primary"
+          size="large"
+        >
+          Adicionar Curso
+        </Button>
+      </AddButtonWrapper>
       <InfiniteScroll
         dataLength={data.length}
         next={loadMoreData}
@@ -55,26 +68,14 @@ function CourseSider() {
         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
         endMessage={<Divider plain>Não há mais itens! 🤐</Divider>}
         scrollableTarget="scrollableDiv"
-        style={{
-          background: "white",
-        }}
       >
-        <List
+        <AlternateList
           itemLayout="vertical"
-          style={{
-            padding: "15px",
-            background: "white",
-            overflow: "auto",
-          }}
           dataSource={data}
-          renderItem={(item) => (
+          renderItem={(item: ICourses) => (
             <List.Item>
               <Link href={`/dashboard/courses/${item.id}`}>
-                <Card
-                  title={item.name}
-                  headStyle={{ background: "#f0f2f5" }}
-                  hoverable
-                />
+                <Card hoverable>{item.name}</Card>
               </Link>
             </List.Item>
           )}

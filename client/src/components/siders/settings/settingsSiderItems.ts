@@ -5,7 +5,7 @@ import Router from "next/router";
 
 const sidersOptions = [
   {
-    label: "Minha Conta",
+    label: "Configuraçẽs do usuário",
     icon: SettingOutlined,
     key: "subKey-2",
     subOptions: [

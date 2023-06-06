@@ -9,8 +9,14 @@ export default class CreateSemester {
     private readonly saveSemester: (semester: Semester) => Promise<Semester>
   ) {}
 
-  async create(semestarData: any) {
-    const newSemester = Object.assign(new Semester(), semestarData);
+  async create(semesterData: any) {
+    if (semesterData.startDate)
+      semesterData.startDate = new Date(semesterData.startDate);
+
+    if (semesterData.endDate)
+      semesterData.endDate = new Date(semesterData.endDate);
+
+    const newSemester = Object.assign(new Semester(), semesterData);
 
     const errors = await validate(newSemester);
 

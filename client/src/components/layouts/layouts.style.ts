@@ -4,7 +4,8 @@ import Sider from "antd/lib/layout/Sider";
 
 export const MainLayout = styled(Layout)`
   height: 100vh;
-  overflow-x: hidden;
+  width: 100vw;
+  overflow: hidden;
 `;
 
 export const SecondLayout = styled(Layout)`
@@ -14,6 +15,8 @@ export const SecondLayout = styled(Layout)`
 `;
 
 export const LayoutSider = styled(Sider)`
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: clip;
   background: white;
 `;

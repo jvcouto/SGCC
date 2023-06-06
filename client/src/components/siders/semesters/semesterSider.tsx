@@ -1,8 +1,10 @@
-import { Card, Divider, List, Skeleton } from "antd";
+import { Button, Card, Divider, List, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Link from "next/link";
 import api from "../../../services/request.service";
+import AlternateList from "../../_ui/styles/alterCard.style";
+import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
 
 interface ICourses {
   id: string;
@@ -47,9 +49,19 @@ function SemesterSider() {
       id="scrollableDiv"
       style={{
         height: "100%",
-        overflow: "auto",
       }}
     >
+      <AddButtonWrapper>
+        <Button
+          style={{
+            width: "90%",
+          }}
+          type="primary"
+          size="large"
+        >
+          Adicionar Novo
+        </Button>
+      </AddButtonWrapper>
       <InfiniteScroll
         dataLength={data.length}
         next={loadMoreData}
@@ -57,33 +69,14 @@ function SemesterSider() {
         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
         endMessage={<Divider plain>Não há mais itens! 🤐</Divider>}
         scrollableTarget="scrollableDiv"
-        style={{
-          background: "white",
-        }}
       >
-        <List
+        <AlternateList
           itemLayout="vertical"
-          style={{
-            padding: "15px",
-            background: "white",
-            overflow: "auto",
-          }}
           dataSource={data}
-          renderItem={(item) => (
+          renderItem={(item: ICourses) => (
             <List.Item>
               <Link href={`/dashboard/semesters/${item.id}`}>
-                <Card
-                  title={`Semestre: ${item.code}`}
-                  headStyle={{ background: "#f0f0f5" }}
-                  hoverable
-                >
-                  <p>{`Start date: ${
-                    item.startDate ? item.EndDate.toLocaleDateString() : "-"
-                  }`}</p>
-                  <p>{`End date: ${
-                    item.EndDate ? item.EndDate.toLocaleDateString() : "-"
-                  }`}</p>
-                </Card>
+                <Card hoverable>{`Semestre: ${item.code}`}</Card>
               </Link>
             </List.Item>
           )}
