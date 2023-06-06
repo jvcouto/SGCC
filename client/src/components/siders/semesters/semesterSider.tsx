@@ -6,10 +6,12 @@ import api from "../../../services/request.service";
 
 interface ICourses {
   id: string;
-  name: string;
+  code: string;
+  startDate: Date;
+  EndDate: Date;
 }
 
-function SemestersSider() {
+function SemesterSider() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<ICourses[]>([]);
   const [total, setTotal] = useState(0);
@@ -21,7 +23,7 @@ function SemestersSider() {
     }
     setLoading(true);
     api
-      .get(`/api/courses?page=${page}`)
+      .get(`/public/list/semesters?page=${page}`)
       .then((response) => {
         const { data: courses, meta } = response.data;
         setData([...data, ...courses]);
@@ -69,12 +71,19 @@ function SemestersSider() {
           dataSource={data}
           renderItem={(item) => (
             <List.Item>
-              <Link href={`/dashboard/courses/${item.id}`}>
+              <Link href={`/dashboard/semesters/${item.id}`}>
                 <Card
-                  title={item.name}
-                  headStyle={{ background: "#f0f2f5" }}
+                  title={`Semestre: ${item.code}`}
+                  headStyle={{ background: "#f0f0f5" }}
                   hoverable
-                />
+                >
+                  <p>{`Start date: ${
+                    item.startDate ? item.EndDate.toLocaleDateString() : "-"
+                  }`}</p>
+                  <p>{`End date: ${
+                    item.EndDate ? item.EndDate.toLocaleDateString() : "-"
+                  }`}</p>
+                </Card>
               </Link>
             </List.Item>
           )}
@@ -84,4 +93,4 @@ function SemestersSider() {
   );
 }
 
-export default SemestersSider;
+export default SemesterSider;

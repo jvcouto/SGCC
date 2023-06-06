@@ -4,20 +4,21 @@ import { parseCookies } from "nookies";
 import { Tabs } from "antd";
 import {
   BookOutlined,
-  BookTwoTone,
   InfoCircleOutlined,
   SolutionOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
 import MainLayout from "../../../components/layouts/mainLayout";
 import SecondLayout from "../../../components/layouts/secondLayout";
+import CourseSider from "../../../components/siders/courses/coursesSider";
+import CourseInfo from "../../../components/contents/courses/courseInfo";
+import TeachersList from "../../../components/contents/courses/courseTeachersList";
+import SubjectsList from "../../../components/contents/courses/courseSubjectsList";
+import CollegeList from "../../../components/contents/courses/couseCollegeList";
 
-import { useAuth } from "../../../contexts/authContext";
 import api from "../../../services/request.service";
 
 import PageContent from "../../../styles/content.style";
-import SemestersSider from "../../../components/siders/courses/coursesSiders";
-import CourseInfo from "../../../components/contents/courses/courseInfo";
 
 function CoursesPage(props: any) {
   const { course } = props;
@@ -39,7 +40,7 @@ function CoursesPage(props: any) {
         </span>
       ),
       key: "item-2",
-      children: "Content 2",
+      children: <SubjectsList subjectsInfo={courseData.subjects} />,
     },
     {
       label: (
@@ -48,7 +49,7 @@ function CoursesPage(props: any) {
         </span>
       ),
       key: "item-3",
-      children: "Content 3",
+      children: <TeachersList teachersInfo={courseData.teachers} />,
     },
     {
       label: (
@@ -57,7 +58,7 @@ function CoursesPage(props: any) {
         </span>
       ),
       key: "item-4",
-      children: "Content 4",
+      children: <CollegeList collegeMembers={courseData.collegeMembers} />,
     },
   ];
 
@@ -76,7 +77,7 @@ function CoursesPage(props: any) {
 CoursesPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <SecondLayout siderContent={<SemestersSider />}>{page}</SecondLayout>
+      <SecondLayout siderContent={<CourseSider />}>{page}</SecondLayout>
     </MainLayout>
   );
 };
@@ -99,7 +100,7 @@ export async function getServerSideProps(ctx: any) {
   // eslint-disable-next-line @typescript-eslint/dot-notation
   api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-  const { data } = await api.get(`/api/courses/${params.cid}`);
+  const { data } = await api.get(`/api/courses/${params.cId}`);
 
   return { props: { course: data } };
 }
