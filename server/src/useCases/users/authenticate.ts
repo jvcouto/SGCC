@@ -5,12 +5,10 @@ import jwt from "jsonwebtoken";
 import AuthenticateFailError from "@errors/authenticateFail.error";
 import User from "@models/user.model";
 import USER_ROLES from "@utils/constants/userRoles";
+import UserRepository from "@dataAccess/user.repository";
 
 export default class AuthenticateUser {
-  constructor(
-    private readonly findOneByKey: Function,
-    private readonly getUserPassword: Function
-  ) {}
+  constructor(private readonly repository: UserRepository) {}
 
   private _getUserRoles(user: User) {
     const userRoles = [];
@@ -23,8 +21,8 @@ export default class AuthenticateUser {
     return userRoles;
   }
 
-  async authenticate(email: string, password: string, semester: number) {
-    const user = (await this.findOneByKey(email, "email")) as User;
+  async execute(email: string, password: string, semester: number) {
+    const user = (await this.repository.findOne(email, "email")) as User;
 
     if (!user) {
       const message = "User not found";
@@ -32,7 +30,9 @@ export default class AuthenticateUser {
       throw new AuthenticateFailError(message);
     }
 
-    const { password: userPassword } = await this.getUserPassword(user.id);
+    const { password: userPassword } = (await this.repository.getUserPassword(
+      user.id
+    )) as User;
 
     const userRoles = this._getUserRoles(user);
 

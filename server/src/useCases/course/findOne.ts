@@ -1,16 +1,14 @@
 import Logger from "@utils/logger";
 import InternalServerError from "@errors/server.error";
-import Course from "@models/course.model";
 import EntityNotFound from "@errors/entityNotFound.error";
+import CourseRepository from "@dataAccess/course.repository";
 
-export default class FindCourse {
-  constructor(
-    private readonly findOneCourse: (id: number) => Promise<Course | undefined>
-  ) {}
+export default class FindOneCourse {
+  constructor(private readonly repository: CourseRepository) {}
 
-  async findOne(id: number) {
+  async execute(id: number) {
     try {
-      const courseFound = await this.findOneCourse(id);
+      const courseFound = await this.repository.findOne(id);
 
       if (!courseFound) throw new EntityNotFound("Course not found");
 

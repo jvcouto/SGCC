@@ -5,13 +5,13 @@ import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 
 export default function MakeCourseController() {
   const create = async (httpRequest: Partial<Request>) => {
-    const courseData = await createCourse.create(httpRequest.body);
+    const courseData = await createCourse.execute(httpRequest.body);
 
     return { status: HTTP_STATUS_CODES.CREATED, data: courseData };
   };
 
   const list = async (httpRequest: Partial<Request>) => {
-    const [data, count] = await listCourses.list(httpRequest.query);
+    const [data, count] = await listCourses.execute(httpRequest.query);
 
     return {
       status: HTTP_STATUS_CODES.OK,
@@ -25,7 +25,7 @@ export default function MakeCourseController() {
   };
 
   const findOne = async (httpRequest: Partial<Request>) => {
-    const course = await findCourse.findOne(
+    const course = await findCourse.execute(
       httpRequest.params?.id as unknown as number
     );
 

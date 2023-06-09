@@ -3,13 +3,12 @@ import Logger from "@utils/logger";
 import InvalidAttributeError from "@errors/invalidAttribute.error";
 import InternalServerError from "@errors/server.error";
 import Course from "@models/course.model";
+import CourseRepository from "@dataAccess/course.repository";
 
 export default class CreateCourse {
-  constructor(
-    private readonly saveCourse: (course: Course) => Promise<Course>
-  ) {}
+  constructor(private readonly repository: CourseRepository) {}
 
-  async create(courseData: any) {
+  async execute(courseData: any) {
     const newCourse = Object.assign(new Course(), courseData);
 
     const errors = await validate(newCourse);
@@ -21,7 +20,7 @@ export default class CreateCourse {
     }
 
     try {
-      return await this.saveCourse(newCourse);
+      return await this.repository.save(newCourse);
     } catch (error: any) {
       Logger.error(error);
       throw new InternalServerError("Error on course creation");

@@ -2,8 +2,8 @@ import { Column, Entity } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import { IsDate, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
-@Entity("semester")
-class Semester extends AbstractBaseModel {
+@Entity("period")
+class Period extends AbstractBaseModel {
   @IsString()
   @IsNotEmpty()
   @Column({ length: 32, unique: true })
@@ -20,4 +20,4 @@ class Semester extends AbstractBaseModel {
   endDate!: string;
 }
 
-export default Semester;
+export default Period;

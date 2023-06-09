@@ -17,23 +17,19 @@ export default function MakeUserController() {
       semester,
     }: { email: string; password: string; semester: number } = httpRequest.body;
 
-    const userData = await authenticateUser.authenticate(
-      email,
-      password,
-      semester
-    );
+    const userData = await authenticateUser.execute(email, password, semester);
 
     return { status: HTTP_STATUS_CODES.OK, data: userData };
   };
 
   const register = async (httpRequest: Partial<Request>) => {
-    const userData = await registerUser.register(httpRequest.body);
+    const userData = await registerUser.execute(httpRequest.body);
 
     return { status: HTTP_STATUS_CODES.CREATED, data: userData };
   };
 
   const update = async (httpRequest: Partial<Request>) => {
-    const userData = await updateUser.update(
+    const userData = await updateUser.execute(
       httpRequest.params?.id,
       httpRequest.body
     );
@@ -52,7 +48,7 @@ export default function MakeUserController() {
       ?.replace("Bearer", "")
       .trim();
 
-    const userData = await getAuthenticatedUserInfo.getUserInfo(token);
+    const userData = await getAuthenticatedUserInfo.execute(token);
 
     return { status: HTTP_STATUS_CODES.OK, data: userData };
   };

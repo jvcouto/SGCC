@@ -3,11 +3,12 @@ import Logger from "@utils/logger";
 import InvalidAttributeError from "@errors/invalidAttribute.error";
 import InternalServerError from "@errors/server.error";
 import SubjectApprovalHistory from "@models/subjectApprovalHistory.model";
+import SubjectApprovalHistoryRepository from "@dataAccess/subjectApprovalHistory.repository";
 
 export default class CreateSubjectApprovalHistory {
-  constructor(private readonly saveSubjectApprovalHistory: any) {}
+  constructor(private readonly repository: SubjectApprovalHistoryRepository) {}
 
-  async create(subjectApprovalHistoryData: any) {
+  async execute(subjectApprovalHistoryData: any) {
     const newSubjectApprovalHistory = Object.assign(
       new SubjectApprovalHistory(),
       subjectApprovalHistoryData
@@ -24,8 +25,9 @@ export default class CreateSubjectApprovalHistory {
     }
 
     try {
-      const subjectApprovalHistoryCreated =
-        await this.saveSubjectApprovalHistory(newSubjectApprovalHistory);
+      const subjectApprovalHistoryCreated = await this.repository.save(
+        newSubjectApprovalHistory
+      );
       return subjectApprovalHistoryCreated;
     } catch (error: any) {
       Logger.error(error.message);

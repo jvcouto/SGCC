@@ -1,6 +1,8 @@
-import saveSubjectOffer from "@dataAccess/subjectOffer/save";
+import SubjectOfferRepository from "@dataAccess/subjectOffer.repository";
 import CreateSubjectOffer from "./create";
 
-const createSubjectOffer = new CreateSubjectOffer(saveSubjectOffer);
+const subjectOfferRepository = new SubjectOfferRepository();
+
+const createSubjectOffer = new CreateSubjectOffer(subjectOfferRepository);
 
 export { createSubjectOffer };

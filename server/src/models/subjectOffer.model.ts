@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import User from "./user.model";
-import Semester from "./semester.model";
+import Semester from "./period.model";
 import {
   IsBoolean,
   IsNotEmpty,

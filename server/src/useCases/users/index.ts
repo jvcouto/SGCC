@@ -1,20 +1,14 @@
-import findOneUserByKey from "@dataAccess/users/findOneByKey";
-import saveUser from "@dataAccess/users/save";
 import AuthenticateUser from "./authenticate";
 import RegisterUser from "./register";
 import UpdateUser from "./update";
 import GetAuthenticatedUserInfo from "./getAuthenticatedUserInfo";
-import getUserPassword from "@dataAccess/users/getUserPassword";
+import UserRepository from "@dataAccess/user.repository";
 
-const authenticateUser = new AuthenticateUser(
-  findOneUserByKey,
-  getUserPassword
-);
+const userRepository = new UserRepository();
 
-const registerUser = new RegisterUser(findOneUserByKey, saveUser);
-
-const updateUser = new UpdateUser(findOneUserByKey, getUserPassword, saveUser);
-
-const getAuthenticatedUserInfo = new GetAuthenticatedUserInfo(findOneUserByKey);
+const authenticateUser = new AuthenticateUser(userRepository);
+const registerUser = new RegisterUser(userRepository);
+const updateUser = new UpdateUser(userRepository);
+const getAuthenticatedUserInfo = new GetAuthenticatedUserInfo(userRepository);
 
 export { authenticateUser, registerUser, updateUser, getAuthenticatedUserInfo };

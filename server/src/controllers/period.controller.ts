@@ -1,20 +1,17 @@
 import { Request } from "express";
-import {
-  createSemester,
-  findSemester,
-  listSemesters,
-} from "@useCases/semester";
+
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
+import { createPeriod, findPeriod, listPeriods } from "@useCases/period";
 
-export default function MakeSemesterController() {
+export default function MakePeriodController() {
   const create = async (httpRequest: Partial<Request>) => {
-    const semesterData = await createSemester.create(httpRequest.body);
+    const periodData = await createPeriod.execute(httpRequest.body);
 
-    return { status: HTTP_STATUS_CODES.CREATED, data: semesterData };
+    return { status: HTTP_STATUS_CODES.CREATED, data: periodData };
   };
 
   const list = async (httpRequest: Partial<Request>) => {
-    const [data, count] = await listSemesters.list(httpRequest.query);
+    const [data, count] = await listPeriods.execute(httpRequest.query);
 
     return {
       status: HTTP_STATUS_CODES.OK,
@@ -28,7 +25,7 @@ export default function MakeSemesterController() {
   };
 
   const findOne = async (httpRequest: Partial<Request>) => {
-    const course = await findSemester.findOne(
+    const course = await findPeriod.execute(
       httpRequest.params?.id as unknown as number
     );
 

@@ -6,16 +6,13 @@ import Logger from "@utils/logger";
 import EntityNotFound from "@errors/entityNotFound.error";
 import InvalidAttributeError from "@errors/invalidAttribute.error";
 import InternalServerError from "@errors/server.error";
+import UserRepository from "@dataAccess/user.repository";
 
 export default class UpdateUser {
-  constructor(
-    private readonly findOneByKey: Function,
-    private readonly getUserPassword: Function,
-    private readonly saveUser: (user: User) => Promise<User>
-  ) {}
+  constructor(private readonly repository: UserRepository) {}
 
-  async update(id: string | undefined, userData: any) {
-    const user = await this.findOneByKey(id);
+  async execute(id: string | undefined, userData: any) {
+    const user = await this.repository.findOne(id as string);
 
     if (!user) {
       const errorMessage = "User not found!";
@@ -24,7 +21,9 @@ export default class UpdateUser {
     }
 
     if (userData.password) {
-      const { password: userPassword } = await this.getUserPassword(user.id);
+      const { password: userPassword } = (await this.repository.getUserPassword(
+        user.id
+      )) as User;
       if (!(await bcrypt.compare(userData.password, userPassword))) {
         throw new InvalidAttributeError("Invalid Password");
       }
@@ -53,7 +52,7 @@ export default class UpdateUser {
     }
 
     try {
-      return await this.saveUser(updatedFields);
+      return await this.repository.save(updatedFields);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error updating the user");

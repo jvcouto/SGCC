@@ -1,7 +1,7 @@
 import { Router } from "express";
 import MakeUserController from "@controllers/user.controller";
 import expressCallback from "../utils/expressCallback";
-import MakeSemesterController from "@controllers/semester.controller";
+import MakePeriodController from "@controllers/period.controller";
 
 const publicRoutes = Router();
 
@@ -14,7 +14,7 @@ publicRoutes
   .post(expressCallback(MakeUserController().register));
 
 publicRoutes
-  .route("/list/semesters")
-  .get(expressCallback(MakeSemesterController().list));
+  .route("/list/periods")
+  .get(expressCallback(MakePeriodController().list));
 
 export default publicRoutes;

@@ -3,11 +3,12 @@ import Logger from "@utils/logger";
 import InvalidAttributeError from "@errors/invalidAttribute.error";
 import InternalServerError from "@errors/server.error";
 import SubjectOffer from "@models/subjectOffer.model";
+import SubjectOfferRepository from "@dataAccess/subjectOffer.repository";
 
 export default class CreateSubjectOffer {
-  constructor(private readonly saveSubjectOffer: any) {}
+  constructor(private readonly repository: SubjectOfferRepository) {}
 
-  async create(subjectOfferData: any) {
+  async execute(subjectOfferData: any) {
     const newOfferSubject = Object.assign(new SubjectOffer(), subjectOfferData);
 
     const errors = await validate(newOfferSubject);
@@ -19,7 +20,7 @@ export default class CreateSubjectOffer {
     }
 
     try {
-      return this.saveSubjectOffer(newOfferSubject);
+      return await this.repository.save(newOfferSubject);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error on subject offer creation");

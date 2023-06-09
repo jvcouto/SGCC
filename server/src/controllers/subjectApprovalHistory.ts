@@ -25,7 +25,7 @@ export default function MakeSubjectApprovalHistoryController() {
     };
 
     const subjectApprovalHistoryData =
-      await createSubjectApprovalHistory.create(newSubjectApprovalHistoryData);
+      await createSubjectApprovalHistory.execute(newSubjectApprovalHistoryData);
 
     return {
       status: HTTP_STATUS_CODES.CREATED,

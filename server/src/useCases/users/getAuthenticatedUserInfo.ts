@@ -3,16 +3,17 @@ import jwt from "jsonwebtoken";
 
 import User from "@models/user.model";
 import InternalServerError from "@errors/server.error";
+import UserRepository from "@dataAccess/user.repository";
 
 export default class GetAuthenticatedUserInfo {
-  constructor(private readonly findOneByKey: Function) {}
+  constructor(private readonly repository: UserRepository) {}
 
-  async getUserInfo(token: string) {
+  async execute(token: string) {
     try {
       const data = jwt.verify(token, process.env.JWT_TOKEN as string) as any;
       const { id, userRoles, semester } = data;
 
-      const user = (await this.findOneByKey(id)) as User;
+      const user = (await this.repository.findOne(id)) as User;
 
       return { ...user, roles: userRoles, semester };
     } catch (error) {

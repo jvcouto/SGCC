@@ -1,16 +1,16 @@
 import Logger from "@utils/logger";
 import InternalServerError from "@errors/server.error";
-import CourseRepository from "@dataAccess/course.repository";
+import PeriodRepository from "@dataAccess/periodRepository";
 
-export default class FindAllCourses {
-  constructor(private readonly repository: CourseRepository) {}
+export default class FindAllPeriods {
+  constructor(private readonly repository: PeriodRepository) {}
 
   async execute(query: any) {
     try {
       return await this.repository.findAll(query);
     } catch (error: any) {
       Logger.error(error.message);
-      throw new InternalServerError("Error fechting courses");
+      throw new InternalServerError("Error fechting period");
     }
   }
 }

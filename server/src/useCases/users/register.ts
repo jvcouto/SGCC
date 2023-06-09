@@ -7,14 +7,12 @@ import InvalidAttributeError from "@errors/invalidAttribute.error";
 import InternalServerError from "@errors/server.error";
 
 import Logger from "@utils/logger";
+import UserRepository from "@dataAccess/user.repository";
 
 export default class RegisterUser {
-  constructor(
-    private readonly findOneByKey: any,
-    private readonly saveUser: (user: User) => Promise<User>
-  ) {}
+  constructor(private readonly repository: UserRepository) {}
 
-  async register({
+  async execute({
     name,
     email,
     password,
@@ -23,7 +21,7 @@ export default class RegisterUser {
     email: string;
     password: string;
   }) {
-    const user = await this.findOneByKey(email, "email");
+    const user = await this.repository.findOne(email, "email");
 
     if (user) {
       Logger.error("validation failed.");
@@ -47,7 +45,7 @@ export default class RegisterUser {
     }
 
     try {
-      return await this.saveUser(newUser);
+      return await this.repository.save(newUser);
     } catch (error: any) {
       Logger.error(error);
       throw new InternalServerError("Error on user save");

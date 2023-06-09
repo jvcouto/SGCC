@@ -5,7 +5,7 @@ import { createSubject } from "@useCases/subject";
 
 export default function MakeSubjectController() {
   const create = async (httpRequest: Partial<Request>) => {
-    const subjectData = await createSubject.create(httpRequest.body);
+    const subjectData = await createSubject.execute(httpRequest.body);
 
     return { status: HTTP_STATUS_CODES.CREATED, data: subjectData };
   };

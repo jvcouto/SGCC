@@ -1,10 +1,11 @@
-import saveSubject from "@dataAccess/subject/save";
+import SubjectRepository from "@dataAccess/subject.repository";
 import CreateSubject from "./create";
 import ListSubjects from "./list";
-import findSubjects from "@dataAccess/subject/find";
 
-const createSubject = new CreateSubject(saveSubject);
+const subjectRepository = new SubjectRepository();
 
-const listSubjects = new ListSubjects(findSubjects);
+const createSubject = new CreateSubject(subjectRepository);
+
+const listSubjects = new ListSubjects(subjectRepository);
 
 export { createSubject, listSubjects };
