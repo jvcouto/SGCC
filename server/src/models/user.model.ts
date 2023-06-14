@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import {
   IsString,
   IsNotEmpty,
@@ -7,6 +13,7 @@ import {
   IsOptional,
 } from "class-validator";
 import Course from "./course.model";
+import Departament from "./departament";
 @Entity("user")
 class User {
   @PrimaryGeneratedColumn("uuid")
@@ -50,11 +57,11 @@ class User {
   @ManyToMany(() => Course, (course) => course.collegeMembers)
   colleges!: Course[];
 
-  @ManyToMany(() => Course, (course) => course.teachers)
-  teaching!: Course[];
-
   @ManyToMany(() => Course, (course) => course.admins)
   administrating!: Course[];
+
+  @ManyToOne(() => Departament, (departament) => departament.teachers)
+  departament!: Departament;
 }
 
 export default User;

@@ -7,7 +7,7 @@ export default class UserRepository {
 
     const queryOptions = {
       where: key === "email" ? { email: value } : { id: value },
-      relations: ["colleges", "teaching", "administrating"],
+      relations: ["colleges", "administrating"],
     };
 
     return userRepository.findOne(queryOptions);

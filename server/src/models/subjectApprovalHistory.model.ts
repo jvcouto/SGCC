@@ -4,7 +4,7 @@ import SubjectOffer from "./subjectOffer.model";
 import { IsBoolean, IsOptional, IsString } from "class-validator";
 import User from "./user.model";
 
-@Entity("subjectApprovalHistory")
+@Entity("subject_approval_history")
 class SubjectApprovalHistory extends AbstractBaseModel {
   @IsOptional()
   @IsString()

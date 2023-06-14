@@ -19,8 +19,9 @@ import {
 } from "class-validator";
 import Subject from "./subject.model";
 import SubjectApprovalHistory from "./subjectApprovalHistory.model";
+import Course from "./course.model";
 
-@Entity("subjectOffer")
+@Entity("subject_offer")
 @Unique(["class", "subject", "semester"])
 class SubjectOffer extends AbstractBaseModel {
   @IsOptional()

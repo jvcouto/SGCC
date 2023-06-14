@@ -8,8 +8,7 @@ export default class ListSubjects {
 
   async execute(params: any) {
     try {
-      const data = await this.repository.find(params);
-      console.log(data);
+      return await this.repository.find(params);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error fechting subjects");

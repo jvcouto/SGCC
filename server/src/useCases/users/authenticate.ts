@@ -15,7 +15,7 @@ export default class AuthenticateUser {
 
     if (user.administrating.length) userRoles.push(USER_ROLES.COURSE_ADMIN);
     if (user.colleges.length) userRoles.push(USER_ROLES.COLLEGE_MEMBER);
-    if (user.teaching.length) userRoles.push(USER_ROLES.TEACHER);
+    if (user.departament) userRoles.push(USER_ROLES.TEACHER);
     if (user.sysAdmin) userRoles.push(USER_ROLES.SYSTEM_ADMIN);
 
     return userRoles;
