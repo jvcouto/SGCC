@@ -13,7 +13,7 @@ interface ICourses {
   EndDate: Date;
 }
 
-function SemesterSider() {
+function PeriodSider() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<ICourses[]>([]);
   const [total, setTotal] = useState(0);
@@ -25,7 +25,7 @@ function SemesterSider() {
     }
     setLoading(true);
     api
-      .get(`/public/list/semesters?page=${page}`)
+      .get(`/public/list/periods?page=${page}`)
       .then((response) => {
         const { data: courses, meta } = response.data;
         setData([...data, ...courses]);
@@ -59,7 +59,7 @@ function SemesterSider() {
           type="primary"
           size="large"
         >
-          Adicionar Novo
+          Adicionar Período
         </Button>
       </AddButtonWrapper>
       <InfiniteScroll
@@ -75,8 +75,8 @@ function SemesterSider() {
           dataSource={data}
           renderItem={(item: ICourses) => (
             <List.Item>
-              <Link href={`/dashboard/semesters/${item.id}`}>
-                <Card hoverable>{`Semestre: ${item.code}`}</Card>
+              <Link href={`/dashboard/periods/${item.id}`}>
+                <Card hoverable>{`Periodo: ${item.code}`}</Card>
               </Link>
             </List.Item>
           )}
@@ -86,4 +86,4 @@ function SemesterSider() {
   );
 }
 
-export default SemesterSider;
+export default PeriodSider;

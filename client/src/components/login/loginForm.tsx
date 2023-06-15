@@ -24,7 +24,7 @@ function Login(props: HomeProps) {
       </div>
 
       <S.form
-        name="basic"
+        name="loginForm"
         layout="vertical"
         initialValues={{ remember: true }}
         onFinish={onFinish}

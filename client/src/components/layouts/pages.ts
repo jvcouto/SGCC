@@ -1,18 +1,23 @@
 import USER_ROLES from "../../ultis/constants/userRoles";
 
 const SYSTEM_PAGES = Object.freeze({
-  semesters: {
-    label: "Semestres",
-    path: "/dashboard/semesters",
-    key: "semesters",
+  periods: {
+    label: "Período",
+    path: "/dashboard/periods",
+    key: "periods",
   },
   courses: {
     label: "Cursos",
     path: "/dashboard/courses",
     key: "courses",
   },
+  departament: {
+    label: "Departamentos",
+    path: "/dashboard/departaments",
+    key: "departament",
+  },
   settings: {
-    label: "Configurações",
+    label: "Minha conta",
     path: "/dashboard/settings/email",
     key: "config",
   },
@@ -35,8 +40,9 @@ const getRolePages = (userRoles: number[]) => {
 
   if (userRoles.includes(USER_ROLES.SYSTEM_ADMIN))
     pages.push(
-      SYSTEM_PAGES.semesters,
+      SYSTEM_PAGES.periods,
       SYSTEM_PAGES.courses,
+      SYSTEM_PAGES.departament,
       SYSTEM_PAGES.settings
     );
 

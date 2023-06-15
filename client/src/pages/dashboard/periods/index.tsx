@@ -4,34 +4,34 @@ import { Empty } from "antd";
 
 import MainLayout from "../../../components/layouts/mainLayout";
 import SecondLayout from "../../../components/layouts/secondLayout";
-import SemesterSider from "../../../components/siders/semesters/semesterSider";
+import PeriodSider from "../../../components/siders/periods/periodSider";
 
 import api from "../../../services/request.service";
 
 import PageContent from "../../../styles/content.style";
 
-function SemesterPage() {
+function PeriodPage() {
   return (
     <PageContent>
       <Empty
         imageStyle={{
           height: 250,
         }}
-        description={<span>Nenhum semestre selecionado</span>}
+        description={<span>Nenhum período selecionado</span>}
       />
     </PageContent>
   );
 }
 
-SemesterPage.getLayout = function getLayout(page: ReactElement) {
+PeriodPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <SecondLayout siderContent={<SemesterSider />}>{page}</SecondLayout>
+      <SecondLayout siderContent={<PeriodSider />}>{page}</SecondLayout>
     </MainLayout>
   );
 };
 
-export default SemesterPage;
+export default PeriodPage;
 
 export async function getServerSideProps(ctx: any) {
   const { sgcc: token } = parseCookies(ctx);

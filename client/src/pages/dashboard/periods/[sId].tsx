@@ -5,43 +5,43 @@ import { Button, Descriptions } from "antd";
 
 import MainLayout from "../../../components/layouts/mainLayout";
 import SecondLayout from "../../../components/layouts/secondLayout";
-import SemesterSider from "../../../components/siders/semesters/semesterSider";
+import PeriodSider from "../../../components/siders/periods/periodSider";
 
 import api from "../../../services/request.service";
 
 import PageContent from "../../../styles/content.style";
 
-function SemesterPage(props: any) {
-  const { semester } = props;
-  const { data: semesterData } = semester;
+function PeriodPage(props: any) {
+  const { period } = props;
+  const { data: periodData } = period;
 
   return (
     <PageContent>
       <Descriptions
-        title="Informações do semestre"
+        title="Informações do periodo"
         extra={<Button type="primary">Editar</Button>}
       >
-        <Descriptions.Item label="Code">{semesterData.code}</Descriptions.Item>
+        <Descriptions.Item label="Code">{periodData.code}</Descriptions.Item>
         <Descriptions.Item label="Data de inicio">
-          {semesterData.startDate ?? "-"}
+          {periodData.startDate ?? "-"}
         </Descriptions.Item>
         <Descriptions.Item label="Data de término">
-          {semesterData.endDate ?? "-"}
+          {periodData.endDate ?? "-"}
         </Descriptions.Item>
       </Descriptions>
     </PageContent>
   );
 }
 
-SemesterPage.getLayout = function getLayout(page: ReactElement) {
+PeriodPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <SecondLayout siderContent={<SemesterSider />}>{page}</SecondLayout>
+      <SecondLayout siderContent={<PeriodSider />}>{page}</SecondLayout>
     </MainLayout>
   );
 };
 
-export default SemesterPage;
+export default PeriodPage;
 
 export async function getServerSideProps(ctx: any) {
   const { sgcc: token } = parseCookies(ctx);
@@ -59,7 +59,7 @@ export async function getServerSideProps(ctx: any) {
   // eslint-disable-next-line @typescript-eslint/dot-notation
   api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-  const { data } = await api.get(`/api/semesters/${params.sId}`);
+  const { data } = await api.get(`/api/periods/${params.sId}`);
 
-  return { props: { semester: data } };
+  return { props: { period: data } };
 }
