@@ -1,4 +1,4 @@
-import USER_ROLES from "../../ultis/constants/userRoles";
+import USER_ROLES from "../../utils/constants/userRoles";
 
 const SYSTEM_PAGES = Object.freeze({
   periods: {
