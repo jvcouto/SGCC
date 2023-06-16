@@ -21,9 +21,6 @@ function CourseInfo(props: ICourseInfo) {
       extra={<Button type="primary">Editar</Button>}
     >
       <Descriptions.Item label="Nome">{courseInfo.name}</Descriptions.Item>
-      <Descriptions.Item label="N° Professores">
-        {courseInfo.teachers.length}
-      </Descriptions.Item>
       <Descriptions.Item label="Live">Hangzhou, Zhejiang</Descriptions.Item>
       <Descriptions.Item label="Remark">empty</Descriptions.Item>
       <Descriptions.Item label="Address">

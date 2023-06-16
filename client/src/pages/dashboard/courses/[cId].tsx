@@ -4,15 +4,15 @@ import { parseCookies } from "nookies";
 import { Tabs } from "antd";
 import {
   BookOutlined,
+  BuildOutlined,
   InfoCircleOutlined,
+  LikeOutlined,
   SolutionOutlined,
-  TeamOutlined,
 } from "@ant-design/icons";
 import MainLayout from "../../../components/layouts/mainLayout";
 import SecondLayout from "../../../components/layouts/secondLayout";
 import CourseSider from "../../../components/siders/courses/coursesSider";
 import CourseInfo from "../../../components/contents/courses/courseInfo";
-import TeachersList from "../../../components/contents/courses/courseTeachersList";
 import SubjectsList from "../../../components/contents/courses/courseSubjectsList";
 import CollegeList from "../../../components/contents/courses/couseCollegeList";
 
@@ -45,20 +45,29 @@ function CoursesPage(props: any) {
     {
       label: (
         <span>
-          <TeamOutlined /> Professores
-        </span>
-      ),
-      key: "item-3",
-      children: <TeachersList teachersInfo={courseData.teachers} />,
-    },
-    {
-      label: (
-        <span>
           <SolutionOutlined /> Colegiado
         </span>
       ),
       key: "item-4",
       children: <CollegeList collegeMembers={courseData.collegeMembers} />,
+    },
+    {
+      label: (
+        <span>
+          <BuildOutlined /> Ofertas do curso
+        </span>
+      ),
+      key: "item-5",
+      children: <div>Ofertas Aqui</div>,
+    },
+    {
+      label: (
+        <span>
+          <LikeOutlined /> Avaliações de Plano
+        </span>
+      ),
+      key: "item-6",
+      children: <div>Avaliações Aqui</div>,
     },
   ];
 

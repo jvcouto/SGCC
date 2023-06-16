@@ -21,7 +21,7 @@ export default class CourseRepository {
     const repository = getRepository(Course);
 
     return repository.findOne(id, {
-      relations: ["collegeMembers", "teachers", "admins", "subjects"],
+      relations: ["collegeMembers", "admins", "subjects"],
     });
   }
 

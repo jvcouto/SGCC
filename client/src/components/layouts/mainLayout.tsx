@@ -65,6 +65,7 @@ function MainLayout({ children }) {
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={[getSelectedKey(asPath.split("/")[2])]}
+          style={{ minWidth: "50rem" }}
         >
           {getRolePages(currentUser?.roles).map((e) => (
             <Menu.Item key={e.key}>
@@ -93,6 +94,7 @@ function MainLayout({ children }) {
               onClick={handleclick}
             >
               <LogoutOutlined />
+              <span>Sair</span>
             </Button>
           </div>
         </div>

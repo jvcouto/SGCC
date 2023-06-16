@@ -11,7 +11,7 @@ const SYSTEM_PAGES = Object.freeze({
     path: "/dashboard/courses",
     key: "courses",
   },
-  departament: {
+  departaments: {
     label: "Departamentos",
     path: "/dashboard/departaments",
     key: "departament",
@@ -20,6 +20,11 @@ const SYSTEM_PAGES = Object.freeze({
     label: "Minha conta",
     path: "/dashboard/settings/email",
     key: "config",
+  },
+  offers: {
+    label: "Ofertas",
+    path: "/dashboard/offers",
+    key: "offers",
   },
 });
 
@@ -41,8 +46,9 @@ const getRolePages = (userRoles: number[]) => {
   if (userRoles.includes(USER_ROLES.SYSTEM_ADMIN))
     pages.push(
       SYSTEM_PAGES.periods,
+      SYSTEM_PAGES.departaments,
       SYSTEM_PAGES.courses,
-      SYSTEM_PAGES.departament,
+      SYSTEM_PAGES.offers,
       SYSTEM_PAGES.settings
     );
 

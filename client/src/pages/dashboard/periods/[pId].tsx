@@ -59,7 +59,7 @@ export async function getServerSideProps(ctx: any) {
   // eslint-disable-next-line @typescript-eslint/dot-notation
   api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-  const { data } = await api.get(`/api/periods/${params.sId}`);
+  const { data } = await api.get(`/api/periods/${params.pId}`);
 
   return { props: { period: data } };
 }

@@ -12,7 +12,9 @@ export default class DepartamentRepository {
   async findOne(id: number) {
     const repository = getRepository(Departament);
 
-    return repository.findOne(id);
+    return repository.findOne(id, {
+      relations: ["teachers"],
+    });
   }
 
   async findAll(query: any) {

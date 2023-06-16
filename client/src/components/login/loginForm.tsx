@@ -8,14 +8,10 @@ import * as S from "./login.style";
 interface HomeProps {
   onFinish: (values: any) => void;
   onFinishFailed: (values: any) => void;
-  semesters: {
-    id: number;
-    code: string;
-  }[];
 }
 
 function Login(props: HomeProps) {
-  const { onFinish, onFinishFailed, semesters } = props;
+  const { onFinish, onFinishFailed } = props;
 
   return (
     <S.LoginBox>
@@ -54,22 +50,6 @@ function Login(props: HomeProps) {
           <Input.Password
             placeholder="Insira sua senha"
             style={{ borderRadius: 10 }}
-          />
-        </Form.Item>
-
-        <Form.Item
-          labelAlign="left"
-          name="semester"
-          rules={[{ required: true, message: "Selecione o semestre!" }]}
-        >
-          <Select
-            showSearch
-            filterOption={(input, option) =>
-              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            placeholder="Selecione o semestre"
-            allowClear
-            options={semesters.map((e) => ({ value: e.id, label: e.code }))}
           />
         </Form.Item>
 

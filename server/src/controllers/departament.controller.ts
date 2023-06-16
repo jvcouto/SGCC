@@ -1,6 +1,10 @@
 import { Request } from "express";
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
-import { createDepartament, listDepartaments } from "@useCases/departament";
+import {
+  createDepartament,
+  findOneDepartament,
+  listDepartaments,
+} from "@useCases/departament";
 
 export default function MakeDepartamentController() {
   const create = async (httpRequest: Partial<Request>) => {
@@ -23,8 +27,20 @@ export default function MakeDepartamentController() {
     };
   };
 
+  const findOne = async (httpRequest: Partial<Request>) => {
+    const departament = await findOneDepartament.execute(
+      httpRequest.params?.id as unknown as number
+    );
+
+    return {
+      status: HTTP_STATUS_CODES.OK,
+      data: departament,
+    };
+  };
+
   return Object.freeze({
     create,
     list,
+    findOne,
   });
 }

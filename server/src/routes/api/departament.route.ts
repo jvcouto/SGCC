@@ -10,5 +10,8 @@ departamentRoutes
 departamentRoutes
   .route("/")
   .get(expressCallback(MakeDepartamentController().list));
+departamentRoutes
+  .route("/:id")
+  .get(expressCallback(MakeDepartamentController().findOne));
 
 export default departamentRoutes;

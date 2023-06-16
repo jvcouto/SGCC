@@ -11,15 +11,7 @@ interface LoginFormData {
   semester: number;
 }
 
-interface ServerSideProps {
-  semesters: {
-    id: number;
-    code: string;
-  }[];
-}
-
-function LoginPage(props: ServerSideProps) {
-  const { semesters } = props;
+function LoginPage() {
   const { signIn } = useAuth();
   const onFinish = async (values: LoginFormData) => {
     await signIn(values);
@@ -29,13 +21,7 @@ function LoginPage(props: ServerSideProps) {
     message.error(`Algo deu errado, por favor tente novamente!`);
   };
 
-  return (
-    <Login
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      semesters={semesters}
-    />
-  );
+  return <Login onFinish={onFinish} onFinishFailed={onFinishFailed} />;
 }
 
 export async function getServerSideProps(ctx: any) {
@@ -50,12 +36,8 @@ export async function getServerSideProps(ctx: any) {
     };
   }
 
-  const res = await api.get("/public/list/semesters");
-  const semesters = res.data.data;
   return {
-    props: {
-      semesters,
-    },
+    props: {},
   };
 }
 

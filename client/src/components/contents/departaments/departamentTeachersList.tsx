@@ -1,7 +1,8 @@
 import React from "react";
 import { Avatar, List } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
-interface ICourseTeachers {
+interface IDepartamentTeachers {
   teachersInfo: {
     id: number;
     name: string;
@@ -9,7 +10,7 @@ interface ICourseTeachers {
   }[];
 }
 
-function TeachersList(props: ICourseTeachers) {
+function TeachersList(props: IDepartamentTeachers) {
   const { teachersInfo } = props;
 
   return (
@@ -19,7 +20,7 @@ function TeachersList(props: ICourseTeachers) {
       renderItem={(teacher) => (
         <List.Item>
           <List.Item.Meta
-            avatar={<Avatar src="" />}
+            avatar={<Avatar src="" icon={<UserOutlined />} />}
             title={teacher.name}
             description={teacher.email}
           />
