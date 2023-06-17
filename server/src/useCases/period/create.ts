@@ -3,7 +3,7 @@ import Logger from "@utils/logger";
 import InvalidAttributeError from "@errors/invalidAttribute.error";
 import InternalServerError from "@errors/server.error";
 import Period from "@models/period.model";
-import PeriodRepository from "@dataAccess/periodRepository";
+import PeriodRepository from "@dataAccess/period.repository";
 
 export default class CreatePeriod {
   constructor(private readonly repository: PeriodRepository) {}

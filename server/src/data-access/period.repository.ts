@@ -20,6 +20,8 @@ export default class PeriodRepository {
 
     const queryOptions: FindManyOptions<Period> = {};
 
+    queryOptions.order = { id: "DESC" };
+
     if (query.page) {
       queryOptions.skip = query.page * DEFAULT_PAGE_SIZE;
       queryOptions.take = DEFAULT_PAGE_SIZE;

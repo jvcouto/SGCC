@@ -1,6 +1,6 @@
 import Logger from "@utils/logger";
 import InternalServerError from "@errors/server.error";
-import PeriodRepository from "@dataAccess/periodRepository";
+import PeriodRepository from "@dataAccess/period.repository";
 
 export default class FindAllPeriods {
   constructor(private readonly repository: PeriodRepository) {}

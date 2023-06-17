@@ -1,7 +1,7 @@
 import Logger from "@utils/logger";
 import InternalServerError from "@errors/server.error";
 import EntityNotFound from "@errors/entityNotFound.error";
-import PeriodRepository from "@dataAccess/periodRepository";
+import PeriodRepository from "@dataAccess/period.repository";
 
 export default class FindOnePeriod {
   constructor(private readonly repository: PeriodRepository) {}

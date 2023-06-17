@@ -1,7 +1,7 @@
 import CreateSemester from "./create";
 import ListSemesters from "./list";
 import FindSemester from "./findOne";
-import PeriodRepository from "@dataAccess/periodRepository";
+import PeriodRepository from "@dataAccess/period.repository";
 
 const periodRepository = new PeriodRepository();
 
