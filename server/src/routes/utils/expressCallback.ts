@@ -43,8 +43,7 @@ export default (controller: CallableFunction) =>
           : Logger.error(e);
         res.status(e.status ?? HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
           code: e.code ?? "INTERNAL_SERVER_ERROR",
-          message:
-            e instanceof GenericCustomError ? e.message : "Error on server",
+          message: e instanceof GenericCustomError ? e.message : "Server Error",
         });
       });
   };

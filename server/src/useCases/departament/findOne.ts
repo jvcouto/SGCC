@@ -10,7 +10,6 @@ export default class FindOneDepartament {
 
     if (!departamentFound) {
       const errorMessage = "Departament not found";
-      Logger.info(errorMessage);
       throw new EntityNotFound(errorMessage);
     }
 
