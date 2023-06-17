@@ -19,10 +19,15 @@ import CollegeList from "../../../components/contents/courses/couseCollegeList";
 import api from "../../../services/request.service";
 
 import PageContent from "../../../styles/content.style";
+import ICourse from "../../../types/apiResponses/course";
 
-function CoursesPage(props: any) {
+interface CoursePageProps {
+  course: ICourse;
+}
+
+function CoursesPage(props: CoursePageProps) {
   const { course } = props;
-  const { data: courseData } = course;
+
   const items = [
     {
       label: (
@@ -31,7 +36,7 @@ function CoursesPage(props: any) {
         </span>
       ),
       key: "item-1",
-      children: <CourseInfo courseInfo={courseData} />,
+      children: <CourseInfo courseInfo={course} />,
     },
     {
       label: (
@@ -40,7 +45,7 @@ function CoursesPage(props: any) {
         </span>
       ),
       key: "item-2",
-      children: <SubjectsList subjectsInfo={courseData.subjects} />,
+      children: <SubjectsList subjectsInfo={course.subjects} />,
     },
     {
       label: (
@@ -49,7 +54,7 @@ function CoursesPage(props: any) {
         </span>
       ),
       key: "item-4",
-      children: <CollegeList collegeMembers={courseData.collegeMembers} />,
+      children: <CollegeList collegeMembers={course.collegeMembers} />,
     },
     {
       label: (
@@ -111,5 +116,5 @@ export async function getServerSideProps(ctx: any) {
 
   const { data } = await api.get(`/api/courses/${params.cId}`);
 
-  return { props: { course: data } };
+  return { props: { course: data.data } };
 }

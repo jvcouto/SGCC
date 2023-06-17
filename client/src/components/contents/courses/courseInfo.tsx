@@ -1,15 +1,9 @@
 import { Button, Descriptions } from "antd";
 import React from "react";
+import ICourse from "../../../types/apiResponses/course";
 
 interface ICourseInfo {
-  courseInfo: {
-    id: number;
-    name: string;
-    teachers: {
-      id: string;
-      name: string;
-    }[];
-  };
+  courseInfo: ICourse;
 }
 
 function CourseInfo(props: ICourseInfo) {
@@ -21,10 +15,18 @@ function CourseInfo(props: ICourseInfo) {
       extra={<Button type="primary">Editar</Button>}
     >
       <Descriptions.Item label="Nome">{courseInfo.name}</Descriptions.Item>
-      <Descriptions.Item label="Live">Hangzhou, Zhejiang</Descriptions.Item>
-      <Descriptions.Item label="Remark">empty</Descriptions.Item>
-      <Descriptions.Item label="Address">
-        No. 18, Wantang Road, Xihu District
+      <Descriptions.Item label="Duração">
+        {`${courseInfo.duration} semestres`}
+      </Descriptions.Item>
+      <Descriptions.Item label="Turno">{courseInfo.shift}</Descriptions.Item>
+      <Descriptions.Item label="N° Disciplinas">
+        {courseInfo.subjects.length}
+      </Descriptions.Item>
+      <Descriptions.Item label="N° Administradores">
+        {courseInfo.admins.length}
+      </Descriptions.Item>
+      <Descriptions.Item label="N° Membros Colegiado">
+        {courseInfo.collegeMembers.length}
       </Descriptions.Item>
     </Descriptions>
   );

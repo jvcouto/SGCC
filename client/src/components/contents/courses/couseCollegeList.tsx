@@ -1,15 +1,12 @@
 import React from "react";
 import { Avatar, List } from "antd";
+import IUser from "../../../types/apiResponses/users";
 
-interface ICourseTeachers {
-  collegeMembers: {
-    id: number;
-    name: string;
-    email: string;
-  }[];
+interface ICourseCollegeMembers {
+  collegeMembers: IUser[];
 }
 
-function CollegeList(props: ICourseTeachers) {
+function CollegeList(props: ICourseCollegeMembers) {
   const { collegeMembers } = props;
 
   return (

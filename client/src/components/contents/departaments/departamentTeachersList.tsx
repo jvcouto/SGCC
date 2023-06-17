@@ -1,13 +1,10 @@
 import React from "react";
 import { Avatar, List } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import IUser from "../../../types/apiResponses/users";
 
 interface IDepartamentTeachers {
-  teachersInfo: {
-    id: number;
-    name: string;
-    email: string;
-  }[];
+  teachersInfo: IUser[];
 }
 
 function TeachersList(props: IDepartamentTeachers) {

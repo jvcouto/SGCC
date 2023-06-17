@@ -1,19 +1,11 @@
 import React from "react";
 import { Avatar, Button, Collapse, Descriptions, List } from "antd";
-import { text } from "stream/consumers";
+import ISubject from "../../../types/apiResponses/subject";
 
 const { Panel } = Collapse;
 
 interface ICourseSubjects {
-  subjectsInfo: {
-    optionalSubject: string;
-    praticalWorkload: string;
-    theoreticalWorkload: string;
-    workload: string;
-    id: number;
-    name: string;
-    email: string;
-  }[];
+  subjectsInfo: ISubject[];
 }
 
 function SubjectsList(props: ICourseSubjects) {
@@ -37,7 +29,7 @@ function SubjectsList(props: ICourseSubjects) {
               {subject.praticalWorkload}
             </Descriptions.Item>
             <Descriptions.Item label="Tipo">
-              {subject.optionalSubject}
+              {subject.optionalSubject ? "Opcional" : "Obrigatória"}
             </Descriptions.Item>
           </Descriptions>
         </Panel>

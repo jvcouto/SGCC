@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { parseCookies } from "nookies";
 
+import { FormattedMessage } from "react-intl";
 import MainLayout from "../../../components/layouts/mainLayout";
 import SecondLayout from "../../../components/layouts/secondLayout";
 
@@ -11,7 +12,9 @@ import PageContent from "../../../styles/content.style";
 function OffersPage() {
   return (
     <PageContent>
-      <div>teste</div>
+      <div>
+        <FormattedMessage id="Teste" />
+      </div>
     </PageContent>
   );
 }
