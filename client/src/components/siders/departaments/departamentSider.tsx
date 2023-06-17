@@ -1,4 +1,4 @@
-import { Button, Card, Divider, List, Skeleton } from "antd";
+import { Button, Card, Divider, Empty, List, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Link from "next/link";
@@ -72,6 +72,11 @@ function DepartamentSider() {
         <AlternateList
           itemLayout="vertical"
           dataSource={data}
+          locale={{
+            emptyText: (
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={false} />
+            ),
+          }}
           renderItem={(item: IDepartament) => (
             <List.Item>
               <Link href={`/dashboard/departaments/${item.id}`}>

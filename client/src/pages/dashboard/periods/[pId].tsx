@@ -3,6 +3,7 @@ import { parseCookies } from "nookies";
 
 import { Button, Descriptions } from "antd";
 
+import dayjs from "dayjs";
 import MainLayout from "../../../components/layouts/mainLayout";
 import SecondLayout from "../../../components/layouts/secondLayout";
 import PeriodSider from "../../../components/siders/periods/periodSider";
@@ -10,10 +11,14 @@ import PeriodSider from "../../../components/siders/periods/periodSider";
 import api from "../../../services/request.service";
 
 import PageContent from "../../../styles/content.style";
+import IPeriod from "../../../types/apiResponses/periods";
 
-function PeriodPage(props: any) {
-  const { period } = props;
-  const { data: periodData } = period;
+interface PeriodPageProps {
+  period: IPeriod;
+}
+
+function PeriodPage(props: PeriodPageProps) {
+  const { period: periodData } = props;
 
   return (
     <PageContent>
@@ -23,10 +28,10 @@ function PeriodPage(props: any) {
       >
         <Descriptions.Item label="Code">{periodData.code}</Descriptions.Item>
         <Descriptions.Item label="Data de inicio">
-          {periodData.startDate ?? "-"}
+          {dayjs(periodData.startDate).format("DD/MM/YYYY") ?? "-"}
         </Descriptions.Item>
         <Descriptions.Item label="Data de término">
-          {periodData.endDate ?? "-"}
+          {dayjs(periodData.endDate).format("DD/MM/YYYY") ?? "-"}
         </Descriptions.Item>
       </Descriptions>
     </PageContent>
@@ -61,5 +66,5 @@ export async function getServerSideProps(ctx: any) {
 
   const { data } = await api.get(`/api/periods/${params.pId}`);
 
-  return { props: { period: data } };
+  return { props: { period: data.data } };
 }
