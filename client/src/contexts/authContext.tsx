@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import Router from "next/router";
+import { message } from "antd";
 import api from "../services/request.service";
 
 interface LoginDataProps {
@@ -76,7 +77,18 @@ export function AuthProvider({ children }) {
         setSelectedSemester(semester);
         Router.push("/dashboard/settings/email");
       })
-      .catch((e) => {});
+      .catch((e) => {
+        const { code } = e.response.data;
+        switch (code) {
+          case "WRONG_CREDENCIALS":
+            message.error("Usuário ou senha incorretos!");
+            break;
+
+          default:
+            message.error("Algo deu errado!");
+            break;
+        }
+      });
   }
 
   function logOut() {

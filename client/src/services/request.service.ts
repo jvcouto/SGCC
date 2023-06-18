@@ -17,7 +17,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) message.error("Server unavailable");
-    message.error(error.response.data.message);
+    if (error.code === "INTERNAL_SERVER_ERROR") message.error("Server Error");
     return Promise.reject(error);
   }
 );

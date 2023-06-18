@@ -1,7 +1,17 @@
-import { Button, Card, Divider, Empty, List, Skeleton, message } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Empty,
+  FormInstance,
+  List,
+  Skeleton,
+  message,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Link from "next/link";
+import Router from "next/router";
 import api from "../../../services/request.service";
 import AlternateList from "../../_ui/styles/alterCard.style";
 import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
@@ -47,7 +57,7 @@ function PeriodSider() {
     loadMoreData();
   }, []);
 
-  const onCreate = (values: PeriodFormValues) => {
+  const onCreate = (values: PeriodFormValues, form: FormInstance<any>) => {
     const newPeriodData = {
       code: values.code,
       startDate: values.duration[0].format(),
@@ -56,13 +66,29 @@ function PeriodSider() {
     api
       .post<{ data: IPeriod }>("api/periods", newPeriodData)
       .then((response) => {
+        const { data: newPeriod } = response.data;
         message.success("Período criado com sucesso!");
-        setData([response.data.data, ...data]);
+        setData([newPeriod, ...data]);
+        Router.push(`/dashboard/periods/${newPeriod.id}`);
+        setformOpen(false);
       })
-      .catch();
-    setTotal(total + 1);
+      .catch((error) => {
+        const { code } = error.response.data;
+        switch (code) {
+          case "DUPLICATED_PERIOD":
+            form.setFields([
+              {
+                name: "code",
+                errors: ["Código já existe!"],
+              },
+            ]);
+            break;
 
-    setformOpen(false);
+          default:
+            message.error("Algo deu errado!");
+            break;
+        }
+      });
   };
 
   return (

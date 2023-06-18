@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Modal, message } from "antd";
+import { Form, FormInstance, Input, Modal, message } from "antd";
 import { Dayjs } from "dayjs";
 import DatePicker from "../_ui/datePicker";
 
@@ -11,7 +11,7 @@ export interface PeriodFormValues {
 }
 interface CreatePeriodModalProps {
   open: boolean;
-  onCreate: (values: PeriodFormValues) => void;
+  onCreate: (values: PeriodFormValues, form: FormInstance<any>) => void;
   onCancel: () => void;
 }
 
@@ -33,7 +33,7 @@ function CreatePeriodModal({
           .validateFields()
           .then((values) => {
             form.resetFields();
-            onCreate(values);
+            onCreate(values, form);
           })
           .catch((info) => {
             message.error("Algo deu errado, por favor tente novamente!");
