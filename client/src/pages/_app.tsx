@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components";
 import { NextPage } from "next";
 import { IntlProvider } from "react-intl";
 import { AuthProvider } from "../contexts/authContext";
-import BrasilTexts from "../utils/translations/br";
+import translactions from "../utils/_i18n/translations.json";
 
 import GlobalStyle from "../styles/global";
 import theme from "../styles/theme";
@@ -23,7 +23,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return getLayout(
-    <IntlProvider messages={BrasilTexts} locale="br" defaultLocale="br">
+    <IntlProvider
+      messages={translactions["pt-BR"]}
+      locale="pt-BR"
+      defaultLocale="br"
+    >
       <ThemeProvider theme={theme}>
         <Head>
           <title>
