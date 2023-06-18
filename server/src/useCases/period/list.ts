@@ -5,7 +5,7 @@ import PeriodRepository from "@dataAccess/period.repository";
 export default class FindAllPeriods {
   constructor(private readonly repository: PeriodRepository) {}
 
-  async execute(query: any) {
+  async execute(query: unknown) {
     try {
       return await this.repository.findAll(query);
     } catch (error: any) {

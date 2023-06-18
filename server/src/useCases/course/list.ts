@@ -5,7 +5,7 @@ import CourseRepository from "@dataAccess/course.repository";
 export default class FindAllCourses {
   constructor(private readonly repository: CourseRepository) {}
 
-  async execute(query: any) {
+  async execute(query: unknown) {
     try {
       return await this.repository.findAll(query);
     } catch (error: any) {

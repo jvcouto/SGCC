@@ -1,4 +1,5 @@
 import Departament from "@models/departament";
+import { DepartamentQueryOpts } from "@useCases/departament/list";
 import DEFAULT_PAGE_SIZE from "@utils/constants/paginationOptions";
 import { FindManyOptions, getRepository } from "typeorm";
 
@@ -17,7 +18,7 @@ export default class DepartamentRepository {
     });
   }
 
-  async findAll(query: any) {
+  async findAll(query: DepartamentQueryOpts) {
     const repository = getRepository(Departament);
 
     const queryOptions: FindManyOptions<Departament> = {};
