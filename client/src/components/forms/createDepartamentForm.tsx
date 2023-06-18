@@ -1,30 +1,27 @@
+import { Form, FormInstance, Input, Modal, Radio, message } from "antd";
 import React from "react";
-import { Form, FormInstance, Input, Modal, message } from "antd";
-import { Dayjs } from "dayjs";
-import DatePicker from "../_ui/datePicker";
 
-const { RangePicker } = DatePicker;
-
-export interface PeriodFormValues {
+export interface DepartamentFormValues {
   code: string;
-  duration: Dayjs[];
+  name: string;
 }
-interface CreatePeriodModalProps {
+
+interface CreateDepartamentModalProps {
   open: boolean;
-  onCreate: (values: PeriodFormValues, form: FormInstance<any>) => void;
+  onCreate: (values: DepartamentFormValues, form: FormInstance<any>) => void;
   onCancel: () => void;
 }
 
-function CreatePeriodModal({
+function CreateDepartamentModal({
   open,
   onCreate,
   onCancel,
-}: CreatePeriodModalProps) {
+}: CreateDepartamentModalProps) {
   const [form] = Form.useForm();
   return (
     <Modal
       open={open}
-      title="Criar novo período"
+      title="Criar novo Departamento"
       okText="Criar"
       cancelText="Cancelar"
       onCancel={onCancel}
@@ -40,34 +37,34 @@ function CreatePeriodModal({
           });
       }}
     >
-      <Form form={form} layout="vertical" name="createPeriodForm">
+      <Form form={form} layout="vertical" name="createDepartamentForm">
+        <Form.Item
+          name="name"
+          label="Nome"
+          rules={[
+            {
+              required: true,
+              message: "Insira o nome do departamento!",
+            },
+          ]}
+        >
+          <Input placeholder="Insira um nome" />
+        </Form.Item>
         <Form.Item
           name="code"
           label="Código"
           rules={[
             {
               required: true,
-              message: "Por favor insira o código do periodo!",
+              message: "Insira o código do departamento!",
             },
           ]}
         >
           <Input placeholder="Insira um código" />
-        </Form.Item>
-        <Form.Item
-          name="duration"
-          label="Duração"
-          rules={[
-            {
-              required: true,
-              message: "Por favor insira a duração do periodo!",
-            },
-          ]}
-        >
-          <RangePicker placeholder={["Inicio", "Término"]} />
         </Form.Item>
       </Form>
     </Modal>
   );
 }
 
-export default CreatePeriodModal;
+export default CreateDepartamentModal;

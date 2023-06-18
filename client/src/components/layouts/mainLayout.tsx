@@ -38,7 +38,7 @@ function MainLayout({ children }) {
   const { asPath } = useRouter();
 
   const handleclick = () => {
-    console.log(asPath);
+    console.log(user);
   };
 
   useEffect(() => {
