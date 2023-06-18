@@ -1,5 +1,6 @@
 import User from "@models/user.model";
-import { getRepository } from "typeorm";
+import { UserQueryOpts } from "@useCases/users/list";
+import { FindManyOptions, Like, getRepository } from "typeorm";
 
 export default class UserRepository {
   async findOne(value: string, key: string = "id") {
@@ -28,5 +29,19 @@ export default class UserRepository {
     const userRepository = getRepository(User);
 
     return userRepository.save(user);
+  }
+
+  async findAll(query: UserQueryOpts) {
+    const repository = getRepository(User);
+
+    const queryOptions: FindManyOptions<User> = {};
+
+    if (query.name) {
+      queryOptions.where = {
+        name: Like(`${query.name}%`),
+      };
+    }
+
+    return repository.findAndCount(queryOptions);
   }
 }

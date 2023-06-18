@@ -4,6 +4,7 @@ import {
   authenticateUser,
   updateUser,
   getAuthenticatedUserInfo,
+  listUsers,
 } from "../useCases/users";
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 import Logger from "@utils/logger";
@@ -53,10 +54,25 @@ export default function MakeUserController() {
     return { status: HTTP_STATUS_CODES.OK, data: userData };
   };
 
+  const list = async (httpRequest: Partial<Request>) => {
+    const [data, count] = await listUsers.execute(httpRequest.query);
+
+    return {
+      status: HTTP_STATUS_CODES.OK,
+      data: data,
+      meta: {
+        total: count,
+        page: httpRequest.query?.page,
+        pageSize: httpRequest.query?.page_size,
+      },
+    };
+  };
+
   return Object.freeze({
     authenticate,
     register,
     update,
     getCurrentUser,
+    list,
   });
 }

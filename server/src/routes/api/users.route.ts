@@ -9,4 +9,6 @@ routes
   .route("/current")
   .get(expressCallback(MakeUserController().getCurrentUser));
 
+routes.route("/").get(expressCallback(MakeUserController().list));
+
 export default routes;
