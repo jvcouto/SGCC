@@ -1,2 +1,4 @@
 const DEFAULT_PAGE_SIZE = 10;
-export default DEFAULT_PAGE_SIZE;
+const MAX_TAKE_ITEMS = 100;
+
+export { DEFAULT_PAGE_SIZE, MAX_TAKE_ITEMS };

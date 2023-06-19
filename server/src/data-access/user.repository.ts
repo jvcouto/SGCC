@@ -1,5 +1,6 @@
 import User from "@models/user.model";
 import { UserQueryOpts } from "@useCases/users/list";
+import { MAX_TAKE_ITEMS } from "@utils/constants/paginationOptions";
 import { FindManyOptions, Like, getRepository } from "typeorm";
 
 export default class UserRepository {
@@ -34,7 +35,9 @@ export default class UserRepository {
   async findAll(query: UserQueryOpts) {
     const repository = getRepository(User);
 
-    const queryOptions: FindManyOptions<User> = {};
+    const queryOptions: FindManyOptions<User> = {
+      take: MAX_TAKE_ITEMS,
+    };
 
     if (query.name) {
       queryOptions.where = {
