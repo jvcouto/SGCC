@@ -34,11 +34,11 @@ interface AuthApiResponse {
 // eslint-disable-next-line react/prop-types
 function MainLayout({ children }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const { user } = useAuth();
+  const { logOut } = useAuth();
   const { asPath } = useRouter();
 
   const handleclick = () => {
-    console.log(user);
+    logOut();
   };
 
   useEffect(() => {

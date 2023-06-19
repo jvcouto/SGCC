@@ -22,7 +22,7 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(
+  return (
     <IntlProvider
       messages={translactions["pt-BR"]}
       locale="pt-BR"
@@ -34,9 +34,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             SGCC - Sistema para Gerenciamento de Coordenação de Cursos
           </title>
         </Head>
-        <AuthProvider>
-          <Component {...pageProps} />
-        </AuthProvider>
+        <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
         <GlobalStyle />
       </ThemeProvider>
     </IntlProvider>

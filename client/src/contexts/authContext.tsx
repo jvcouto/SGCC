@@ -7,7 +7,6 @@ import api from "../services/request.service";
 interface LoginDataProps {
   email: string;
   password: string;
-  semester: number;
 }
 
 interface AuthApiResponse {
@@ -17,7 +16,6 @@ interface AuthApiResponse {
     email: string;
     roles: number[];
     token?: string;
-    semester: number;
   };
 }
 
@@ -34,7 +32,6 @@ interface AuthContextType {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   user: User;
   logOut(): void;
-  selectedSemester: number;
 }
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -43,7 +40,6 @@ export const AuthContext = createContext({} as AuthContextType);
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
 
   useEffect(() => {
     const { sgcc: token } = parseCookies();
@@ -51,10 +47,9 @@ export function AuthProvider({ children }) {
       api
         .get<AuthApiResponse>(`api/user/current`)
         .then((response) => {
-          const { id, email, name, roles, semester } = response.data.data;
+          const { id, email, name, roles } = response.data.data;
           setUser({ id, name, email, roles });
           setIsAuthenticated(true);
-          setSelectedSemester(semester);
         })
         .catch();
     }
@@ -64,7 +59,7 @@ export function AuthProvider({ children }) {
     api
       .post<AuthApiResponse>("/public/auth", data)
       .then((response) => {
-        const { id, name, email, roles, token, semester } = response.data.data;
+        const { id, name, email, roles, token } = response.data.data;
         setCookie(undefined, "sgcc", token, {
           maxAge: 60 * 60 * 6, // 6 hour
         });
@@ -74,7 +69,6 @@ export function AuthProvider({ children }) {
         api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
         setIsAuthenticated(true);
-        setSelectedSemester(semester);
         Router.push("/dashboard/settings/email");
       })
       .catch((e) => {
@@ -93,7 +87,6 @@ export function AuthProvider({ children }) {
 
   function logOut() {
     setUser(null);
-    setSelectedSemester(null);
     destroyCookie(undefined, "sgcc");
     Router.push("/");
   }
@@ -107,7 +100,6 @@ export function AuthProvider({ children }) {
         signIn,
         user,
         logOut,
-        selectedSemester,
       }}
     >
       {children}
@@ -117,14 +109,7 @@ export function AuthProvider({ children }) {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  const {
-    isAuthenticated,
-    setIsAuthenticated,
-    signIn,
-    user,
-    logOut,
-    selectedSemester,
-  } = context;
+  const { isAuthenticated, setIsAuthenticated, signIn, user, logOut } = context;
 
   return {
     isAuthenticated,
@@ -132,6 +117,5 @@ export const useAuth = () => {
     signIn,
     user,
     logOut,
-    selectedSemester,
   };
 };

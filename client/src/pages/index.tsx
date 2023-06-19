@@ -3,7 +3,6 @@ import { message } from "antd";
 import { parseCookies } from "nookies";
 import Login from "../components/login/loginForm";
 import { useAuth } from "../contexts/authContext";
-import api from "../services/request.service";
 
 interface LoginFormData {
   email: string;
@@ -30,7 +29,7 @@ export async function getServerSideProps(ctx: any) {
   if (token) {
     return {
       redirect: {
-        destination: "/dashboard",
+        destination: "/dashboard/settings/password",
         permanent: false,
       },
     };

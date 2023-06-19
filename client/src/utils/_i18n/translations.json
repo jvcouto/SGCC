@@ -3,6 +3,9 @@
   "pt-BR": {
     "Bem vindo!": "Bem vindo!",
     "header.bemvindousuario": "Bem vindo {usuario}!",
-    "Teste": " asdadsasdada"
+    "Teste": " asdadsasdada",
+    "shift.fulltime": "Integral",
+    "shift.vespertine": "Vespertino",
+    "shift.nocturnal": "Noturno"
   }
 }
