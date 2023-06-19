@@ -8,6 +8,10 @@ const AlternateList = styled(List)`
       background: #f0f2f5;
     }
   }
+
+  .ant-card.selected {
+    box-shadow: 0 0 4px 1.5px #40a9ff;
+  }
 `;
 
 export default AlternateList;

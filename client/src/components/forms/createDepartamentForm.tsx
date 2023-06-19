@@ -1,4 +1,4 @@
-import { Form, FormInstance, Input, Modal, Radio, message } from "antd";
+import { Form, FormInstance, Input, Modal, message } from "antd";
 import React from "react";
 
 export interface IDepartamentFormValues {

@@ -2,7 +2,7 @@ import { Button, Card, Divider, Empty, List, Skeleton, message } from "antd";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Link from "next/link";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { FormInstance } from "antd/es/form/Form";
 import api from "../../../services/request.service";
 import AlternateList from "../../_ui/styles/alterCard.style";
@@ -17,6 +17,8 @@ interface IDepartament {
 }
 
 function DepartamentSider() {
+  const router = useRouter();
+  const { dId } = router.query;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<IDepartament[]>([]);
   const [total, setTotal] = useState(0);
@@ -134,7 +136,14 @@ function DepartamentSider() {
             renderItem={(item: IDepartament) => (
               <List.Item>
                 <Link href={`/dashboard/departaments/${item.id}`}>
-                  <Card hoverable>{item.name}</Card>
+                  <Card
+                    className={
+                      Number(dId) === item.id ? "selected" : "notSelected"
+                    }
+                    hoverable
+                  >
+                    {item.name}
+                  </Card>
                 </Link>
               </List.Item>
             )}

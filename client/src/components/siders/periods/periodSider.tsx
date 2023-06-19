@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Link from "next/link";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import api from "../../../services/request.service";
 import AlternateList from "../../_ui/styles/alterCard.style";
 import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
@@ -21,6 +21,8 @@ import CreatePeriodModal, {
 import IPeriod from "../../../types/apiResponses/periods";
 
 function PeriodSider() {
+  const router = useRouter();
+  const { pId } = router.query;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<IPeriod[]>([]);
   const [total, setTotal] = useState(0);
@@ -140,7 +142,12 @@ function PeriodSider() {
             renderItem={(item: IPeriod) => (
               <List.Item>
                 <Link href={`/dashboard/periods/${item.id}`}>
-                  <Card hoverable>{`Periodo: ${item.code}`}</Card>
+                  <Card
+                    className={
+                      Number(pId) === item.id ? "selected" : "notSelected"
+                    }
+                    hoverable
+                  >{`Periodo: ${item.code}`}</Card>
                 </Link>
               </List.Item>
             )}
