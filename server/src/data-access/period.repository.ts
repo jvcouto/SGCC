@@ -1,6 +1,9 @@
 import { FindManyOptions, getRepository } from "typeorm";
 import Period from "@models/period.model";
-import { DEFAULT_PAGE_SIZE } from "@utils/constants/paginationOptions";
+import {
+  DEFAULT_PAGE_SIZE,
+  MAX_TAKE_ITEMS,
+} from "@utils/constants/paginationOptions";
 
 export default class PeriodRepository {
   async save(period: Period) {
