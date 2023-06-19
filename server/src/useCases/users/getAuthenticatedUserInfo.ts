@@ -11,11 +11,11 @@ export default class GetAuthenticatedUserInfo {
   async execute(token: string) {
     try {
       const data = jwt.verify(token, process.env.JWT_TOKEN as string) as any;
-      const { id, userRoles, semester } = data;
+      const { id, userRoles } = data;
 
       const user = (await this.repository.findOne(id)) as User;
 
-      return { ...user, roles: userRoles, semester };
+      return { ...user, roles: userRoles };
     } catch (error) {
       Logger.error(error as string);
       throw new InternalServerError("Error fecthing current user");

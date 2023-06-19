@@ -21,7 +21,7 @@ export default class AuthenticateUser {
     return userRoles;
   }
 
-  async execute(email: string, password: string, semester: number) {
+  async execute(email: string, password: string) {
     const user = (await this.repository.findOne(email, "email")) as User;
 
     if (!user) {
@@ -38,7 +38,7 @@ export default class AuthenticateUser {
 
     if (await bcrypt.compare(password, userPassword)) {
       const token = jwt.sign(
-        { id: user.id, userRoles: userRoles, semester },
+        { id: user.id, userRoles: userRoles },
         process.env.JWT_TOKEN as string,
         {
           expiresIn: process.env.JWT_EXPIRE,
@@ -50,7 +50,6 @@ export default class AuthenticateUser {
         name: user.name,
         email: user.email,
         roles: userRoles,
-        semester,
         token,
       };
 

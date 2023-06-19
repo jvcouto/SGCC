@@ -12,13 +12,10 @@ import NotAuthenticatedError from "@errors/notAuthenticated.error";
 
 export default function MakeUserController() {
   const authenticate = async (httpRequest: Partial<Request>) => {
-    const {
-      email,
-      password,
-      semester,
-    }: { email: string; password: string; semester: number } = httpRequest.body;
+    const { email, password }: { email: string; password: string } =
+      httpRequest.body;
 
-    const userData = await authenticateUser.execute(email, password, semester);
+    const userData = await authenticateUser.execute(email, password);
 
     return { status: HTTP_STATUS_CODES.OK, data: userData };
   };
