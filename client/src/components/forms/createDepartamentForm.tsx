@@ -1,14 +1,14 @@
 import { Form, FormInstance, Input, Modal, Radio, message } from "antd";
 import React from "react";
 
-export interface DepartamentFormValues {
+export interface IDepartamentFormValues {
   code: string;
   name: string;
 }
 
 interface CreateDepartamentModalProps {
   open: boolean;
-  onCreate: (values: DepartamentFormValues, form: FormInstance<any>) => void;
+  onCreate: (values: IDepartamentFormValues, form: FormInstance<any>) => void;
   onCancel: () => void;
 }
 
@@ -24,7 +24,10 @@ function CreateDepartamentModal({
       title="Criar novo Departamento"
       okText="Criar"
       cancelText="Cancelar"
-      onCancel={onCancel}
+      onCancel={() => {
+        form.resetFields();
+        onCancel();
+      }}
       onOk={() => {
         form
           .validateFields()

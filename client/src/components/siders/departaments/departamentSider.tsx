@@ -8,7 +8,7 @@ import api from "../../../services/request.service";
 import AlternateList from "../../_ui/styles/alterCard.style";
 import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
 import CreateDepartamentModal, {
-  DepartamentFormValues,
+  IDepartamentFormValues,
 } from "../../forms/createDepartamentForm";
 
 interface IDepartament {
@@ -53,7 +53,10 @@ function DepartamentSider() {
     loadMoreData();
   }, []);
 
-  const onCreate = (values: DepartamentFormValues, form: FormInstance<any>) => {
+  const onCreate = (
+    values: IDepartamentFormValues,
+    form: FormInstance<any>
+  ) => {
     const newDepartamentData = {
       name: values.name,
       code: values.code,

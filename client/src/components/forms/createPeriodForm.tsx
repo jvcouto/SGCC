@@ -27,7 +27,10 @@ function CreatePeriodModal({
       title="Criar novo período"
       okText="Criar"
       cancelText="Cancelar"
-      onCancel={onCancel}
+      onCancel={() => {
+        form.resetFields();
+        onCancel();
+      }}
       onOk={() => {
         form
           .validateFields()
