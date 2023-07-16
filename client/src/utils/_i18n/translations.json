@@ -6,6 +6,7 @@
     "Teste": " asdadsasdada",
     "shift.fulltime": "Integral",
     "shift.vespertine": "Vespertino",
-    "shift.nocturnal": "Noturno"
+    "shift.nocturnal": "Noturno",
+    "error.genericFormError": "Algo deu errado!"
   }
 }

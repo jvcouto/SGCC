@@ -1,52 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Layout, Menu, Button } from "antd";
 import Link from "next/link";
 import Image from "next/image";
 
 import { LogoutOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import api from "../../services/request.service";
 
-import { getDefaultUserPage, getRolePages, getSelectedKey } from "./pages";
+import { getRolePages, getSelectedKey } from "./pages";
 
 import * as S from "./layouts.style";
 import { useAuth } from "../../contexts/authContext";
 
 const { Header, Footer } = Layout;
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  roles: number[];
-}
-
-interface AuthApiResponse {
-  data: {
-    id: number;
-    name: string;
-    email: string;
-    roles: number[];
-    token: string;
-    semester: number;
-  };
-}
 
 // eslint-disable-next-line react/prop-types
 function MainLayout({ children }) {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const { logOut } = useAuth();
+  const { logOut, user } = useAuth();
   const { asPath } = useRouter();
 
   const handleclick = () => {
     logOut();
   };
-
-  useEffect(() => {
-    api.get<AuthApiResponse>(`api/user/current`).then((response) => {
-      const { id, email, name, roles } = response.data.data;
-      setCurrentUser({ id, name, email, roles });
-    });
-  }, []);
 
   return (
     <S.MainLayout>
@@ -67,7 +41,7 @@ function MainLayout({ children }) {
           defaultSelectedKeys={[getSelectedKey(asPath.split("/")[2])]}
           style={{ minWidth: "50rem" }}
         >
-          {getRolePages(currentUser?.roles).map((e) => (
+          {Array.from(getRolePages(user?.roles)).map((e) => (
             <Menu.Item key={e.key}>
               <Link href={e.path}>{e.label}</Link>
             </Menu.Item>

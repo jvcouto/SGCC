@@ -1,18 +1,20 @@
-import { Breadcrumb, Layout, Menu } from "antd";
+import { Breadcrumb, Layout } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import React, { ReactElement } from "react";
 import * as S from "./layouts.style";
 
 interface SecondLayoutProps {
   children: ReactElement;
-  siderContent: ReactElement;
+  siderContent?: ReactElement;
 }
 
 // eslint-disable-next-line react/prop-types
 function SecondLayout({ children, siderContent }: SecondLayoutProps) {
   return (
     <S.SecondLayout>
-      <S.LayoutSider width={300}>{siderContent}</S.LayoutSider>
+      {siderContent && (
+        <S.LayoutSider width={300}>{siderContent}</S.LayoutSider>
+      )}
       <Layout style={{ padding: "24px 24px 0px 24px" }}>
         {/* <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Semestre</Breadcrumb.Item>
@@ -32,5 +34,9 @@ function SecondLayout({ children, siderContent }: SecondLayoutProps) {
     </S.SecondLayout>
   );
 }
+
+SecondLayout.defaultProps = {
+  siderContent: null,
+};
 
 export default SecondLayout;

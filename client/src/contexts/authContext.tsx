@@ -3,6 +3,7 @@ import { setCookie, parseCookies, destroyCookie } from "nookies";
 import Router from "next/router";
 import { message } from "antd";
 import api from "../services/request.service";
+import IUser from "../types/apiResponses/users";
 
 interface LoginDataProps {
   email: string;
@@ -20,7 +21,7 @@ interface AuthApiResponse {
 }
 
 interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   roles: number[];
@@ -45,7 +46,7 @@ export function AuthProvider({ children }) {
     const { sgcc: token } = parseCookies();
     if (token) {
       api
-        .get<AuthApiResponse>(`api/user/current`)
+        .get<{ data: IUser }>(`api/user/current`)
         .then((response) => {
           const { id, email, name, roles } = response.data.data;
           setUser({ id, name, email, roles });
@@ -69,7 +70,7 @@ export function AuthProvider({ children }) {
         api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
         setIsAuthenticated(true);
-        Router.push("/dashboard/settings/email");
+        Router.push("/dashboard");
       })
       .catch((e) => {
         const { code } = e.response.data;

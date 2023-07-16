@@ -29,39 +29,36 @@ const SYSTEM_PAGES = Object.freeze({
 });
 
 const getSelectedKey = (path: string) => {
-  if (!path) return "config";
+  if (!path) return null;
 
   return SYSTEM_PAGES[path].key;
 };
 
 const getRolePages = (userRoles: number[]) => {
-  if (!userRoles || !userRoles.length) return [];
+  const pages = new Set([SYSTEM_PAGES.settings]);
 
-  const pages = [];
+  if (!userRoles || !userRoles.length) return pages;
 
-  if (userRoles.includes(USER_ROLES.TEACHER)) {
-    pages.push(SYSTEM_PAGES.courses, SYSTEM_PAGES.settings);
+  if (userRoles.includes(USER_ROLES.SYSTEM_ADMIN)) {
+    pages.add(SYSTEM_PAGES.departaments);
+    pages.add(SYSTEM_PAGES.periods);
+    pages.add(SYSTEM_PAGES.courses);
+    return pages;
   }
 
-  if (userRoles.includes(USER_ROLES.SYSTEM_ADMIN))
-    pages.push(
-      SYSTEM_PAGES.periods,
-      SYSTEM_PAGES.departaments,
-      SYSTEM_PAGES.courses,
-      SYSTEM_PAGES.offers,
-      SYSTEM_PAGES.settings
-    );
+  if (userRoles.includes(USER_ROLES.TEACHER)) {
+    pages.add(SYSTEM_PAGES.departaments);
+  }
+
+  if (userRoles.includes(USER_ROLES.COLLEGE_MEMBER)) {
+    pages.add(SYSTEM_PAGES.courses);
+  }
+
+  if (userRoles.includes(USER_ROLES.COURSE_ADMIN)) {
+    pages.add(SYSTEM_PAGES.courses);
+  }
 
   return pages;
 };
 
-const getDefaultUserPage = (userRoles: number[]) => {
-  if (!userRoles.length) return SYSTEM_PAGES.settings.key;
-
-  if (userRoles.includes(USER_ROLES.TEACHER)) return SYSTEM_PAGES.settings.key;
-
-  if (userRoles.includes(USER_ROLES.SYSTEM_ADMIN))
-    return SYSTEM_PAGES.settings.key;
-};
-
-export { getRolePages, getDefaultUserPage, getSelectedKey };
+export { getRolePages, getSelectedKey };
