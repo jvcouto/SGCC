@@ -26,12 +26,18 @@ export default class CourseRepository {
     const repository = getRepository(Course);
 
     return repository.findOne(id, {
-      relations: ["collegeMembers", "admins", "subjects"],
+      relations: ["collegeMembers", "admins", "subjects", "admins.user"],
     });
   }
 
   async save(data: Course) {
     const repository = getRepository(Course);
+
+    if (data.admins && data.admins.length) {
+      data.admins.forEach((admin) => {
+        admin.createdAt = new Date();
+      });
+    }
 
     return repository.save(data);
   }

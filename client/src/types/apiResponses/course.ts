@@ -11,6 +11,12 @@ interface IUser {
   roles: number[];
 }
 
+interface ICourseAdmins {
+  id: number;
+  adminRole: string;
+  user?: IUser;
+}
+
 interface ICourse {
   id: number;
   name: string;
@@ -19,7 +25,7 @@ interface ICourse {
   createdAt: string;
   updatedAt: string;
   collegeMembers?: IUser[];
-  admins?: IUser[];
+  admins?: ICourseAdmins[];
   subjects?: ISubject[];
 }
 

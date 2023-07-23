@@ -21,11 +21,6 @@ const SYSTEM_PAGES = Object.freeze({
     path: "/dashboard/settings/email",
     key: "config",
   },
-  offers: {
-    label: "Ofertas",
-    path: "/dashboard/offers",
-    key: "offers",
-  },
 });
 
 const getSelectedKey = (path: string) => {
@@ -35,14 +30,19 @@ const getSelectedKey = (path: string) => {
 };
 
 const getRolePages = (userRoles: number[]) => {
-  const pages = new Set([SYSTEM_PAGES.settings]);
+  const pages = new Set();
 
-  if (!userRoles || !userRoles.length) return pages;
+  if (!userRoles || !userRoles.length) {
+    pages.add(SYSTEM_PAGES.settings);
+    return pages;
+  }
 
   if (userRoles.includes(USER_ROLES.SYSTEM_ADMIN)) {
-    pages.add(SYSTEM_PAGES.departaments);
     pages.add(SYSTEM_PAGES.periods);
+    pages.add(SYSTEM_PAGES.departaments);
     pages.add(SYSTEM_PAGES.courses);
+    pages.add(SYSTEM_PAGES.settings);
+
     return pages;
   }
 
@@ -57,6 +57,8 @@ const getRolePages = (userRoles: number[]) => {
   if (userRoles.includes(USER_ROLES.COURSE_ADMIN)) {
     pages.add(SYSTEM_PAGES.courses);
   }
+
+  pages.add(SYSTEM_PAGES.settings);
 
   return pages;
 };

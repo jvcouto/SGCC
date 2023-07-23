@@ -1,21 +1,47 @@
-import { Form, Input, Modal, Select, Tooltip, message } from "antd";
+import { Divider, Form, Input, Modal, Select, Tooltip, message } from "antd";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import DayShift from "../../utils/constants/dayShift";
 import api from "../../services/request.service";
 import IUser from "../../types/apiResponses/users";
 
-interface ICreateCourseFormValues {
-  title: string;
-  description: string;
-  modifier: string;
+export interface ICreateCourseFormValues {
+  name: string;
+  duration: number;
+  shift: string;
+  admin: string;
+  secretary: string;
+  viceAdmin: string;
 }
 
 interface ICreateCourseFormModalProps {
   open: boolean;
-  onCreate: (values: ICreateCourseFormValues) => void;
+  onCreate: (values: ICreateCourseFormValues, form: FormInstance<any>) => void;
   onCancel: () => void;
 }
+
+const SEMESTER_OPTIONS = [
+  {
+    value: 4,
+    label: "4 Semestres",
+  },
+  {
+    value: 6,
+    label: "6 Semestres",
+  },
+  {
+    value: 8,
+    label: "8 Semestres",
+  },
+  {
+    value: 10,
+    label: "10 Semestres",
+  },
+  {
+    value: 12,
+    label: "12 Semestres",
+  },
+];
 
 function CreateCourseModal({
   open,
@@ -57,8 +83,7 @@ function CreateCourseModal({
         form
           .validateFields()
           .then((values) => {
-            form.resetFields();
-            onCreate(values);
+            onCreate(values, form);
           })
           .catch(() => {
             message.error(intl.formatMessage({ id: "error.genericFormError" }));
@@ -88,31 +113,7 @@ function CreateCourseModal({
             },
           ]}
         >
-          <Select
-            placeholder="Insira um valor"
-            options={[
-              {
-                value: 4,
-                label: "4 Semestres",
-              },
-              {
-                value: 6,
-                label: "6 Semestres",
-              },
-              {
-                value: 8,
-                label: "8 Semestres",
-              },
-              {
-                value: 10,
-                label: "10 Semestres",
-              },
-              {
-                value: 12,
-                label: "12 Semestres",
-              },
-            ]}
-          />
+          <Select placeholder="Insira um valor" options={SEMESTER_OPTIONS} />
         </Form.Item>
         <Form.Item
           name="shift"
@@ -133,25 +134,51 @@ function CreateCourseModal({
           />
         </Form.Item>
 
-        <Form.Item
-          name="admin"
-          label={
-            <Tooltip
-              placement="rightBottom"
-              title="Outros adminstradores poderão ser inseridos após a criação."
-            >
-              <span>Administrador</span>
-            </Tooltip>
-          }
-          rules={[
-            {
-              required: true,
-              message: "Insira o administrador do curso!",
-            },
-          ]}
-        >
+        <Tooltip placement="top" title="Selecione uma opção">
+          <Divider>Administradores</Divider>
+        </Tooltip>
+
+        <Form.Item name="admin" label="Coordenador">
           <Select
-            placeholder="Insira um administrador"
+            placeholder="Selecione o coordenador"
+            showSearch
+            allowClear
+            value={selectedUser}
+            defaultActiveFirstOption={false}
+            showArrow={false}
+            filterOption={false}
+            onSearch={handleUserSearch}
+            onChange={handleUserChange}
+            notFoundContent="Nenhum item encontrado"
+            options={(users || []).map((user) => ({
+              value: user.id,
+              label: user.name,
+            }))}
+          />
+        </Form.Item>
+
+        <Form.Item name="viceAdmin" label="Vice Coordenador">
+          <Select
+            placeholder="Selecione o vice coordenador"
+            showSearch
+            allowClear
+            value={selectedUser}
+            defaultActiveFirstOption={false}
+            showArrow={false}
+            filterOption={false}
+            onSearch={handleUserSearch}
+            onChange={handleUserChange}
+            notFoundContent="Nenhum item encontrado"
+            options={(users || []).map((user) => ({
+              value: user.id,
+              label: user.name,
+            }))}
+          />
+        </Form.Item>
+
+        <Form.Item name="secretary" label="Secretário">
+          <Select
+            placeholder="Insira o secretário"
             showSearch
             allowClear
             value={selectedUser}

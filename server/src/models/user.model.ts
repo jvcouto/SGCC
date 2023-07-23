@@ -3,6 +3,7 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import {
@@ -14,6 +15,8 @@ import {
 } from "class-validator";
 import Course from "./course.model";
 import Departament from "./departament";
+import CourseAdmins from "./courseAdmin.model";
+import DepartamentAdmin from "./departamentAdmin.model";
 @Entity("user")
 class User {
   @PrimaryGeneratedColumn("uuid")
@@ -57,8 +60,14 @@ class User {
   @ManyToMany(() => Course, (course) => course.collegeMembers)
   colleges!: Course[];
 
-  @ManyToMany(() => Course, (course) => course.admins)
-  administrating!: Course[];
+  @OneToMany(() => CourseAdmins, (courseAdmin) => courseAdmin.user)
+  courseAdmin!: CourseAdmins[];
+
+  @OneToMany(
+    () => DepartamentAdmin,
+    (departamentAdmin) => departamentAdmin.admin
+  )
+  departamentAdmin!: CourseAdmins[];
 
   @ManyToOne(() => Departament, (departament) => departament.teachers)
   departament!: Departament;

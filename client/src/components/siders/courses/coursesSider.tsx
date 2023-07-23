@@ -1,12 +1,23 @@
-import { Button, Card, Divider, Empty, List, Skeleton } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Empty,
+  FormInstance,
+  List,
+  Skeleton,
+  message,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import api from "../../../services/request.service";
 import AlternateList from "../../_ui/styles/alterCard.style";
 import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
-import CreateCourseModal from "../../forms/createCourseForm";
+import CreateCourseModal, {
+  ICreateCourseFormValues,
+} from "../../forms/createCourseForm";
 import ICourse from "../../../types/apiResponses/course";
 
 function CourseSider() {
@@ -48,9 +59,74 @@ function CourseSider() {
     loadMoreData();
   }, []);
 
-  const onCreate = (values: any) => {
-    console.log("Received values of form: ", values);
-    setformOpen(false);
+  const onCreate = (
+    values: ICreateCourseFormValues,
+    form: FormInstance<any>
+  ) => {
+    if (!values.admin && !values.viceAdmin && !values.secretary) {
+      form.setFields([
+        {
+          name: "admin",
+          errors: ["Selecione pelo menos um administrador!"],
+        },
+        {
+          name: "viceAdmin",
+          errors: ["Selecione pelo menos um administrador!"],
+        },
+        {
+          name: "secretary",
+          errors: ["Selecione pelo menos um administrador!"],
+        },
+      ]);
+      return;
+    }
+    const newCourseData = {
+      name: values.name,
+      duration: values.duration,
+      shift: values.shift,
+      admins: [],
+    };
+
+    if (values.admin)
+      newCourseData.admins.push({
+        user: { id: values.admin },
+        adminRole: "coordinator",
+      });
+
+    if (values.viceAdmin)
+      newCourseData.admins.push({
+        user: { id: values.viceAdmin },
+        adminRole: "vice-coordinator",
+      });
+
+    if (values.secretary)
+      newCourseData.admins.push({
+        user: { id: values.secretary },
+        adminRole: "secretary",
+      });
+
+    api
+      .post<{ data }>("api/courses", newCourseData)
+      .then((response) => {
+        const { data: newCourse } = response.data;
+        message.success("Curso criado com sucesso!");
+        setData([newCourse, ...data]);
+        Router.push(`/dashboard/courses/${newCourse.id}`);
+        form.resetFields();
+        setformOpen(false);
+      })
+      .catch((error) => {
+        const { code } = error.response.data;
+        switch (code) {
+          case "DUPLICATED_PERIOD":
+            message.error("Códig ou nome ja existente!");
+            break;
+
+          default:
+            message.error("Algo deu errado!");
+            break;
+        }
+      });
   };
 
   return (

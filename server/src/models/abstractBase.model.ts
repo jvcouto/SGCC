@@ -30,11 +30,6 @@ abstract class AbstractBaseModel {
   private setCreatedAt(): void {
     this.createdAt = new Date();
   }
-
-  @BeforeUpdate()
-  private setUpdatedAt(): void {
-    this.updatedAt = new Date();
-  }
 }
 
 export default AbstractBaseModel;

@@ -35,7 +35,7 @@ function CreateDepartamentModal({
             form.resetFields();
             onCreate(values, form);
           })
-          .catch((info) => {
+          .catch(() => {
             message.error("Algo deu errado, por favor tente novamente!");
           });
       }}

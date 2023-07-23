@@ -12,7 +12,7 @@ import CreateDepartamentModal, {
 } from "../../forms/createDepartamentForm";
 
 interface IDepartament {
-  id: string;
+  id: number;
   name: string;
 }
 

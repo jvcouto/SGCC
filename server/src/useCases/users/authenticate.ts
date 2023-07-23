@@ -13,7 +13,7 @@ export default class AuthenticateUser {
   private _getUserRoles(user: User) {
     const userRoles = [];
 
-    if (user.administrating.length) userRoles.push(USER_ROLES.COURSE_ADMIN);
+    if (user.courseAdmin.length) userRoles.push(USER_ROLES.COURSE_ADMIN);
     if (user.colleges.length) userRoles.push(USER_ROLES.COLLEGE_MEMBER);
     if (user.departament) userRoles.push(USER_ROLES.TEACHER);
     if (user.sysAdmin) userRoles.push(USER_ROLES.SYSTEM_ADMIN);

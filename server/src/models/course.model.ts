@@ -3,6 +3,7 @@ import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import User from "./user.model";
 import Subject from "./subject.model";
+import CourseAdmin from "./courseAdmin.model";
 
 enum DayShift {
   FULLTIME = "fulltime",
@@ -31,9 +32,10 @@ class Course extends AbstractBaseModel {
   @JoinTable()
   collegeMembers!: User[];
 
-  @ManyToMany(() => User, (user) => user.administrating)
-  @JoinTable()
-  admins!: User[];
+  @OneToMany(() => CourseAdmin, (courseAdmin) => courseAdmin.course, {
+    cascade: true,
+  })
+  admins!: CourseAdmin[];
 
   @OneToMany(() => Subject, (subject) => subject.course)
   subjects!: Subject[];
