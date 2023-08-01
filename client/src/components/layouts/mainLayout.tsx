@@ -42,7 +42,7 @@ function MainLayout({ children }) {
           defaultSelectedKeys={[getSelectedKey(asPath.split("/")[2])]}
           style={{ minWidth: "50rem" }}
         >
-          {Array.from(getRolePages(user?.roles)).map((e) => (
+          {Array.from(getRolePages(user?.roles)).map((e: any) => (
             <Menu.Item key={e.key}>
               <Link href={e.path}>{e.label}</Link>
             </Menu.Item>

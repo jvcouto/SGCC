@@ -24,7 +24,7 @@ const SYSTEM_PAGES = Object.freeze({
 });
 
 const getSelectedKey = (path: string) => {
-  if (!path) return null;
+  if (!path) return SYSTEM_PAGES.settings.key;
 
   return SYSTEM_PAGES[path].key;
 };
