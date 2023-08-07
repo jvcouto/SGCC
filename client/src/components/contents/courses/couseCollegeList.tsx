@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Button, Empty, List, message } from "antd";
 import IUser from "../../../types/apiResponses/users";
 import ContentAddButtonWrapper from "../../_ui/styles/contentAddButtonWrapper";
@@ -15,7 +15,6 @@ interface ICourseCollegeMembers {
 
 function CollegeList(props: ICourseCollegeMembers) {
   const { collegeMembers, selectedCourse } = props;
-  const [cMembers, setCMembers] = useState(collegeMembers);
   const [enableForm, seEnableForm] = useState(false);
 
   const handleFormFinish = (values: ICollegeMembersFormValues) => {
@@ -29,7 +28,6 @@ function CollegeList(props: ICourseCollegeMembers) {
       .then((response) => {
         message.success("Membros do colegiado adicionados!");
         const { data: updatedCourse }: { data: ICourse } = response.data;
-        setCMembers(updatedCourse.collegeMembers);
       })
       .catch(() => {
         message.error("Algo deu errado, tente novamente!");
@@ -57,7 +55,7 @@ function CollegeList(props: ICourseCollegeMembers) {
       )}
       <List
         itemLayout="horizontal"
-        dataSource={cMembers}
+        dataSource={collegeMembers}
         locale={{
           emptyText: (
             <Empty
