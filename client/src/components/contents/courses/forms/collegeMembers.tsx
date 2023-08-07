@@ -78,14 +78,13 @@ function CollegeMembersForm(props: ICollegeMembersFormProps) {
           style={{ display: "flex", justifyContent: "flex-end", gap: " 1rem" }}
         >
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Confirmar
-            </Button>
-          </Form.Item>
-
-          <Form.Item>
             <Button type="primary" danger htmlType="reset">
               cancelar
+            </Button>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Confirmar
             </Button>
           </Form.Item>
         </div>
