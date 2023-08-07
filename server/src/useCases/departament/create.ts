@@ -9,7 +9,16 @@ export default class CreateDepartament {
   constructor(private readonly repository: DepartamentRepository) {}
 
   async execute(departamentData: any) {
-    const newDepartament = Object.assign(new Departament(), departamentData);
+    if (departamentData.admins && departamentData.admins.length) {
+      departamentData.admins.forEach((admin: any) => {
+        admin.createdAt = new Date();
+      });
+    }
+
+    const newDepartament = Object.assign(
+      new Departament(),
+      departamentData
+    ) as Departament;
 
     const errors = await validate(newDepartament);
 

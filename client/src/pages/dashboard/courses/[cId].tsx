@@ -54,7 +54,12 @@ function CoursesPage(props: CoursePageProps) {
         </span>
       ),
       key: "item-4",
-      children: <CollegeList collegeMembers={course.collegeMembers} />,
+      children: (
+        <CollegeList
+          collegeMembers={course.collegeMembers}
+          selectedCourse={course.id}
+        />
+      ),
     },
     {
       label: (

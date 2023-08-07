@@ -1,21 +1,6 @@
+import IAdmins from "./admins";
 import ISubject from "./subject";
-
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  sysAdmin: boolean;
-  firstLogin: boolean;
-  colleges?: ICourse[];
-  administrating?: ICourse[];
-  roles: number[];
-}
-
-interface ICourseAdmins {
-  id: number;
-  adminRole: string;
-  user?: IUser;
-}
+import IUser from "./users";
 
 interface ICourse {
   id: number;
@@ -25,7 +10,7 @@ interface ICourse {
   createdAt: string;
   updatedAt: string;
   collegeMembers?: IUser[];
-  admins?: ICourseAdmins[];
+  admins?: IAdmins[];
   subjects?: ISubject[];
 }
 

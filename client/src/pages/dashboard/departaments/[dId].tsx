@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { parseCookies } from "nookies";
 
-import { Button, Descriptions, Tabs } from "antd";
+import { Tabs } from "antd";
 
 import { InfoCircleOutlined, TeamOutlined } from "@ant-design/icons";
 import MainLayout from "../../../components/layouts/mainLayout";

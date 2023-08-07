@@ -17,7 +17,7 @@ export default class DepartamentRepository {
     const repository = getRepository(Departament);
 
     return repository.findOne(id, {
-      relations: ["teachers"],
+      relations: ["teachers", "admins", "admins.user"],
     });
   }
 

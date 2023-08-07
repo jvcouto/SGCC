@@ -32,6 +32,7 @@ function CourseInfo(props: ICourseInfo) {
           {courseInfo.collegeMembers.length}
         </Descriptions.Item>
       </Descriptions>
+
       <Divider orientation="left" orientationMargin="0">
         Administradores
       </Divider>

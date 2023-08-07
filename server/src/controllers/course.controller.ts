@@ -1,5 +1,10 @@
 import { Request } from "express";
-import { createCourse, findCourse, listCourses } from "@useCases/course";
+import {
+  createCourse,
+  findCourse,
+  listCourses,
+  updateCourse,
+} from "@useCases/course";
 
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 
@@ -32,9 +37,19 @@ export default function MakeCourseController() {
     return { status: HTTP_STATUS_CODES.OK, data: course };
   };
 
+  const update = async (httpRequest: Partial<Request>) => {
+    const userData = await updateCourse.execute(
+      Number(httpRequest.params?.id),
+      httpRequest.body
+    );
+
+    return { status: HTTP_STATUS_CODES.OK, data: userData };
+  };
+
   return Object.freeze({
     create,
     list,
     findOne,
+    update,
   });
 }

@@ -1,9 +1,21 @@
-import { Form, FormInstance, Input, Modal, message } from "antd";
+import {
+  Divider,
+  Form,
+  FormInstance,
+  Input,
+  Modal,
+  Tooltip,
+  message,
+} from "antd";
 import React from "react";
+import PersonSelect from "../_ui/userSelect";
 
 export interface IDepartamentFormValues {
   code: string;
   name: string;
+  admin: string;
+  secretary: string;
+  viceAdmin: string;
 }
 
 interface CreateDepartamentModalProps {
@@ -32,7 +44,6 @@ function CreateDepartamentModal({
         form
           .validateFields()
           .then((values) => {
-            form.resetFields();
             onCreate(values, form);
           })
           .catch(() => {
@@ -64,6 +75,22 @@ function CreateDepartamentModal({
           ]}
         >
           <Input placeholder="Insira um código" />
+        </Form.Item>
+
+        <Tooltip placement="top" title="Selecione uma opção">
+          <Divider>Administradores</Divider>
+        </Tooltip>
+
+        <Form.Item name="admin" label="Chefe">
+          <PersonSelect placeholder="Selecione o chefe" />
+        </Form.Item>
+
+        <Form.Item name="viceAdmin" label="Vice Chefe">
+          <PersonSelect placeholder="Selecione o vice chefe" />
+        </Form.Item>
+
+        <Form.Item name="secretary" label="Secretário">
+          <PersonSelect placeholder="Selecione o secretário" />
         </Form.Item>
       </Form>
     </Modal>

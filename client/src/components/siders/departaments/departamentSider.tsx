@@ -59,10 +59,47 @@ function DepartamentSider() {
     values: IDepartamentFormValues,
     form: FormInstance<any>
   ) => {
+    if (!values.admin && !values.viceAdmin && !values.secretary) {
+      form.setFields([
+        {
+          name: "admin",
+          errors: ["Selecione pelo menos um administrador!"],
+        },
+        {
+          name: "viceAdmin",
+          errors: ["Selecione pelo menos um administrador!"],
+        },
+        {
+          name: "secretary",
+          errors: ["Selecione pelo menos um administrador!"],
+        },
+      ]);
+      return;
+    }
     const newDepartamentData = {
       name: values.name,
       code: values.code,
+      admins: [],
     };
+
+    if (values.admin)
+      newDepartamentData.admins.push({
+        user: { id: values.admin },
+        adminRole: "chief",
+      });
+
+    if (values.viceAdmin)
+      newDepartamentData.admins.push({
+        user: { id: values.viceAdmin },
+        adminRole: "sub-chief",
+      });
+
+    if (values.secretary)
+      newDepartamentData.admins.push({
+        user: { id: values.secretary },
+        adminRole: "secretary",
+      });
+
     api
       .post<{ data: IDepartament }>("api/departaments", newDepartamentData)
       .then((response) => {
@@ -70,6 +107,7 @@ function DepartamentSider() {
         message.success("Período criado com sucesso!");
         setData([newDepartament, ...data]);
         Router.push(`/dashboard/departaments/${newDepartament.id}`);
+        form.resetFields();
         setformOpen(false);
       })
       .catch((error) => {

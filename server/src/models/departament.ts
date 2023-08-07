@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import { IsString, IsNotEmpty } from "class-validator";
 import User from "./user.model";
+import DepartamentAdmin from "./departamentAdmin.model";
 
 @Entity("departament")
 class Departament extends AbstractBaseModel {
@@ -14,6 +15,15 @@ class Departament extends AbstractBaseModel {
   @IsNotEmpty()
   @Column({ length: 32, unique: true })
   code!: string;
+
+  @OneToMany(
+    () => DepartamentAdmin,
+    (departamentAdmin) => departamentAdmin.departament,
+    {
+      cascade: true,
+    }
+  )
+  admins!: DepartamentAdmin[];
 
   @OneToMany(() => User, (user) => user.departament)
   teachers!: User[];

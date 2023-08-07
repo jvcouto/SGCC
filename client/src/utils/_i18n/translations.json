@@ -10,6 +10,8 @@
     "error.genericFormError": "Algo deu errado, por favor tente novamente!!",
     "coordinator": "Coordenador",
     "vice-coordinator": "Vice Coordenador",
-    "secretary": "Secretário"
+    "secretary": "Secretário",
+    "chief": "Chefe",
+    "sub-chief": "Sub-Chefe"
   }
 }

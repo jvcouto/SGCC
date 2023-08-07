@@ -65,7 +65,7 @@ class User {
 
   @OneToMany(
     () => DepartamentAdmin,
-    (departamentAdmin) => departamentAdmin.admin
+    (departamentAdmin) => departamentAdmin.user
   )
   departamentAdmin!: CourseAdmins[];
 

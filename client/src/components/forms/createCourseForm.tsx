@@ -1,4 +1,13 @@
-import { Divider, Form, Input, Modal, Select, Tooltip, message } from "antd";
+import {
+  Divider,
+  Form,
+  FormInstance,
+  Input,
+  Modal,
+  Select,
+  Tooltip,
+  message,
+} from "antd";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import DayShift from "../../utils/constants/dayShift";
@@ -129,7 +138,7 @@ function CreateCourseModal({
             placeholder="Insira um turno"
             options={Object.keys(DayShift).map((e) => ({
               value: DayShift[e],
-              label: <FormattedMessage id={`shift.${DayShift[e]}`} />,
+              label: intl.formatMessage({ id: `shift.${DayShift[e]}` }),
             }))}
           />
         </Form.Item>
