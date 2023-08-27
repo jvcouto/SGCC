@@ -1,9 +1,11 @@
 import React from "react";
 import { Avatar, Empty, List, message } from "antd";
-import IUser from "../../../types/apiResponses/users";
-import api from "../../../services/request.service";
-import ICourse from "../../../types/apiResponses/course";
-import AddUserBulk, { IBulkUserFormValues } from "../../_ui/forms/addUserBulk";
+import IUser from "../../../../types/apiResponses/users";
+import api from "../../../../services/request.service";
+import ICourse from "../../../../types/apiResponses/course";
+import AddUserBulk, {
+  ICollegeMembersFormValues,
+} from "./college-members-form/collegeMembersForm";
 
 interface ICourseCollegeMembers {
   selectedCourse: number;
@@ -13,7 +15,7 @@ interface ICourseCollegeMembers {
 function CollegeList(props: ICourseCollegeMembers) {
   const { collegeMembers, selectedCourse } = props;
 
-  const onSubmit = async (values: IBulkUserFormValues) => {
+  const onSubmit = async (values: ICollegeMembersFormValues) => {
     if (!values?.users?.length) {
       return;
     }

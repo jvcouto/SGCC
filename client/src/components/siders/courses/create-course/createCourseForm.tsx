@@ -10,9 +10,9 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import DayShift from "../../utils/constants/dayShift";
-import api from "../../services/request.service";
-import IUser from "../../types/apiResponses/users";
+import DayShift from "../../../../utils/constants/dayShift";
+import api from "../../../../services/request.service";
+import IUser from "../../../../types/apiResponses/users";
 
 export interface ICreateCourseFormValues {
   name: string;

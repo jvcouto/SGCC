@@ -8,7 +8,7 @@ import {
   message,
 } from "antd";
 import React from "react";
-import PersonSelect from "../_ui/userSelect";
+import PersonSelect from "../../../_ui/userSelect";
 
 export interface IDepartamentFormValues {
   code: string;

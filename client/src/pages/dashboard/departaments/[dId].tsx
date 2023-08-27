@@ -11,8 +11,8 @@ import api from "../../../services/request.service";
 
 import PageContent from "../../../styles/content.style";
 import DepartamentSider from "../../../components/siders/departaments/departamentSider";
-import DepartamentInfo from "../../../components/contents/departaments/departamentInfo";
-import TeachersList from "../../../components/contents/departaments/departamentTeachersList";
+import DepartamentInfo from "../../../components/contents/departaments/information/departamentInfo";
+import TeachersList from "../../../components/contents/departaments/teachers/departamentTeachersList";
 import IDepartament from "../../../types/apiResponses/departament";
 
 interface IDepartamentPageProps {

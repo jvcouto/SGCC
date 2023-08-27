@@ -2,7 +2,7 @@ import { Descriptions, Button, Divider, List, Avatar, Tag, Empty } from "antd";
 import React from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { FormattedMessage } from "react-intl";
-import IDepartament from "../../../types/apiResponses/departament";
+import IDepartament from "../../../../types/apiResponses/departament";
 
 interface IDepartamentInfo {
   departamentInfo: IDepartament;

@@ -2,7 +2,7 @@ import { Avatar, Button, Descriptions, Divider, List, Tag } from "antd";
 import React from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { FormattedMessage } from "react-intl";
-import ICourse from "../../../types/apiResponses/course";
+import ICourse from "../../../../types/apiResponses/course";
 
 interface ICourseInfo {
   courseInfo: ICourse;

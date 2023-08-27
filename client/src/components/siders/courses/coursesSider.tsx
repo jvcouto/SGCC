@@ -17,7 +17,7 @@ import AlternateList from "../../_ui/styles/alterCard.style";
 import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
 import CreateCourseModal, {
   ICreateCourseFormValues,
-} from "../../forms/createCourseForm";
+} from "./create-course/createCourseForm";
 import ICourse from "../../../types/apiResponses/course";
 
 function CourseSider() {

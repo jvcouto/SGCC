@@ -9,7 +9,7 @@ import AlternateList from "../../_ui/styles/alterCard.style";
 import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
 import CreateDepartamentModal, {
   IDepartamentFormValues,
-} from "../../forms/createDepartamentForm";
+} from "./create-departament/createDepartamentForm";
 
 interface IDepartament {
   id: number;

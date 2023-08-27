@@ -1,20 +1,20 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Space } from "antd";
 import React, { useState } from "react";
-import PersonSelect from "../userSelect";
-import ContentAddButtonWrapper from "../styles/contentAddButtonWrapper";
+import PersonSelect from "../../../../_ui/userSelect";
+import ContentAddButtonWrapper from "../../../../_ui/styles/contentAddButtonWrapper";
 
-export interface IBulkUserFormValues {
+export interface ICollegeMembersFormValues {
   users: {
     user: string;
   }[];
 }
 
-interface IBulkUserFormProps {
-  onSubmit: (values: IBulkUserFormValues) => Promise<void>;
+interface ICollegeMembersFormProps {
+  onSubmit: (values: ICollegeMembersFormValues) => Promise<void>;
 }
 
-function AddUserBulk(props: IBulkUserFormProps) {
+function CollegeMemberForm(props: ICollegeMembersFormProps) {
   const { onSubmit } = props;
 
   const [enableForm, seEnableForm] = useState(false);
@@ -34,7 +34,7 @@ function AddUserBulk(props: IBulkUserFormProps) {
       }}
     >
       <Form
-        name="bulkUsers"
+        name="CollegeMembers"
         onFinish={handleFinish}
         onReset={() => {
           seEnableForm(false);
@@ -108,4 +108,4 @@ function AddUserBulk(props: IBulkUserFormProps) {
   );
 }
 
-export default AddUserBulk;
+export default CollegeMemberForm;

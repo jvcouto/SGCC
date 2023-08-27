@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Collapse, Descriptions } from "antd";
-import ISubject from "../../../types/apiResponses/subject";
+import ISubject from "../../../../types/apiResponses/subject";
 
 const { Panel } = Collapse;
 

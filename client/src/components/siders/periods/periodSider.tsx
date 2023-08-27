@@ -17,7 +17,7 @@ import AlternateList from "../../_ui/styles/alterCard.style";
 import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
 import CreatePeriodModal, {
   PeriodFormValues,
-} from "../../forms/createPeriodForm";
+} from "./create-period/createPeriodForm";
 import IPeriod from "../../../types/apiResponses/periods";
 
 function PeriodSider() {
