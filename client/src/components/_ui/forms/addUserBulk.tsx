@@ -1,23 +1,30 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Space } from "antd";
-import React from "react";
-import PersonSelect from "../../../_ui/userSelect";
+import React, { useState } from "react";
+import PersonSelect from "../userSelect";
+import ContentAddButtonWrapper from "../styles/contentAddButtonWrapper";
 
-export interface ICollegeMembersFormValues {
+export interface IBulkUserFormValues {
   users: {
     user: string;
   }[];
 }
 
-interface ICollegeMembersFormProps {
-  onFormFinish: (values: ICollegeMembersFormValues) => void;
-  onCancel: () => void;
+interface IBulkUserFormProps {
+  onSubmit: (values: IBulkUserFormValues) => Promise<void>;
 }
 
-function CollegeMembersForm(props: ICollegeMembersFormProps) {
-  const { onFormFinish, onCancel } = props;
+function AddUserBulk(props: IBulkUserFormProps) {
+  const { onSubmit } = props;
 
-  return (
+  const [enableForm, seEnableForm] = useState(false);
+
+  const handleFinish = async (values) => {
+    await onSubmit(values);
+    seEnableForm(false);
+  };
+
+  return enableForm ? (
     <div
       style={{
         display: "flex",
@@ -27,9 +34,11 @@ function CollegeMembersForm(props: ICollegeMembersFormProps) {
       }}
     >
       <Form
-        name="collegeMembersForm"
-        onFinish={onFormFinish}
-        onReset={onCancel}
+        name="bulkUsers"
+        onFinish={handleFinish}
+        onReset={() => {
+          seEnableForm(false);
+        }}
         autoComplete="off"
         initialValues={[]}
         style={{ width: "50%" }}
@@ -55,7 +64,7 @@ function CollegeMembersForm(props: ICollegeMembersFormProps) {
                     ]}
                   >
                     {/* @ts-ignore */}
-                    <PersonSelect placeholder="Selecione um membro" />
+                    <PersonSelect placeholder="Selecione um usuário" />
                   </Form.Item>
                   <MinusCircleOutlined onClick={() => remove(name)} />
                 </Space.Compact>
@@ -67,7 +76,7 @@ function CollegeMembersForm(props: ICollegeMembersFormProps) {
                   block
                   icon={<PlusOutlined />}
                 >
-                  Adicionar Membro
+                  Adicionar
                 </Button>
               </Form.Item>
             </>
@@ -90,7 +99,13 @@ function CollegeMembersForm(props: ICollegeMembersFormProps) {
         </div>
       </Form>
     </div>
+  ) : (
+    <ContentAddButtonWrapper>
+      <Button onClick={() => seEnableForm(!enableForm)} type="link">
+        Adicionar
+      </Button>
+    </ContentAddButtonWrapper>
   );
 }
 
-export default CollegeMembersForm;
+export default AddUserBulk;

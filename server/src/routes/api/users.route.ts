@@ -11,4 +11,6 @@ routes
 
 routes.route("/").get(expressCallback(MakeUserController().list));
 
+routes.route("/update").post(expressCallback(MakeUserController().bulkUpdate));
+
 export default routes;

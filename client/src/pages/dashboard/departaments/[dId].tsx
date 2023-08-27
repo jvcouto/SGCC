@@ -13,10 +13,14 @@ import PageContent from "../../../styles/content.style";
 import DepartamentSider from "../../../components/siders/departaments/departamentSider";
 import DepartamentInfo from "../../../components/contents/departaments/departamentInfo";
 import TeachersList from "../../../components/contents/departaments/departamentTeachersList";
+import IDepartament from "../../../types/apiResponses/departament";
 
-function DepartamentPage(props: any) {
+interface IDepartamentPageProps {
+  departament: IDepartament;
+}
+
+function DepartamentPage(props: IDepartamentPageProps) {
   const { departament } = props;
-  const { data: departamentData } = departament;
 
   const items = [
     {
@@ -26,7 +30,7 @@ function DepartamentPage(props: any) {
         </span>
       ),
       key: "item-1",
-      children: <DepartamentInfo departamentInfo={departamentData} />,
+      children: <DepartamentInfo departamentInfo={departament} />,
     },
     {
       label: (
@@ -35,7 +39,12 @@ function DepartamentPage(props: any) {
         </span>
       ),
       key: "item-2",
-      children: <TeachersList teachersInfo={departamentData.teachers} />,
+      children: (
+        <TeachersList
+          departamentId={departament.id}
+          teachersInfo={departament.teachers}
+        />
+      ),
     },
   ];
 
@@ -79,5 +88,5 @@ export async function getServerSideProps(ctx: any) {
 
   const { data } = await api.get(`/api/departaments/${params.dId}`);
 
-  return { props: { departament: data } };
+  return { props: { departament: data.data } };
 }

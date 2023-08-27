@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Avatar, Button, Empty, List, message } from "antd";
+import React from "react";
+import { Avatar, Empty, List, message } from "antd";
 import IUser from "../../../types/apiResponses/users";
-import ContentAddButtonWrapper from "../../_ui/styles/contentAddButtonWrapper";
-import CollegeMembersForm, {
-  ICollegeMembersFormValues,
-} from "./forms/collegeMembers";
 import api from "../../../services/request.service";
 import ICourse from "../../../types/apiResponses/course";
+import AddUserBulk, { IBulkUserFormValues } from "../../_ui/forms/addUserBulk";
 
 interface ICourseCollegeMembers {
   selectedCourse: number;
@@ -15,9 +12,11 @@ interface ICourseCollegeMembers {
 
 function CollegeList(props: ICourseCollegeMembers) {
   const { collegeMembers, selectedCourse } = props;
-  const [enableForm, seEnableForm] = useState(false);
 
-  const handleFormFinish = (values: ICollegeMembersFormValues) => {
+  const onSubmit = async (values: IBulkUserFormValues) => {
+    if (!values?.users?.length) {
+      return;
+    }
     const patchValues = {
       collegeMembers: values.users.map((eachMember) => ({
         id: eachMember.user,
@@ -32,27 +31,11 @@ function CollegeList(props: ICourseCollegeMembers) {
       .catch(() => {
         message.error("Algo deu errado, tente novamente!");
       });
-    seEnableForm(false);
-  };
-
-  const handleFormCancel = () => {
-    seEnableForm(false);
   };
 
   return (
     <>
-      {enableForm ? (
-        <CollegeMembersForm
-          onFormFinish={handleFormFinish}
-          onCancel={handleFormCancel}
-        />
-      ) : (
-        <ContentAddButtonWrapper>
-          <Button onClick={() => seEnableForm(!enableForm)} type="link">
-            Adicionar
-          </Button>
-        </ContentAddButtonWrapper>
-      )}
+      <AddUserBulk onSubmit={onSubmit} />
       <List
         itemLayout="horizontal"
         dataSource={collegeMembers}

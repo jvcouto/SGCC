@@ -5,6 +5,7 @@ import {
   updateUser,
   getAuthenticatedUserInfo,
   listUsers,
+  bulkUpdateUsers,
 } from "../useCases/users";
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 import Logger from "@utils/logger";
@@ -30,6 +31,15 @@ export default function MakeUserController() {
     const userData = await updateUser.execute(
       httpRequest.params?.id,
       httpRequest.body
+    );
+
+    return { status: HTTP_STATUS_CODES.OK, data: userData };
+  };
+
+  const bulkUpdate = async (httpRequest: Partial<Request>) => {
+    const userData = await bulkUpdateUsers.execute(
+      httpRequest.body?.ids,
+      httpRequest.body?.data
     );
 
     return { status: HTTP_STATUS_CODES.OK, data: userData };
@@ -71,5 +81,6 @@ export default function MakeUserController() {
     update,
     getCurrentUser,
     list,
+    bulkUpdate,
   });
 }

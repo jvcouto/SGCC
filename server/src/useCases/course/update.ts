@@ -24,7 +24,7 @@ export default class UpdateCourse {
       ...courseData,
     }) as Course;
 
-    if (updatedFields?.collegeMembers.length) {
+    if (updatedFields?.collegeMembers?.length) {
       updatedFields.collegeMembers = [
         ...updatedFields.collegeMembers,
         ...course.collegeMembers,
