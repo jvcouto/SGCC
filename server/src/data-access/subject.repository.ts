@@ -16,4 +16,10 @@ export default class SubjectRepository {
 
     return repository.save(subject);
   }
+
+  async findOne(id: number) {
+    const repository = getRepository(Subject);
+
+    return repository.findOne(id, { relations: ["departament"] });
+  }
 }

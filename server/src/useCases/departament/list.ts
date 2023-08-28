@@ -5,12 +5,13 @@ import InvalidQueryStringItemError from "@errors/invalidQueryStringItem.error";
 
 export interface DepartamentQueryOpts {
   page?: number;
+  name?: string;
 }
 
 export default class FindAllDepartaments {
   constructor(private readonly repository: DepartamentRepository) {}
 
-  private PERMITTED_QUERY_ITEMS = ["page"];
+  private PERMITTED_QUERY_ITEMS = ["page", "name"];
 
   private _validadeQueryString(query: any) {
     for (const key in query) {

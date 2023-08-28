@@ -2,7 +2,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Space } from "antd";
 import React, { useState } from "react";
 import PersonSelect from "../../../../_ui/userSelect";
-import ContentAddButtonWrapper from "../../../../_ui/styles/contentAddButtonWrapper";
+import { ContentAddButtonWrapper } from "../../../content.style";
 
 export interface ICollegeMembersFormValues {
   users: {

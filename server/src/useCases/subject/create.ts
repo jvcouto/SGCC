@@ -9,9 +9,9 @@ export default class CreateSubject {
   constructor(private readonly repository: SubjectRepository) {}
 
   async execute(subjectData: any) {
-    const newSubject = Object.assign(new Subject(), subjectData);
+    const newSubjectData = Object.assign(new Subject(), subjectData);
 
-    const errors = await validate(newSubject);
+    const errors = await validate(newSubjectData);
 
     if (errors.length > 0) {
       const formatedError = errors.map((error) => error.constraints);
@@ -20,7 +20,8 @@ export default class CreateSubject {
     }
 
     try {
-      return await this.repository.save(newSubject);
+      const newSubject = await this.repository.save(newSubjectData);
+      return await this.repository.findOne(newSubject.id);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error on subject creation");

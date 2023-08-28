@@ -1,6 +1,6 @@
 import Departament from "@models/departament";
 import { DepartamentQueryOpts } from "@useCases/departament/list";
-import { FindManyOptions, getRepository } from "typeorm";
+import { FindManyOptions, Like, getRepository } from "typeorm";
 
 import {
   DEFAULT_PAGE_SIZE,
@@ -25,6 +25,12 @@ export default class DepartamentRepository {
     const repository = getRepository(Departament);
 
     const queryOptions: FindManyOptions<Departament> = {};
+
+    if (query.name) {
+      queryOptions.where = {
+        name: Like(`${query.name}%`),
+      };
+    }
 
     if (query.page) {
       queryOptions.skip = query.page * DEFAULT_PAGE_SIZE;

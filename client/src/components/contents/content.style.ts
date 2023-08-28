@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ContentAddButtonWrapper = styled.div`
+export const ContentAddButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
