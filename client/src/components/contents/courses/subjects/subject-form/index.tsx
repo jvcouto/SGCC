@@ -22,6 +22,7 @@ export interface ISubjectFormValues {
   praticallWorkload: number;
   theoreticalWorkload: number;
   semester: number;
+  shortName: string;
 }
 interface ICollegeFormProps {
   onSubmit: (
@@ -64,7 +65,22 @@ function SubjectForm(props: ICollegeFormProps) {
           </Form.Item>
         </Col>
 
-        <Col span={8}>
+        <Col span={6}>
+          <Form.Item
+            name="shortName"
+            label="Nome breve"
+            rules={[
+              {
+                required: true,
+                message: "Informe o nome breve da disciplina!",
+              },
+            ]}
+          >
+            <Input placeholder="Nome breve" />
+          </Form.Item>
+        </Col>
+
+        <Col span={8} offset={4}>
           <Form.Item
             name="departament"
             label="Departamento"
@@ -76,10 +92,35 @@ function SubjectForm(props: ICollegeFormProps) {
             ]}
           >
             {/* @ts-ignore */}
-            <DepartamentSelect placeholder="Selecione um usuário" />
+            <DepartamentSelect placeholder="Selecione um departamento" />
           </Form.Item>
         </Col>
-        <Col span={3} offset={4}>
+        <Col span={4}>
+          <Form.Item
+            name="semester"
+            label="Semestre"
+            rules={[
+              {
+                type: "number",
+                min: 1,
+                max: 20,
+                message: "Valor fora da faixa permitida! (0-20)",
+              },
+              {
+                required: true,
+                message: "Informe o semestre!",
+              },
+            ]}
+          >
+            <InputNumber />
+          </Form.Item>
+        </Col>
+        <Col span={4}>
+          <Form.Item label="Opcional" name="optional" initialValue={false}>
+            <Switch />
+          </Form.Item>
+        </Col>
+        <Col span={6} offset={4}>
           <Form.Item
             name="workload"
             label={
@@ -103,7 +144,7 @@ function SubjectForm(props: ICollegeFormProps) {
             <InputNumber />
           </Form.Item>
         </Col>
-        <Col span={3}>
+        <Col span={6}>
           <Form.Item
             name="theoreticalWorkload"
             label="Carga Horária Teórica"
@@ -120,7 +161,7 @@ function SubjectForm(props: ICollegeFormProps) {
             <InputNumber />
           </Form.Item>
         </Col>
-        <Col span={3}>
+        <Col span={6}>
           <Form.Item
             name="praticallWorkload"
             label="Carga Horária Prática"
@@ -135,31 +176,6 @@ function SubjectForm(props: ICollegeFormProps) {
             ]}
           >
             <InputNumber />
-          </Form.Item>
-        </Col>
-        <Col span={3}>
-          <Form.Item
-            name="semester"
-            label="Semestre"
-            rules={[
-              {
-                type: "number",
-                min: 1,
-                max: 20,
-                message: "Valor fora da faixa permitida! (0-20)",
-              },
-              {
-                required: true,
-                message: "Informe o semestre!",
-              },
-            ]}
-          >
-            <InputNumber />
-          </Form.Item>
-        </Col>
-        <Col span={2}>
-          <Form.Item label="Opcional" name="optional">
-            <Switch />
           </Form.Item>
         </Col>
       </Row>

@@ -27,6 +27,7 @@ interface ISubject {
   optionalSubject: boolean;
   departament: IDepartament;
   offers?: ISubjectOffer[];
+  shortName: string;
 }
 
 export default ISubject;

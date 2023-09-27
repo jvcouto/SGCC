@@ -21,7 +21,9 @@ function CourseInfo(props: ICourseInfo) {
         <Descriptions.Item label="Duração">
           {`${courseInfo.duration} semestres`}
         </Descriptions.Item>
-        <Descriptions.Item label="Turno">{courseInfo.shift}</Descriptions.Item>
+        <Descriptions.Item label="Turno">
+          <FormattedMessage id={courseInfo.shift} />
+        </Descriptions.Item>
         <Descriptions.Item label="N° Disciplinas">
           {courseInfo.subjects.length}
         </Descriptions.Item>

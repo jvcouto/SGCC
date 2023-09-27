@@ -37,6 +37,7 @@ function SubjectsList(props: ICourseSubjects) {
       departament: {
         id: values.departament,
       },
+      shortName: values.shortName,
     };
     api
       .post(`/api/subjects`, newSubjetValue)
@@ -57,7 +58,10 @@ function SubjectsList(props: ICourseSubjects) {
       <SubjectForm onSubmit={onSubmit} />
       <Collapse>
         {subjects.map((subject) => (
-          <Panel header={subject.name} key={subject.id}>
+          <Panel
+            header={`${subject.name} - ${subject.shortName}`}
+            key={subject.id}
+          >
             <Descriptions
               title="Informações da disciplina"
               extra={<Button type="primary">Editar</Button>}

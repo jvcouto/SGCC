@@ -13,6 +13,11 @@ class Subject extends AbstractBaseModel {
   @Column({ length: 128 })
   name!: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @Column({ length: 64 })
+  shortName!: string;
+
   @IsNumber()
   @IsNotEmpty()
   @Column()
@@ -48,7 +53,6 @@ class Subject extends AbstractBaseModel {
   })
   departament!: Departament;
 
-  @IsNotEmpty()
   @OneToMany(() => SubjectOffer, (subjectOffer) => subjectOffer.subject)
   offers!: SubjectOffer[];
 }
