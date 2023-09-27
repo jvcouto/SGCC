@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Collapse, Descriptions, FormInstance, message } from "antd";
 import ISubject from "../../../../types/apiResponses/subject";
 import SubjectForm, { ISubjectFormValues } from "./subject-form";
@@ -15,6 +15,10 @@ function SubjectsList(props: ICourseSubjects) {
   const { subjectsInfo, selectedCourse } = props;
 
   const [subjects, setSubjects] = useState(subjectsInfo);
+
+  useEffect(() => {
+    setSubjects(subjectsInfo);
+  }, [selectedCourse]);
 
   const onSubmit = async (
     values: ISubjectFormValues,

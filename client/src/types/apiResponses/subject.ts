@@ -4,6 +4,17 @@ interface IDepartament {
   code: string;
 }
 
+export interface ISubjectOffer {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  class: string;
+  places: number;
+  teachingPlan: any; // todo
+  teachingPlanApproved: boolean;
+  subject: ISubject;
+}
+
 interface ISubject {
   id: number;
   createdAt: string;
@@ -15,6 +26,7 @@ interface ISubject {
   praticalWorkload: number;
   optionalSubject: boolean;
   departament: IDepartament;
+  offers?: ISubjectOffer[];
 }
 
 export default ISubject;

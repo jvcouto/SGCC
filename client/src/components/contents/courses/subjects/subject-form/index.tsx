@@ -49,7 +49,7 @@ function SubjectForm(props: ICollegeFormProps) {
       onFinish={handleFinish}
     >
       <Row gutter={24}>
-        <Col span={8} offset={8}>
+        <Col span={8} offset={4}>
           <Form.Item
             name="name"
             label="Nome"
@@ -64,7 +64,7 @@ function SubjectForm(props: ICollegeFormProps) {
           </Form.Item>
         </Col>
 
-        <Col span={8} offset={8}>
+        <Col span={8}>
           <Form.Item
             name="departament"
             label="Departamento"
@@ -79,12 +79,12 @@ function SubjectForm(props: ICollegeFormProps) {
             <DepartamentSelect placeholder="Selecione um usuário" />
           </Form.Item>
         </Col>
-        <Col span={3} offset={8}>
+        <Col span={3} offset={4}>
           <Form.Item
             name="workload"
             label={
-              <Tooltip placement="rightTop" title="Teórica + Optional">
-                Carga horária
+              <Tooltip placement="rightTop" title="Teórica + Prática">
+                Carga horária Total
               </Tooltip>
             }
             rules={[
@@ -120,7 +120,7 @@ function SubjectForm(props: ICollegeFormProps) {
             <InputNumber />
           </Form.Item>
         </Col>
-        <Col span={6}>
+        <Col span={3}>
           <Form.Item
             name="praticallWorkload"
             label="Carga Horária Prática"
@@ -137,7 +137,7 @@ function SubjectForm(props: ICollegeFormProps) {
             <InputNumber />
           </Form.Item>
         </Col>
-        <Col span={3} offset={8}>
+        <Col span={3}>
           <Form.Item
             name="semester"
             label="Semestre"
@@ -157,14 +157,14 @@ function SubjectForm(props: ICollegeFormProps) {
             <InputNumber />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={2}>
           <Form.Item label="Opcional" name="optional">
             <Switch />
           </Form.Item>
         </Col>
       </Row>
       <Row>
-        <Col span={16} style={{ textAlign: "right", paddingBottom: "2rem" }}>
+        <Col span={20} style={{ textAlign: "right", paddingBottom: "2rem" }}>
           <Button
             type="primary"
             danger

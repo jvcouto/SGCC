@@ -22,16 +22,27 @@ export default class CourseRepository {
     return repository.findAndCount(queryOptions);
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, query?: any) {
     const repository = getRepository(Course);
 
+    const queryOptions: FindManyOptions<Course> = {};
+
+    // todo
+    if (query?.period || true) {
+      queryOptions.where = {
+        ["subject.offers.period"]: 1,
+      };
+    }
+
     return repository.findOne(id, {
+      ...queryOptions,
       relations: [
         "collegeMembers",
         "admins",
         "subjects",
         "admins.user",
         "subjects.departament",
+        "subjects.offers",
       ],
     });
   }

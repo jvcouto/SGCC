@@ -7,4 +7,16 @@ export default class SubjectOfferRepository {
 
     return repository.save(subjectOffer);
   }
+
+  async bulkCreate(subjectOffer: SubjectOffer[]) {
+    const repository = getRepository(SubjectOffer);
+
+    return repository.save(subjectOffer);
+  }
+
+  async findByIds(ids: number[]) {
+    const repository = getRepository(SubjectOffer);
+
+    return repository.findByIds(ids, { relations: ["period", "subject"] });
+  }
 }

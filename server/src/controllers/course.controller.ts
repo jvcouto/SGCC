@@ -4,6 +4,7 @@ import {
   findCourse,
   listCourses,
   updateCourse,
+  offerAllCourseRequiredSubjects,
 } from "@useCases/course";
 
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
@@ -38,12 +39,21 @@ export default function MakeCourseController() {
   };
 
   const update = async (httpRequest: Partial<Request>) => {
-    const userData = await updateCourse.execute(
+    const updatedCourse = await updateCourse.execute(
       Number(httpRequest.params?.id),
       httpRequest.body
     );
 
-    return { status: HTTP_STATUS_CODES.OK, data: userData };
+    return { status: HTTP_STATUS_CODES.OK, data: updatedCourse };
+  };
+
+  const offerAllRequiredSubjects = async (httpRequest: Partial<Request>) => {
+    const subjectOffers = await offerAllCourseRequiredSubjects.execute(
+      Number(httpRequest.params?.id),
+      httpRequest.body
+    );
+
+    return { status: HTTP_STATUS_CODES.OK, data: subjectOffers };
   };
 
   return Object.freeze({
@@ -51,5 +61,6 @@ export default function MakeCourseController() {
     list,
     findOne,
     update,
+    offerAllRequiredSubjects,
   });
 }

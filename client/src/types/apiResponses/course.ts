@@ -11,7 +11,7 @@ interface ICourse {
   updatedAt: string;
   collegeMembers?: IUser[];
   admins?: IAdmins[];
-  subjects?: ISubject[];
+  subjects?: Array<ISubject>;
 }
 
 export default ICourse;

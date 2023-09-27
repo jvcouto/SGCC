@@ -9,12 +9,14 @@ import {
   LikeOutlined,
   SolutionOutlined,
 } from "@ant-design/icons";
+
 import MainLayout from "../../../components/layouts/mainLayout";
 import SecondLayout from "../../../components/layouts/secondLayout";
 import CourseSider from "../../../components/siders/courses/coursesSider";
 import CourseInfo from "../../../components/contents/courses/information/courseInfo";
 import SubjectsList from "../../../components/contents/courses/subjects/courseSubjectsList";
 import CollegeList from "../../../components/contents/courses/college/couseCollegeList";
+import SubjectOffers from "../../../components/contents/courses/offers/couseOffers";
 
 import api from "../../../services/request.service";
 
@@ -73,7 +75,12 @@ function CoursesPage(props: CoursePageProps) {
         </span>
       ),
       key: "item-5",
-      children: <div>Ofertas Aqui</div>,
+      children: (
+        <SubjectOffers
+          subjectsInfo={course.subjects}
+          selectedCourse={course.id}
+        />
+      ),
     },
     {
       label: (

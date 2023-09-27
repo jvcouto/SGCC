@@ -10,5 +10,8 @@ courseRoutes.route("/:id").get(expressCallback(MakeCourseController().findOne));
 courseRoutes
   .route("/:id")
   .patch(expressCallback(MakeCourseController().update));
+courseRoutes
+  .route("/:id/offerRequired")
+  .post(expressCallback(MakeCourseController().offerAllRequiredSubjects));
 
 export default courseRoutes;

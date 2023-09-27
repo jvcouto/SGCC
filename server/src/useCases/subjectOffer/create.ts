@@ -9,9 +9,9 @@ export default class CreateSubjectOffer {
   constructor(private readonly repository: SubjectOfferRepository) {}
 
   async execute(subjectOfferData: any) {
-    const newOfferSubject = Object.assign(new SubjectOffer(), subjectOfferData);
+    const subjectOffer = Object.assign(new SubjectOffer(), subjectOfferData);
 
-    const errors = await validate(newOfferSubject);
+    const errors = await validate(subjectOffer);
 
     if (errors.length > 0) {
       const formatedError = errors.map((error) => error.constraints);
@@ -20,7 +20,8 @@ export default class CreateSubjectOffer {
     }
 
     try {
-      return await this.repository.save(newOfferSubject);
+      const createdSubjectOffer = await this.repository.save(subjectOffer);
+      return await this.repository.findByIds([createdSubjectOffer.id]);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error on subject offer creation");

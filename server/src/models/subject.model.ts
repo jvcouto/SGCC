@@ -1,8 +1,9 @@
-import { Column, Entity, ManyToOne, Unique } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, Unique } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
 import Course from "./course.model";
 import Departament from "./departament";
+import SubjectOffer from "./subjectOffer.model";
 
 @Entity("subject")
 @Unique(["name", "course"])
@@ -46,6 +47,10 @@ class Subject extends AbstractBaseModel {
     nullable: false,
   })
   departament!: Departament;
+
+  @IsNotEmpty()
+  @OneToMany(() => SubjectOffer, (subjectOffer) => subjectOffer.subject)
+  offers!: SubjectOffer[];
 }
 
 export default Subject;

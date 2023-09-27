@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import User from "./user.model";
-import Semester from "./period.model";
+import Period from "./period.model";
 import {
   IsBoolean,
   IsNotEmpty,
@@ -19,22 +19,21 @@ import {
 } from "class-validator";
 import Subject from "./subject.model";
 import SubjectApprovalHistory from "./subjectApprovalHistory.model";
-import Course from "./course.model";
 
 @Entity("subject_offer")
-@Unique(["class", "subject", "semester"])
+@Unique(["class", "subject", "period"])
 class SubjectOffer extends AbstractBaseModel {
   @IsOptional()
   @IsString()
   @Column({
     length: 16,
-    default: "Unique",
+    default: "unique",
   })
   class!: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
-  @Column()
+  @Column({ nullable: true, default: null })
   places!: number;
 
   @IsOptional()
@@ -50,8 +49,8 @@ class SubjectOffer extends AbstractBaseModel {
   teachingPlanApproved!: boolean;
 
   @IsNotEmpty()
-  @ManyToOne(() => Semester, { nullable: false })
-  semester!: Semester;
+  @ManyToOne(() => Period, { nullable: false })
+  period!: Period;
 
   @IsNotEmpty()
   @ManyToOne(() => Subject, { nullable: false })

@@ -22,4 +22,17 @@ export default class SubjectRepository {
 
     return repository.findOne(id, { relations: ["departament"] });
   }
+
+  async findRequiredSubjectsByCourse(courseId: number) {
+    const repository = getRepository(Subject);
+
+    return repository.find({
+      where: {
+        course: {
+          id: courseId,
+        },
+        optionalSubject: false,
+      },
+    });
+  }
 }
