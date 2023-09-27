@@ -4,6 +4,7 @@ import InvalidAttributeError from "@errors/invalidAttribute.error";
 import InternalServerError from "@errors/server.error";
 import SubjectOffer from "@models/subjectOffer.model";
 import SubjectOfferRepository from "@dataAccess/subjectOffer.repository";
+import DuplicatedEntityError from "@errors/duplicatedEntity.error";
 
 export default class CreateSubjectOffer {
   constructor(private readonly repository: SubjectOfferRepository) {}
@@ -23,6 +24,10 @@ export default class CreateSubjectOffer {
       const createdSubjectOffer = await this.repository.save(subjectOffer);
       return await this.repository.findByIds([createdSubjectOffer.id]);
     } catch (error: any) {
+      if (error.routine === "_bt_check_unique") {
+        Logger.error(error.message);
+        throw new DuplicatedEntityError("Duplicated subject offer");
+      }
       Logger.error(error.message);
       throw new InternalServerError("Error on subject offer creation");
     }

@@ -7,6 +7,7 @@ import { validate } from "class-validator";
 import InvalidAttributeError from "@errors/invalidAttribute.error";
 import EntityNotFound from "@errors/entityNotFound.error";
 import InternalServerError from "@errors/server.error";
+import DuplicatedEntityError from "@errors/duplicatedEntity.error";
 
 export default class OfferAllRequiredSubjects {
   constructor(
@@ -54,9 +55,12 @@ export default class OfferAllRequiredSubjects {
       return await this.subjectOfferRepository.findByIds(
         subjectOffers.map((eachSubjectOffer) => eachSubjectOffer.id)
       );
-    } catch (error) {
+    } catch (error: any) {
+      if (error.routine === "_bt_check_unique") {
+        Logger.error(error.message);
+        throw new DuplicatedEntityError("Duplicated subject offer");
+      }
       throw new InternalServerError("Error Offering required subjects");
-      // TODO - case duplicated entry
     }
   }
 }

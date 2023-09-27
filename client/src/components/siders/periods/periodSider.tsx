@@ -77,7 +77,7 @@ function PeriodSider() {
       .catch((error) => {
         const { code } = error.response.data;
         switch (code) {
-          case "DUPLICATED_PERIOD":
+          case "DUPLICATED_ENTITY":
             form.setFields([
               {
                 name: "code",

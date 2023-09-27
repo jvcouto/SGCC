@@ -16,7 +16,7 @@ import CourseSider from "../../../components/siders/courses/coursesSider";
 import CourseInfo from "../../../components/contents/courses/information/courseInfo";
 import SubjectsList from "../../../components/contents/courses/subjects/courseSubjectsList";
 import CollegeList from "../../../components/contents/courses/college/couseCollegeList";
-import SubjectOffers from "../../../components/contents/courses/offers/couseOffers";
+import SubjectOffers from "../../../components/contents/courses/offers/courseOffers";
 
 import api from "../../../services/request.service";
 
