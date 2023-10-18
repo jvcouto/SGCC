@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
   Col,
   Form,
   Input,
@@ -42,6 +41,14 @@ function SubjectForm(props: ICollegeFormProps) {
     setEnableForm(false);
   };
 
+  const handleWorkLoadChange = () => {
+    form.setFieldValue(
+      "workload",
+      form.getFieldValue("theoreticalWorkload") +
+        form.getFieldValue("praticallWorkload")
+    );
+  };
+
   return enableForm ? (
     <Form
       form={form}
@@ -64,7 +71,6 @@ function SubjectForm(props: ICollegeFormProps) {
             <Input placeholder="Nome" />
           </Form.Item>
         </Col>
-
         <Col span={6}>
           <Form.Item
             name="shortName"
@@ -79,7 +85,6 @@ function SubjectForm(props: ICollegeFormProps) {
             <Input placeholder="Nome breve" />
           </Form.Item>
         </Col>
-
         <Col span={8} offset={4}>
           <Form.Item
             name="departament"
@@ -123,6 +128,7 @@ function SubjectForm(props: ICollegeFormProps) {
         <Col span={6} offset={4}>
           <Form.Item
             name="workload"
+            initialValue={0}
             label={
               <Tooltip placement="rightTop" title="Teórica + Prática">
                 Carga horária Total
@@ -141,9 +147,10 @@ function SubjectForm(props: ICollegeFormProps) {
               },
             ]}
           >
-            <InputNumber />
+            <InputNumber disabled />
           </Form.Item>
         </Col>
+
         <Col span={6}>
           <Form.Item
             name="theoreticalWorkload"
@@ -158,7 +165,7 @@ function SubjectForm(props: ICollegeFormProps) {
               },
             ]}
           >
-            <InputNumber />
+            <InputNumber onChange={handleWorkLoadChange} />
           </Form.Item>
         </Col>
         <Col span={6}>
@@ -175,7 +182,7 @@ function SubjectForm(props: ICollegeFormProps) {
               },
             ]}
           >
-            <InputNumber />
+            <InputNumber onChange={handleWorkLoadChange} />
           </Form.Item>
         </Col>
       </Row>
