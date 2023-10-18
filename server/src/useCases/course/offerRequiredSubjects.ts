@@ -17,18 +17,41 @@ export default class OfferAllRequiredSubjects {
   ) {}
 
   async execute(courseId: number, data: unknown) {
-    const requiredSubjects =
-      await this.subjectRepository.findRequiredSubjectsByCourse(courseId);
+    const { periodId, addRequired, addOptional } = data as {
+      periodId: number;
+      addRequired: boolean;
+      addOptional: boolean;
+    };
+
+    const requiredSubjects = await this.subjectRepository.findSubjectsByCourse(
+      courseId,
+      addRequired,
+      addOptional
+    );
 
     if (!requiredSubjects.length) {
-      const errorMessage = "Course dont have required subjects";
+      const errorMessage = "Course dont have subjects to add";
       Logger.error(errorMessage);
       throw new EntityNotFound(errorMessage);
     }
 
-    const { periodId } = data as { periodId: number };
+    const alreadyExistingSubjects =
+      await this.subjectOfferRepository.findExistentBulkSubject(
+        courseId,
+        periodId,
+        addRequired,
+        addOptional
+      );
 
-    const requiredSubjectOffersData = requiredSubjects.map((eachSubject) => {
+    const alreadyExistingSubjectsIDs = alreadyExistingSubjects.map(
+      (e) => e.subject.id
+    );
+
+    const nonExistentSubject = requiredSubjects.filter(
+      (e) => !alreadyExistingSubjectsIDs.includes(e.id)
+    );
+
+    const requiredSubjectOffersData = nonExistentSubject.map((eachSubject) => {
       return Object.assign(new SubjectOffer(), {
         period: {
           id: periodId,
@@ -44,7 +67,7 @@ export default class OfferAllRequiredSubjects {
     if (errors.length > 0) {
       const formatedError = errors.map((error) => error.constraints);
       Logger.error(JSON.stringify(formatedError));
-      throw new InvalidAttributeError("Error offering required subjects");
+      throw new InvalidAttributeError("Error offering subjects");
     }
 
     try {
@@ -60,7 +83,8 @@ export default class OfferAllRequiredSubjects {
         Logger.error(error.message);
         throw new DuplicatedEntityError("Duplicated subject offer");
       }
-      throw new InternalServerError("Error Offering required subjects");
+      Logger.error(error.message);
+      throw new InternalServerError("Error Offering subjects");
     }
   }
 }

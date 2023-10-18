@@ -19,4 +19,27 @@ export default class SubjectOfferRepository {
 
     return repository.findByIds(ids, { relations: ["period", "subject"] });
   }
+
+  async findExistentBulkSubject(
+    courseId: number,
+    perdiodId: number,
+    addRequired: boolean,
+    addOptional: boolean
+  ) {
+    const repository = getRepository(SubjectOffer);
+
+    return repository.find({
+      where: {
+        course: {
+          id: courseId,
+        },
+        period: {
+          id: perdiodId,
+        },
+        class: "unique",
+        ...(addRequired && addOptional ? {} : { optionalSubject: addOptional }),
+      },
+      relations: ["subject"],
+    });
+  }
 }

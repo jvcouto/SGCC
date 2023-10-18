@@ -23,7 +23,11 @@ export default class SubjectRepository {
     return repository.findOne(id, { relations: ["departament"] });
   }
 
-  async findRequiredSubjectsByCourse(courseId: number) {
+  async findSubjectsByCourse(
+    courseId: number,
+    addRequired: boolean,
+    addOptional: boolean
+  ) {
     const repository = getRepository(Subject);
 
     return repository.find({
@@ -31,7 +35,7 @@ export default class SubjectRepository {
         course: {
           id: courseId,
         },
-        optionalSubject: false,
+        ...(addRequired && addOptional ? {} : { optionalSubject: addOptional }),
       },
     });
   }

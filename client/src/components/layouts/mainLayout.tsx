@@ -1,10 +1,17 @@
-import React from "react";
-import _ from "lodash";
-import { Layout, Menu, Button } from "antd";
+import React, { useState } from "react";
+import {
+  Layout,
+  Menu,
+  Button,
+  Dropdown,
+  Space,
+  Typography,
+  MenuProps,
+} from "antd";
 import Link from "next/link";
 import Image from "next/image";
 
-import { LogoutOutlined } from "@ant-design/icons";
+import { DownOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 
 import { getRolePages, getSelectedKey } from "./pages";
@@ -19,8 +26,30 @@ function MainLayout({ children }) {
   const { logOut, user } = useAuth();
   const { asPath } = useRouter();
 
+  const [selectedPeriod, setSelectedPeriod] = useState("Período");
+
   const handleclick = () => {
     logOut();
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "Item 1",
+    },
+    {
+      key: "2",
+      label: "Item 2",
+    },
+    {
+      key: "3",
+      label: "Item 3",
+    },
+  ];
+
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    const teste = items.find((e) => e.key === key);
+    setSelectedPeriod();
   };
 
   return (
@@ -48,6 +77,7 @@ function MainLayout({ children }) {
             </Menu.Item>
           ))}
         </Menu>
+
         <div
           style={{
             width: "100%",
@@ -56,11 +86,27 @@ function MainLayout({ children }) {
             margin: "0 0.5rem 0 0",
           }}
         >
+          <Dropdown
+            menu={{
+              items,
+              selectable: true,
+              defaultSelectedKeys: ["3"],
+              onClick,
+            }}
+          >
+            <Typography.Link onClick={(e) => e.preventDefault()}>
+              <Space>
+                {selectedPeriod}
+                <DownOutlined />
+              </Space>
+            </Typography.Link>
+          </Dropdown>
           <div
             style={{
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
+              marginLeft: "1rem",
             }}
           >
             <Button

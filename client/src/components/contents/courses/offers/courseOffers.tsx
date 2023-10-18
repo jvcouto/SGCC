@@ -59,9 +59,16 @@ function SubjectOffers(props: ISubjectOffersProps) {
     );
   }, [selectedCourse]);
 
-  const handleAddRequiredSubjets = async () => {
+  const handleAddRequiredSubjets = async (
+    addRequired: boolean,
+    addOptional: boolean
+  ) => {
     api
-      .post(`/api/courses/${selectedCourse}/offerRequired`, { periodId: 1 }) // todo period
+      .post(`/api/courses/${selectedCourse}/offerRequired`, {
+        periodId: 1,
+        addRequired,
+        addOptional,
+      }) // TODO period
       .then((response) => {
         message.success("Ofertas adicionadas!");
         const { data: newSubjectOffers }: { data: ISubjectOffer[] } =
@@ -83,7 +90,6 @@ function SubjectOffers(props: ISubjectOffersProps) {
           case "DUPLICATED_ENTITY":
             message.error("Uma ou mais disciplinas já foram adicionadas");
             break;
-
           default:
             message.error("Algo deu errado, tente novamente!");
             break;
@@ -158,7 +164,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
               <b>Disciplina</b>
             </div>
             <Space size="large">
-              <b>Classe</b>
+              <b>Turma</b>
               <b>Tipo</b>
               <b>Semestre</b>
             </Space>

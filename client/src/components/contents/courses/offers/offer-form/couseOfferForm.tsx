@@ -9,7 +9,10 @@ import AddRequiredSubjectModal from "./addRequiredSubjectsModal";
 interface ISubjectOfferFormProps {
   onSubmit: (values: any, form: FormInstance<any>) => Promise<void>;
   courseSubjects: ISubject[];
-  handleAddRequiredSubjets: () => Promise<void>;
+  handleAddRequiredSubjets: (
+    addRequired: boolean,
+    addOptional: boolean
+  ) => Promise<void>;
 }
 
 export interface ISubjectOfferFormValues {
@@ -87,7 +90,7 @@ function SubjectOfferForm(props: ISubjectOfferFormProps) {
                 },
               ]}
             >
-              <Input placeholder="Turma" />
+              <Input placeholder="Turma" defaultValue="Única" />
             </Form.Item>
             <div
               style={{
@@ -112,10 +115,10 @@ function SubjectOfferForm(props: ISubjectOfferFormProps) {
       ) : (
         <ContentAddButtonWrapper>
           <Button onClick={() => setEnableConfirmModal(true)} type="primary">
-            Adicionar obrigatórias
+            Ofertar todas disciplinas
           </Button>
           <Button onClick={() => seEnableForm(!enableForm)} type="primary">
-            Adicionar
+            Ofertar diciplina
           </Button>
         </ContentAddButtonWrapper>
       )}
