@@ -176,7 +176,11 @@ function SubjectOffers(props: ISubjectOffersProps) {
             <>
               {subjectOffer.subjectName}
               <Space size="small">
-                <Tag color="blue">{subjectOffer.class}</Tag>
+                <Tag color="blue">
+                  {subjectOffer.class === "unique"
+                    ? "Única"
+                    : subjectOffer.class}
+                </Tag>
                 <Tag color="green">
                   {subjectOffer.optionalSubject ? "Opcional" : "Obrigatória"}
                 </Tag>
