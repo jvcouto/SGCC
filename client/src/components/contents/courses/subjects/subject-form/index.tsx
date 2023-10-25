@@ -6,12 +6,14 @@ import {
   Input,
   InputNumber,
   Row,
+  Select,
   Switch,
   Tooltip,
 } from "antd";
 import { FormInstance } from "antd/es/form/Form";
 import { ContentAddButtonWrapper } from "../../../content.style";
 import DepartamentSelect from "../../../../_ui/departamentSelect";
+import ICourse from "../../../../../types/apiResponses/course";
 
 export interface ISubjectFormValues {
   name: string;
@@ -22,19 +24,32 @@ export interface ISubjectFormValues {
   theoreticalWorkload: number;
   semester: number;
   shortName: string;
+  places: number;
 }
 interface ICollegeFormProps {
   onSubmit: (
     values: ISubjectFormValues,
     form: FormInstance<any>
   ) => Promise<void>;
+  selectedCourse: ICourse;
 }
 
 function SubjectForm(props: ICollegeFormProps) {
-  const { onSubmit } = props;
+  const { onSubmit, selectedCourse } = props;
 
   const [enableForm, setEnableForm] = useState(false);
   const [form] = Form.useForm();
+
+  const arrayFromCourseDuration = Array(selectedCourse.duration).fill(1);
+  const semesterDropDownItems = arrayFromCourseDuration.map((e, index) => ({
+    label: `${index + 1}`,
+    value: index + 1,
+  }));
+
+  semesterDropDownItems.push({
+    label: "OP",
+    value: 99,
+  });
 
   const handleFinish = async (values: ISubjectFormValues) => {
     await onSubmit(values, form);
@@ -106,18 +121,12 @@ function SubjectForm(props: ICollegeFormProps) {
             label="Semestre"
             rules={[
               {
-                type: "number",
-                min: 1,
-                max: 20,
-                message: "Valor fora da faixa permitida! (0-20)",
-              },
-              {
                 required: true,
                 message: "Informe o semestre!",
               },
             ]}
           >
-            <InputNumber />
+            <Select placeholder="Semestre" options={semesterDropDownItems} />
           </Form.Item>
         </Col>
         <Col span={4}>
@@ -125,33 +134,28 @@ function SubjectForm(props: ICollegeFormProps) {
             <Switch />
           </Form.Item>
         </Col>
-        <Col span={6} offset={4}>
+        <Col span={4} offset={4}>
           <Form.Item
-            name="workload"
-            initialValue={0}
-            label={
-              <Tooltip placement="rightTop" title="Teórica + Prática">
-                Carga horária Total
-              </Tooltip>
-            }
+            name="places"
+            label="Vagas"
             rules={[
+              {
+                required: true,
+                message: "Informe a quantidade de vagas da disciplina!",
+              },
               {
                 type: "number",
                 min: 0,
                 max: 99,
                 message: "Valor fora da faixa permitida! (0-99)",
               },
-              {
-                required: true,
-                message: "Informe a carga horária!",
-              },
             ]}
           >
-            <InputNumber disabled />
+            <InputNumber />
           </Form.Item>
         </Col>
 
-        <Col span={6}>
+        <Col span={4}>
           <Form.Item
             name="theoreticalWorkload"
             label="Carga Horária Teórica"
@@ -168,7 +172,7 @@ function SubjectForm(props: ICollegeFormProps) {
             <InputNumber onChange={handleWorkLoadChange} />
           </Form.Item>
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <Form.Item
             name="praticallWorkload"
             label="Carga Horária Prática"
@@ -183,6 +187,31 @@ function SubjectForm(props: ICollegeFormProps) {
             ]}
           >
             <InputNumber onChange={handleWorkLoadChange} />
+          </Form.Item>
+        </Col>
+        <Col span={3}>
+          <Form.Item
+            name="workload"
+            initialValue={0}
+            label={
+              <Tooltip placement="rightTop" title="Teórica + Prática">
+                CH Total
+              </Tooltip>
+            }
+            rules={[
+              {
+                type: "number",
+                min: 0,
+                max: 99,
+                message: "Valor fora da faixa permitida! (0-99)",
+              },
+              {
+                required: true,
+                message: "Informe a carga horária!",
+              },
+            ]}
+          >
+            <InputNumber disabled />
           </Form.Item>
         </Col>
       </Row>

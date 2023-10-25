@@ -48,10 +48,7 @@ function CoursesPage(props: CoursePageProps) {
       ),
       key: "item-2",
       children: (
-        <SubjectsList
-          subjectsInfo={course.subjects}
-          selectedCourse={course.id}
-        />
+        <SubjectsList subjectsInfo={course.subjects} selectedCourse={course} />
       ),
     },
     {

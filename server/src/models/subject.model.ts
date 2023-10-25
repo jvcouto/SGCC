@@ -18,6 +18,11 @@ class Subject extends AbstractBaseModel {
   @Column({ length: 64 })
   shortName!: string;
 
+  @IsNotEmpty()
+  @IsNumber()
+  @Column()
+  places!: number;
+
   @IsNumber()
   @IsNotEmpty()
   @Column()

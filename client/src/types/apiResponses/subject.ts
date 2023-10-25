@@ -10,7 +10,7 @@ export interface ISubjectOffer {
   updatedAt: Date;
   class: string;
   places: number;
-  teachingPlan: any; // todo
+  teachingPlan: any; // TODO
   teachingPlanApproved: boolean;
   subject: ISubject;
 }
@@ -28,6 +28,7 @@ interface ISubject {
   departament: IDepartament;
   offers?: ISubjectOffer[];
   shortName: string;
+  places: number;
 }
 
 export default ISubject;

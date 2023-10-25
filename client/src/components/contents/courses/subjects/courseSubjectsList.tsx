@@ -3,12 +3,13 @@ import { Button, Collapse, Descriptions, FormInstance, message } from "antd";
 import ISubject from "../../../../types/apiResponses/subject";
 import SubjectForm, { ISubjectFormValues } from "./subject-form";
 import api from "../../../../services/request.service";
+import ICourse from "../../../../types/apiResponses/course";
 
 const { Panel } = Collapse;
 
 interface ICourseSubjects {
   subjectsInfo: ISubject[];
-  selectedCourse: number;
+  selectedCourse: ICourse;
 }
 
 function SubjectsList(props: ICourseSubjects) {
@@ -32,12 +33,13 @@ function SubjectsList(props: ICourseSubjects) {
       praticalWorkload: values.praticallWorkload,
       optionalSubject: values.optional,
       course: {
-        id: selectedCourse,
+        id: selectedCourse.id,
       },
       departament: {
         id: values.departament,
       },
       shortName: values.shortName,
+      places: values.places,
     };
     api
       .post(`/api/subjects`, newSubjetValue)
@@ -55,7 +57,7 @@ function SubjectsList(props: ICourseSubjects) {
 
   return (
     <>
-      <SubjectForm onSubmit={onSubmit} />
+      <SubjectForm onSubmit={onSubmit} selectedCourse={selectedCourse} />
       <Collapse>
         {subjects.map((subject) => (
           <Panel
@@ -80,6 +82,9 @@ function SubjectsList(props: ICourseSubjects) {
               </Descriptions.Item>
               <Descriptions.Item label="Semestre">
                 {subject.semester}
+              </Descriptions.Item>
+              <Descriptions.Item label="Vagas">
+                {subject.places}
               </Descriptions.Item>
               <Descriptions.Item label="Departamento">
                 {subject.departament.name}
