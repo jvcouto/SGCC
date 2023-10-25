@@ -27,7 +27,7 @@ export default class CourseRepository {
 
     const queryOptions: FindManyOptions<Course> = {};
 
-    // todo
+    // TODO - Remove true and default 1 value
     if (query?.period || true) {
       queryOptions.where = {
         ["subject.offers.period"]: 1,

@@ -43,7 +43,7 @@ export default class UpdateCourse {
 
     try {
       const updatedCourse = await this.repository.save(updatedFields);
-      return Object.assign(course, updatedCourse);
+      return await this.repository.findOne(updatedCourse.id);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error updating the course");

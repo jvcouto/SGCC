@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Empty, List, message } from "antd";
 import IUser from "../../../../types/apiResponses/users";
 import api from "../../../../services/request.service";
@@ -15,6 +15,12 @@ interface ICourseCollegeMembers {
 function CollegeList(props: ICourseCollegeMembers) {
   const { collegeMembers, selectedCourse } = props;
 
+  const [collegeMembersList, setCollegeMembersList] = useState(collegeMembers);
+
+  useEffect(() => {
+    setCollegeMembersList(collegeMembers);
+  }, [selectedCourse]);
+
   const onSubmit = async (values: ICollegeMembersFormValues) => {
     if (!values?.users?.length) {
       return;
@@ -29,6 +35,7 @@ function CollegeList(props: ICourseCollegeMembers) {
       .then((response) => {
         message.success("Membros do colegiado adicionados!");
         const { data: updatedCourse }: { data: ICourse } = response.data;
+        setCollegeMembersList(updatedCourse.collegeMembers);
       })
       .catch(() => {
         message.error("Algo deu errado, tente novamente!");
@@ -40,7 +47,7 @@ function CollegeList(props: ICourseCollegeMembers) {
       <AddUserBulk onSubmit={onSubmit} />
       <List
         itemLayout="horizontal"
-        dataSource={collegeMembers}
+        dataSource={collegeMembersList}
         locale={{
           emptyText: (
             <Empty
