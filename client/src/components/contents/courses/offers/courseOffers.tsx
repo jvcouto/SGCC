@@ -15,6 +15,7 @@ export interface ISubjectOfferList {
   class: string;
   optionalSubject: boolean;
   semester: number;
+  places: number;
 }
 
 interface ISubjectOffersProps {
@@ -25,21 +26,7 @@ interface ISubjectOffersProps {
 function SubjectOffers(props: ISubjectOffersProps) {
   const { subjectsInfo, selectedCourse } = props;
 
-  const [courseOffers, setCouseOffers] = useState<ISubjectOfferList[]>(
-    subjectsInfo.reduce((acc, e) => {
-      if (e.offers) {
-        const subjectOfferParsed = e.offers.map((each) => ({
-          subjectName: e.name,
-          optionalSubject: e.optionalSubject,
-          id: each.id,
-          class: each.class,
-          semester: e.semester,
-        }));
-        return [...acc, ...subjectOfferParsed];
-      }
-      return acc;
-    }, [])
-  );
+  const [courseOffers, setCouseOffers] = useState<ISubjectOfferList[]>();
 
   useEffect(() => {
     setCouseOffers(
@@ -51,6 +38,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
             id: each.id,
             class: each.class,
             semester: e.semester,
+            places: each.places,
           }));
           return [...acc, ...subjectOfferParsed];
         }
@@ -81,6 +69,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
             optionalSubject: newSubjectOffer.subject.optionalSubject,
             subjectName: newSubjectOffer.subject.name,
             semester: newSubjectOffer.subject.semester,
+            places: newSubjectOffer.places,
           })),
         ]);
       })
@@ -109,6 +98,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
       period: {
         id: 1,
       },
+      places: values.places,
     };
     api
       .post(`/api/subjectOffer`, newCourseOffer)
@@ -125,6 +115,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
             optionalSubject: newSubjectOffer.subject.optionalSubject,
             subjectName: newSubjectOffer.subject.name,
             semester: newSubjectOffer.subject.semester,
+            places: newSubjectOffer.places,
           },
         ]);
 
@@ -165,6 +156,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
             </div>
             <Space size="large">
               <b>Turma</b>
+              <b>Vagas</b>
               <b>Tipo</b>
               <b>Semestre</b>
             </Space>
@@ -181,10 +173,13 @@ function SubjectOffers(props: ISubjectOffersProps) {
                     ? "Única"
                     : subjectOffer.class}
                 </Tag>
+                <Tag color="yellow">{subjectOffer.places}</Tag>
                 <Tag color="green">
                   {subjectOffer.optionalSubject ? "Opcional" : "Obrigatória"}
                 </Tag>
-                <Tag color="purple">{subjectOffer.semester}</Tag>
+                <Tag color="purple">
+                  {subjectOffer.semester === 99 ? "OP" : subjectOffer.semester}
+                </Tag>
               </Space>
             </>
           </List.Item>

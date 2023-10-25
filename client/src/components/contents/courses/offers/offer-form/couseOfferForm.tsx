@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, InputNumber, Select } from "antd";
 
 import { FormInstance } from "antd/es/form/Form";
 import { ContentAddButtonWrapper } from "../../../content.style";
@@ -18,6 +18,7 @@ interface ISubjectOfferFormProps {
 export interface ISubjectOfferFormValues {
   subject: number;
   class: string;
+  places: number;
 }
 
 function SubjectOfferForm(props: ISubjectOfferFormProps) {
@@ -32,6 +33,13 @@ function SubjectOfferForm(props: ISubjectOfferFormProps) {
   const handleFinish = async (values: ISubjectOfferFormValues) => {
     await onSubmit(values, form);
     seEnableForm(false);
+  };
+
+  const handleSubjectChange = (selectedSubject: number) => {
+    form.setFieldValue(
+      "places",
+      courseSubjects.find((e) => e.id === selectedSubject).places
+    );
   };
 
   return (
@@ -53,6 +61,7 @@ function SubjectOfferForm(props: ISubjectOfferFormProps) {
           }}
         >
           <Form
+            form={form}
             name="SubjectOffer"
             onFinish={handleFinish}
             onReset={() => {
@@ -74,6 +83,7 @@ function SubjectOfferForm(props: ISubjectOfferFormProps) {
             >
               <Select
                 placeholder="Disciplina"
+                onChange={handleSubjectChange}
                 options={courseSubjects.map((e) => ({
                   value: e.id,
                   label: e.name,
@@ -91,6 +101,24 @@ function SubjectOfferForm(props: ISubjectOfferFormProps) {
               ]}
             >
               <Input placeholder="Turma" defaultValue="Única" />
+            </Form.Item>
+            <Form.Item
+              name="places"
+              label="Vagas"
+              rules={[
+                {
+                  required: true,
+                  message: "Informe a quantidade de vagas!",
+                },
+                {
+                  type: "number",
+                  min: 0,
+                  max: 99,
+                  message: "Valor fora da faixa permitida! (0-99)",
+                },
+              ]}
+            >
+              <InputNumber placeholder="Vagas" />
             </Form.Item>
             <div
               style={{
@@ -118,7 +146,7 @@ function SubjectOfferForm(props: ISubjectOfferFormProps) {
             Ofertar todas disciplinas
           </Button>
           <Button onClick={() => seEnableForm(!enableForm)} type="primary">
-            Ofertar diciplina
+            Ofertar disciplina
           </Button>
         </ContentAddButtonWrapper>
       )}

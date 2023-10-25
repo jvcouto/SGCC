@@ -47,9 +47,9 @@ function AddRequiredSubjectModal(props: AddRequiredSubjectModalProps) {
       okText="Confirmar"
       cancelText="Cancelar"
     >
-      <h3>Selecione as diciplinas para ofertar:</h3>
+      <h3>Selecione as disciplina para ofertar:</h3>
       <br />
-      <Checkbox onChange={handleRequiredChange}>Obrigatórioas</Checkbox>
+      <Checkbox onChange={handleRequiredChange}>Obrigatórias</Checkbox>
       <br />
       <Checkbox onChange={handleOptionalChange}>Opcionais</Checkbox>
     </Modal>

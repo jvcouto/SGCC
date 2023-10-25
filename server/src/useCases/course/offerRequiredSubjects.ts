@@ -23,13 +23,13 @@ export default class OfferAllRequiredSubjects {
       addOptional: boolean;
     };
 
-    const requiredSubjects = await this.subjectRepository.findSubjectsByCourse(
+    const courseSubjects = await this.subjectRepository.findSubjectsByCourse(
       courseId,
       addRequired,
       addOptional
     );
 
-    if (!requiredSubjects.length) {
+    if (!courseSubjects.length) {
       const errorMessage = "Course dont have subjects to add";
       Logger.error(errorMessage);
       throw new EntityNotFound(errorMessage);
@@ -47,7 +47,7 @@ export default class OfferAllRequiredSubjects {
       (e) => e.subject.id
     );
 
-    const nonExistentSubject = requiredSubjects.filter(
+    const nonExistentSubject = courseSubjects.filter(
       (e) => !alreadyExistingSubjectsIDs.includes(e.id)
     );
 
@@ -59,6 +59,7 @@ export default class OfferAllRequiredSubjects {
         subject: {
           id: eachSubject.id,
         },
+        places: eachSubject.places,
       });
     });
 

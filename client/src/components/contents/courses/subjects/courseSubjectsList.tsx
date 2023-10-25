@@ -81,7 +81,7 @@ function SubjectsList(props: ICourseSubjects) {
                 {subject.optionalSubject ? "Opcional" : "Obrigatória"}
               </Descriptions.Item>
               <Descriptions.Item label="Semestre">
-                {subject.semester}
+                {subject.semester === 99 ? "OP" : subject.semester}
               </Descriptions.Item>
               <Descriptions.Item label="Vagas">
                 {subject.places}
