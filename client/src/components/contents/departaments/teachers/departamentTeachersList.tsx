@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, List, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import IUser from "../../../../types/apiResponses/users";
 import AddUserBulk, {
   ICollegeMembersFormValues,
 } from "../../courses/college/college-members-form/collegeMembersForm";
-import IDepartament from "../../../../types/apiResponses/departament";
 import api from "../../../../services/request.service";
 
 interface IDepartamentTeachers {
@@ -15,6 +14,12 @@ interface IDepartamentTeachers {
 
 function TeachersList(props: IDepartamentTeachers) {
   const { teachersInfo, departamentId } = props;
+
+  const [teachersList, setTeachersList] = useState(teachersInfo);
+
+  useEffect(() => {
+    setTeachersList(teachersInfo);
+  }, [departamentId]);
 
   const onSubmit = async (values: ICollegeMembersFormValues) => {
     if (!values?.users?.length) {
@@ -31,8 +36,8 @@ function TeachersList(props: IDepartamentTeachers) {
       .post(`/api/user/update`, patchValues)
       .then((response) => {
         message.success("Professores adicionados!");
-        const { data: updatedDepartament }: { data: IDepartament } =
-          response.data;
+        const { data: teachersAdded }: { data: IUser[] } = response.data;
+        setTeachersList([...teachersList, ...teachersAdded]);
       })
       .catch(() => {
         message.error("Algo deu errado, tente novamente!");
@@ -44,7 +49,7 @@ function TeachersList(props: IDepartamentTeachers) {
       <AddUserBulk onSubmit={onSubmit} />
       <List
         itemLayout="horizontal"
-        dataSource={teachersInfo}
+        dataSource={teachersList}
         renderItem={(teacher) => (
           <List.Item>
             <List.Item.Meta

@@ -54,4 +54,10 @@ export default class UserRepository {
 
     return repository.findAndCount(queryOptions);
   }
+
+  async findByIds(ids: string[]) {
+    const userRepository = getRepository(User);
+
+    return userRepository.findByIds(ids);
+  }
 }

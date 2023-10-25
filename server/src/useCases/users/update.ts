@@ -52,7 +52,9 @@ export default class UpdateUser {
     }
 
     try {
-      return await this.repository.save(updatedFields);
+      const updatedUser = await this.repository.save(updatedFields);
+
+      return await this.repository.findOne(updatedUser.id);
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error updating the user");

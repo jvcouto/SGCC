@@ -30,7 +30,13 @@ export default class BulkUpdateUser {
     });
 
     try {
-      return await this.repository.bulkUpdate(updatedUsersData);
+      const updatedUsers = await this.repository.bulkUpdate(updatedUsersData);
+
+      const returndata = await this.repository.findByIds(
+        updatedUsers.map((e) => e.id)
+      );
+
+      return returndata;
     } catch (error: any) {
       Logger.error(error.message);
       throw new InternalServerError("Error bulk updating users");
