@@ -18,6 +18,7 @@ import { getRolePages, getSelectedKey } from "./pages";
 
 import * as S from "./layouts.style";
 import { useAuth } from "../../contexts/authContext";
+import { usePeriod } from "../../contexts/periodContext";
 
 const { Header, Footer } = Layout;
 
@@ -26,30 +27,19 @@ function MainLayout({ children }) {
   const { logOut, user } = useAuth();
   const { asPath } = useRouter();
 
-  const [selectedPeriod, setSelectedPeriod] = useState("Período");
+  const { selectedPeriod, periodList, setSelectedPeriod } = usePeriod();
 
   const handleclick = () => {
     logOut();
   };
 
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: "Item 1",
-    },
-    {
-      key: "2",
-      label: "Item 2",
-    },
-    {
-      key: "3",
-      label: "Item 3",
-    },
-  ];
+  const items: MenuProps["items"] = periodList.map((eachPeriod) => ({
+    key: eachPeriod.id,
+    label: eachPeriod.code,
+  }));
 
   const onClick: MenuProps["onClick"] = ({ key }) => {
-    const teste = items.find((e) => e.key === key);
-    setSelectedPeriod();
+    setSelectedPeriod(Number(key));
   };
 
   return (
@@ -90,13 +80,13 @@ function MainLayout({ children }) {
             menu={{
               items,
               selectable: true,
-              defaultSelectedKeys: ["3"],
               onClick,
             }}
           >
             <Typography.Link onClick={(e) => e.preventDefault()}>
               <Space>
-                {selectedPeriod}
+                {periodList.length &&
+                  periodList.find((e) => e.id === selectedPeriod).code}
                 <DownOutlined />
               </Space>
             </Typography.Link>

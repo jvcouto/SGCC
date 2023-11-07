@@ -20,8 +20,9 @@ import SubjectOffers from "../../../components/contents/courses/offers/courseOff
 
 import api from "../../../services/request.service";
 
-import PageContent from "../../../styles/content.style";
 import ICourse from "../../../types/apiResponses/course";
+
+import PageContent from "../../../styles/content.style";
 
 interface CoursePageProps {
   course: ICourse;

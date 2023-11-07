@@ -25,26 +25,22 @@ export default class CourseRepository {
   async findOne(id: number, query?: any) {
     const repository = getRepository(Course);
 
-    const queryOptions: FindManyOptions<Course> = {};
-
-    // TODO - Remove true and default 1 value
-    if (query?.period || true) {
-      queryOptions.where = {
-        ["subject.offers.period"]: 1,
-      };
-    }
-
-    return repository.findOne(id, {
-      ...queryOptions,
-      relations: [
-        "collegeMembers",
-        "admins",
-        "subjects",
-        "admins.user",
-        "subjects.departament",
+    const queryrun = repository
+      .createQueryBuilder("course")
+      .leftJoinAndSelect("course.collegeMembers", "collegeMembers")
+      .leftJoinAndSelect("course.admins", "admins")
+      .leftJoinAndSelect("admins.user", "user")
+      .leftJoinAndSelect("course.subjects", "subjects")
+      .leftJoinAndSelect("subjects.departament", "departament")
+      .leftJoinAndSelect(
         "subjects.offers",
-      ],
-    });
+        "offers",
+        query?.period && `offers.period.id = ${query.period}`
+      )
+      .leftJoinAndSelect("offers.period", "period")
+      .where("course.id = :id", { id: id });
+
+    return queryrun.getOne();
   }
 
   async save(data: Course) {

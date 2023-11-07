@@ -8,6 +8,8 @@ import SubjectOfferForm, {
   ISubjectOfferFormValues,
 } from "./offer-form/couseOfferForm";
 import api from "../../../../services/request.service";
+import { usePeriod } from "../../../../contexts/periodContext";
+import ICourse from "../../../../types/apiResponses/course";
 
 export interface ISubjectOfferList {
   id: number;
@@ -24,28 +26,36 @@ interface ISubjectOffersProps {
 }
 
 function SubjectOffers(props: ISubjectOffersProps) {
-  const { subjectsInfo, selectedCourse } = props;
+  const { selectedCourse, subjectsInfo } = props;
 
+  const { selectedPeriod } = usePeriod();
   const [courseOffers, setCouseOffers] = useState<ISubjectOfferList[]>();
 
   useEffect(() => {
-    setCouseOffers(
-      subjectsInfo.reduce((acc, e) => {
-        if (e.offers) {
-          const subjectOfferParsed = e.offers.map((each) => ({
-            subjectName: e.name,
-            optionalSubject: e.optionalSubject,
-            id: each.id,
-            class: each.class,
-            semester: e.semester,
-            places: each.places,
-          }));
-          return [...acc, ...subjectOfferParsed];
-        }
-        return acc;
-      }, [])
-    );
-  }, [selectedCourse]);
+    api
+      .get<{ data: ICourse }>(
+        `api/courses/${selectedCourse}?period=${selectedPeriod}`
+      )
+      .then((response) => {
+        const courseResponse = response.data.data;
+        setCouseOffers(
+          courseResponse.subjects.reduce((acc, e) => {
+            if (e.offers) {
+              const subjectOfferParsed = e.offers.map((each) => ({
+                subjectName: e.name,
+                optionalSubject: e.optionalSubject,
+                id: each.id,
+                class: each.class,
+                semester: e.semester,
+                places: each.places,
+              }));
+              return [...acc, ...subjectOfferParsed];
+            }
+            return acc;
+          }, [])
+        );
+      });
+  }, [selectedCourse, selectedPeriod]);
 
   const handleAddRequiredSubjets = async (
     addRequired: boolean,
@@ -53,10 +63,10 @@ function SubjectOffers(props: ISubjectOffersProps) {
   ) => {
     api
       .post(`/api/courses/${selectedCourse}/offerRequired`, {
-        periodId: 1,
+        periodId: selectedPeriod,
         addRequired,
         addOptional,
-      }) // TODO period
+      })
       .then((response) => {
         message.success("Ofertas adicionadas!");
         const { data: newSubjectOffers }: { data: ISubjectOffer[] } =
@@ -96,7 +106,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
       },
       class: values.class,
       period: {
-        id: 1,
+        id: selectedPeriod,
       },
       places: values.places,
     };

@@ -93,6 +93,7 @@ function SubjectOfferForm(props: ISubjectOfferFormProps) {
             <Form.Item
               name="class"
               label="Turma"
+              initialValue="Única"
               rules={[
                 {
                   required: true,

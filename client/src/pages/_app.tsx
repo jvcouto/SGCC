@@ -10,6 +10,7 @@ import translactions from "../utils/_i18n/translations.json";
 
 import GlobalStyle from "../styles/global";
 import theme from "../styles/theme";
+import { PeriodProvider } from "../contexts/periodContext";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -34,7 +35,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             SGCC - Sistema para Gerenciamento de Coordenação de Cursos
           </title>
         </Head>
-        <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
+        <AuthProvider>
+          <PeriodProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </PeriodProvider>
+        </AuthProvider>
         <GlobalStyle />
       </ThemeProvider>
     </IntlProvider>

@@ -32,7 +32,8 @@ export default function MakeCourseController() {
 
   const findOne = async (httpRequest: Partial<Request>) => {
     const course = await findCourse.execute(
-      httpRequest.params?.id as unknown as number
+      httpRequest.params?.id as unknown as number,
+      httpRequest.query
     );
 
     return { status: HTTP_STATUS_CODES.OK, data: course };
