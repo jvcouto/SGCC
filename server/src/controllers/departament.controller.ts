@@ -29,7 +29,8 @@ export default function MakeDepartamentController() {
 
   const findOne = async (httpRequest: Partial<Request>) => {
     const departament = await findOneDepartament.execute(
-      httpRequest.params?.id as unknown as number
+      httpRequest.params?.id as unknown as number,
+      httpRequest.query
     );
 
     return {

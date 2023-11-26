@@ -54,7 +54,7 @@ export default function MakeCourseController() {
       httpRequest.body
     );
 
-    return { status: HTTP_STATUS_CODES.OK, data: subjectOffers };
+    return { status: HTTP_STATUS_CODES.CREATED, data: subjectOffers };
   };
 
   return Object.freeze({

@@ -67,7 +67,7 @@ class User {
     () => DepartamentAdmin,
     (departamentAdmin) => departamentAdmin.user
   )
-  departamentAdmin!: CourseAdmins[];
+  departamentAdmin!: DepartamentAdmin[];
 
   @ManyToOne(() => Departament, (departament) => departament.teachers)
   departament!: Departament;

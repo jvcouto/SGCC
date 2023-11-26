@@ -26,7 +26,7 @@ interface IUser {
   firstLogin: boolean;
   colleges?: ICourse[];
   administrating?: ICourse[];
-  roles: number[];
+  roles?: number[];
 }
 
 export default IUser;

@@ -9,7 +9,7 @@ export default class UserRepository {
 
     const queryOptions = {
       where: key === "email" ? { email: value } : { id: value },
-      relations: ["colleges", "departamentAdmin", "courseAdmin"],
+      relations: ["colleges", "departamentAdmin", "courseAdmin", "departament"],
     };
 
     return userRepository.findOne(queryOptions);

@@ -17,7 +17,9 @@ export default class SubjectOfferRepository {
   async findByIds(ids: number[]) {
     const repository = getRepository(SubjectOffer);
 
-    return repository.findByIds(ids, { relations: ["period", "subject"] });
+    return repository.findByIds(ids, {
+      relations: ["period", "subject", "teachers", "subject.course"],
+    });
   }
 
   async findExistentBulkSubject(
@@ -41,5 +43,11 @@ export default class SubjectOfferRepository {
       },
       relations: ["subject"],
     });
+  }
+
+  async update(subjectOffer: SubjectOffer) {
+    const repository = getRepository(SubjectOffer);
+
+    return repository.save(subjectOffer);
   }
 }

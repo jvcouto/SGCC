@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import { IsNotEmpty, IsString } from "class-validator";
 import User from "./user.model";

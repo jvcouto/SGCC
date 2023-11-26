@@ -13,12 +13,26 @@ export default class DepartamentRepository {
     return repository.save(departament);
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, query?: any) {
     const repository = getRepository(Departament);
 
-    return repository.findOne(id, {
-      relations: ["teachers", "admins", "admins.user"],
-    });
+    const queryrun = repository
+      .createQueryBuilder("departament")
+      .leftJoinAndSelect("departament.teachers", "teachers")
+      .leftJoinAndSelect("departament.admins", "admins")
+      .leftJoinAndSelect("admins.user", "user")
+      .leftJoinAndSelect("departament.subjects", "subjects")
+      .leftJoinAndSelect("subjects.course", "course")
+      .leftJoinAndSelect(
+        "subjects.offers",
+        "offers",
+        query?.period && `offers.period.id = ${query.period}`
+      )
+      .leftJoinAndSelect("offers.period", "period")
+      .leftJoinAndSelect("offers.teachers", "offerTeachers")
+      .where("departament.id = :id", { id: id });
+
+    return queryrun.getOne();
   }
 
   async findAll(query: DepartamentQueryOpts) {

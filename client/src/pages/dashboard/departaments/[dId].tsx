@@ -3,7 +3,11 @@ import { parseCookies } from "nookies";
 
 import { Tabs } from "antd";
 
-import { InfoCircleOutlined, TeamOutlined } from "@ant-design/icons";
+import {
+  DiffOutlined,
+  InfoCircleOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
 import MainLayout from "../../../components/layouts/mainLayout";
 import SecondLayout from "../../../components/layouts/secondLayout";
 
@@ -14,6 +18,7 @@ import DepartamentSider from "../../../components/siders/departaments/departamen
 import DepartamentInfo from "../../../components/contents/departaments/information/departamentInfo";
 import TeachersList from "../../../components/contents/departaments/teachers/departamentTeachersList";
 import IDepartament from "../../../types/apiResponses/departament";
+import ChargesList from "../../../components/contents/departaments/charges/chargesList";
 
 interface IDepartamentPageProps {
   departament: IDepartament;
@@ -45,6 +50,15 @@ function DepartamentPage(props: IDepartamentPageProps) {
           teachersInfo={departament.teachers}
         />
       ),
+    },
+    {
+      label: (
+        <span>
+          <DiffOutlined /> Encargos
+        </span>
+      ),
+      key: "item-3",
+      children: <ChargesList departamentId={departament.id} />,
     },
   ];
 

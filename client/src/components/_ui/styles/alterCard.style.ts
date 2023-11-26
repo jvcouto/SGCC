@@ -12,7 +12,6 @@ const AlternateList = styled(List)`
   .ant-card.selected {
     /* box-shadow: 0 0 4px 1.5px #40a9ff; */
     background: rgba(64, 169, 255, 0.5) !important;
-    back
   }
 `;
 

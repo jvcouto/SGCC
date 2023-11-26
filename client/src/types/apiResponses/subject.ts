@@ -4,6 +4,23 @@ interface IDepartament {
   code: string;
 }
 
+interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  sysAdmin: boolean;
+  firstLogin: boolean;
+}
+
+interface ICourse {
+  id: number;
+  name: string;
+  duration: number;
+  shift: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ISubjectOffer {
   id: number;
   createdAt: Date;
@@ -13,6 +30,7 @@ export interface ISubjectOffer {
   teachingPlan: any; // TODO
   teachingPlanApproved: boolean;
   subject: ISubject;
+  teachers: IUser[];
 }
 
 interface ISubject {
@@ -29,6 +47,7 @@ interface ISubject {
   offers?: ISubjectOffer[];
   shortName: string;
   places: number;
+  course?: ICourse;
 }
 
 export default ISubject;

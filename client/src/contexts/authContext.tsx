@@ -12,7 +12,7 @@ interface LoginDataProps {
 
 interface AuthApiResponse {
   data: {
-    id: number;
+    id: string;
     name: string;
     email: string;
     roles: number[];

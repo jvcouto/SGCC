@@ -13,4 +13,8 @@ subjectOfferRoutes
   .route("/:id/approvalHistory")
   .post(expressCallback(MakeSubjectApprovalHistoryController().create));
 
+subjectOfferRoutes
+  .route("/:offerUid/request")
+  .patch(expressCallback(MakeSubjectOfferController().request));
+
 export default subjectOfferRoutes;
