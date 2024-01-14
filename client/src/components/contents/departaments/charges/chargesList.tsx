@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Collapse, Descriptions, Divider, List, message } from "antd";
+import {
+  Avatar,
+  Collapse,
+  Descriptions,
+  Divider,
+  Empty,
+  List,
+  message,
+} from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { usePeriod } from "../../../../contexts/periodContext";
 import api from "../../../../services/request.service";
@@ -59,11 +67,13 @@ function ChargesList(props: DepartamentChargesListProps) {
         message.success("Solicitação adicionada!");
         const { data: offerUpdated } = response.data;
 
-        const newDepartamentChargesGrouped = departamentChargesGrouped[
-          offerUpdated.subject.course.name
-        ].find((e) => e.id === offerUpdated.id);
+        const newDepartamentChargesGrouped = { ...departamentChargesGrouped };
 
-        // setDepartamentChargesGrouped();
+        newDepartamentChargesGrouped[offerUpdated.subject.course.name].find(
+          (e) => e.id === offerUpdated.id
+        ).teachers = offerUpdated.teachers;
+
+        setDepartamentChargesGrouped(newDepartamentChargesGrouped);
       })
       .catch(() => {
         message.error("Algo deu errado, tente novamente!");
@@ -113,6 +123,14 @@ function ChargesList(props: DepartamentChargesListProps) {
                 <List
                   itemLayout="horizontal"
                   dataSource={charge.teachers}
+                  locale={{
+                    emptyText: (
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description="Não há professores solicitantes"
+                      />
+                    ),
+                  }}
                   renderItem={(teacher) => (
                     <List.Item>
                       <List.Item.Meta

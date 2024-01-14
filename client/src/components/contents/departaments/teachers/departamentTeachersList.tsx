@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, List, message } from "antd";
+import { Avatar, Empty, List, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import IUser from "../../../../types/apiResponses/users";
 import AddUserBulk, {
@@ -50,6 +50,14 @@ function TeachersList(props: IDepartamentTeachers) {
       <List
         itemLayout="horizontal"
         dataSource={teachersList}
+        locale={{
+          emptyText: (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Não há professores cadastrados"
+            />
+          ),
+        }}
         renderItem={(teacher) => (
           <List.Item>
             <List.Item.Meta

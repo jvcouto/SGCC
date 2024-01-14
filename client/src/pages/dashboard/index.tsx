@@ -39,7 +39,7 @@ function Dashboard(props: IDashboardProps) {
         >
           <Title level={2}>Bem vindo ao SGCC!</Title>
           <Text type="secondary" style={{ fontSize: "1.25rem" }}>
-            Seu usuario nao possui nenhum encargo, entre em contato com o
+            Seu usuario não possui nenhum encargo, entre em contato com o
             administrador!
           </Text>
         </div>

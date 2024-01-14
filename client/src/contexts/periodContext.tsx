@@ -20,8 +20,12 @@ export function PeriodProvider({ children }) {
   useEffect(() => {
     api.get<{ data: IPeriod[] }>(`public/list/periods`).then((response) => {
       const { data: periodListFetched } = response.data;
-      setPeriodList(periodListFetched);
-      setSelectedPeriod(periodListFetched[periodListFetched.length - 1].id);
+      setPeriodList(periodListFetched.length ? periodListFetched : []);
+      setSelectedPeriod(
+        periodListFetched.length
+          ? periodListFetched[periodListFetched.length - 1].id
+          : null
+      );
     });
   }, []);
 

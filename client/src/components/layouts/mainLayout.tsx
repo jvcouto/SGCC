@@ -85,8 +85,9 @@ function MainLayout({ children }) {
           >
             <Typography.Link onClick={(e) => e.preventDefault()}>
               <Space>
-                {periodList.length &&
-                  periodList.find((e) => e.id === selectedPeriod).code}
+                {periodList.length
+                  ? periodList.find((e) => e.id === selectedPeriod).code
+                  : ""}
                 <DownOutlined />
               </Space>
             </Typography.Link>

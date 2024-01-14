@@ -19,7 +19,7 @@ function ChargeListHeader(props: IChargeListHeaderProps) {
 
   const { user } = useAuth();
 
-  const shouldRenderRequestButton = user.roles.includes(USER_ROLES.TEACHER);
+  const shouldRenderRequestButton = user?.roles.includes(USER_ROLES.TEACHER);
 
   return (
     <ChargesListHeaderWrapper>
