@@ -16,6 +16,9 @@
     "secretary": "Secretário",
     "chief": "Chefe",
     "sub-chief": "Sub-Chefe",
-    "unique": "Única"
+    "unique": "Única",
+    "cancel":  "Cancelar",
+    "exclude.request":  "Excluir Solicitação"
+
   }
 }

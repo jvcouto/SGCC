@@ -3,6 +3,7 @@ import { Request } from "express";
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 import {
   createSubjectOffer,
+  deleteSubjectRequest,
   requestSubjectOffer,
 } from "@useCases/subjectOffer";
 
@@ -22,8 +23,19 @@ export default function MakeSubjectOfferController() {
     return { status: HTTP_STATUS_CODES.OK, data: requestData };
   };
 
+  const deleteRequest = async (httpRequest: Partial<Request>) => {
+    const requestData = await deleteSubjectRequest.execute(
+      httpRequest.params,
+      httpRequest.body,
+      httpRequest.user
+    );
+
+    return { status: HTTP_STATUS_CODES.OK, data: requestData };
+  };
+
   return Object.freeze({
     create,
     request,
+    deleteRequest,
   });
 }

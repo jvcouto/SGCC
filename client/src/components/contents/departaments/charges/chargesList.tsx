@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from "react";
 import {
   Avatar,
+  Button,
   Collapse,
   Descriptions,
   Divider,
   Empty,
   List,
+  Tooltip,
   message,
 } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import {
+  LockOutlined,
+  StopOutlined,
+  UnlockOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { FormattedMessage } from "react-intl";
 import { usePeriod } from "../../../../contexts/periodContext";
 import api from "../../../../services/request.service";
 import IDepartament from "../../../../types/apiResponses/departament";
 import { ISubjectOffer } from "../../../../types/apiResponses/subject";
 import ChargeListHeader from "./chargesListHeader";
+import USER_ROLES from "../../../../utils/constants/userRoles";
+import { useAuth } from "../../../../contexts/authContext";
+import { ChargesRequestListActionsWrapper } from "./chargeList.style";
 
 const { Panel } = Collapse;
 
@@ -28,6 +39,16 @@ interface IOffersGroupedByCourse {
 function ChargesList(props: DepartamentChargesListProps) {
   const { departamentId } = props;
   const { selectedPeriod } = usePeriod();
+
+  const { user } = useAuth();
+
+  const shouldRenderTeachersCancelButton = user?.roles.includes(
+    USER_ROLES.TEACHER
+  );
+
+  const shouldRenderAdminsRemoveButton =
+    user?.roles.includes(USER_ROLES.SYSTEM_ADMIN) ||
+    user?.roles.includes(USER_ROLES.DEPARTAMENT_ADMIN);
 
   const [departamentChargesGrouped, setDepartamentChargesGrouped] =
     useState<IOffersGroupedByCourse>();
@@ -77,6 +98,38 @@ function ChargesList(props: DepartamentChargesListProps) {
       })
       .catch(() => {
         message.error("Algo deu errado, tente novamente!");
+      });
+  };
+
+  const handleDeleteOfferRequest = (teacherId: string, offerId: number) => {
+    api
+      .post<{ data: ISubjectOffer }>(`/api/subjectOffer/${offerId}/delete`, {
+        teacherId,
+      })
+      .then((response) => {
+        message.success("Operação realizada com sucesso!");
+
+        const { data: offerUpdated } = response.data;
+
+        const newDepartamentChargesGrouped = { ...departamentChargesGrouped };
+
+        newDepartamentChargesGrouped[offerUpdated.subject.course.name].find(
+          (e) => e.id === offerUpdated.id
+        ).teachers = offerUpdated.teachers;
+
+        setDepartamentChargesGrouped(newDepartamentChargesGrouped);
+      })
+      .catch((error) => {
+        const { code } = error.response.data;
+        switch (code) {
+          case "NOT_AUTHORIZED":
+            message.error("Usuário não autorizado para realizar a ação!");
+            break;
+
+          default:
+            message.error("Algo deu errado, tente novamente!");
+            break;
+        }
       });
   };
 
@@ -133,11 +186,34 @@ function ChargesList(props: DepartamentChargesListProps) {
                   }}
                   renderItem={(teacher) => (
                     <List.Item>
-                      <List.Item.Meta
-                        avatar={<Avatar src="" icon={<UserOutlined />} />}
-                        title={teacher.name}
-                        description={teacher.email}
-                      />
+                      <>
+                        <List.Item.Meta
+                          avatar={<Avatar src="" icon={<UserOutlined />} />}
+                          title={teacher.name}
+                          description={teacher.email}
+                        />
+                        <ChargesRequestListActionsWrapper>
+                          {(shouldRenderAdminsRemoveButton ||
+                            (shouldRenderTeachersCancelButton &&
+                              teacher.id === user.id)) && (
+                            <Tooltip
+                              title={<FormattedMessage id="exclude.request" />}
+                            >
+                              <Button
+                                type="text"
+                                icon={<StopOutlined />}
+                                danger
+                                onClick={() =>
+                                  handleDeleteOfferRequest(
+                                    teacher.id,
+                                    charge.id
+                                  )
+                                }
+                              />
+                            </Tooltip>
+                          )}
+                        </ChargesRequestListActionsWrapper>
+                      </>
                     </List.Item>
                   )}
                 />

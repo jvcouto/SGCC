@@ -1,4 +1,4 @@
 export interface IUser {
   id: string;
-  userRoles: Array<string>;
+  userRoles: Array<number>;
 }
