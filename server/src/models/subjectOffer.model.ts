@@ -65,6 +65,12 @@ class SubjectOffer extends AbstractBaseModel {
   @ManyToMany(() => User)
   @JoinTable()
   teachers!: User[];
+
+  @IsOptional()
+  @IsBoolean()
+  @IsNotEmpty()
+  @Column({ nullable: false, default: false })
+  closed!: boolean;
 }
 
 export default SubjectOffer;

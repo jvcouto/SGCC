@@ -46,12 +46,14 @@ function ChargesList(props: DepartamentChargesListProps) {
     USER_ROLES.TEACHER
   );
 
-  const shouldRenderAdminsRemoveButton =
+  const shouldRenderAdminsButtons =
     user?.roles.includes(USER_ROLES.SYSTEM_ADMIN) ||
     user?.roles.includes(USER_ROLES.DEPARTAMENT_ADMIN);
 
   const [departamentChargesGrouped, setDepartamentChargesGrouped] =
     useState<IOffersGroupedByCourse>();
+
+  const [offersClosed, setOffersClosed] = useState<boolean>();
 
   useEffect(() => {
     api
@@ -76,8 +78,19 @@ function ChargesList(props: DepartamentChargesListProps) {
             return offerWithSubject;
           });
           return acc;
-        }, {});
+        }, {}) as IOffersGroupedByCourse;
+
+        let isOffersClosed: boolean;
+        // eslint-disable-next-line no-restricted-syntax
+        for (const course of Object.keys(chargesGrouped)) {
+          // eslint-disable-next-line @typescript-eslint/no-loop-func
+          chargesGrouped[course].forEach((e) => {
+            isOffersClosed = isOffersClosed || e.closed;
+          });
+        }
+
         setDepartamentChargesGrouped(chargesGrouped);
+        setOffersClosed(isOffersClosed);
       });
   }, [departamentId, selectedPeriod]);
 
@@ -133,10 +146,58 @@ function ChargesList(props: DepartamentChargesListProps) {
       });
   };
 
+  const handleCloseRequest = () => {
+    const offersIds: number[] = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const course of Object.keys(departamentChargesGrouped)) {
+      departamentChargesGrouped[course].forEach((e) => offersIds.push(e.id));
+    }
+
+    api
+      .patch(`/api/subjectOffer/offers/close-all`, {
+        close: !offersClosed,
+        periodId: selectedPeriod,
+        subjectsIds: offersIds,
+      })
+      .then(() => {
+        message.success("Alterações realizadas!");
+        setOffersClosed(!offersClosed);
+      })
+      .catch(() => {
+        message.error("Algo deu errado, tente novamente!");
+      });
+  };
+
   return (
     <>
       {Object.keys(departamentChargesGrouped ?? {}).map((eachCourse) => (
         <>
+          {shouldRenderAdminsButtons && (
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Tooltip
+                title={
+                  <FormattedMessage
+                    id={offersClosed ? "offers.open" : "offers.close"}
+                  />
+                }
+              >
+                {offersClosed ? (
+                  <Button
+                    type="text"
+                    icon={<LockOutlined style={{ fontSize: "1.5rem" }} />}
+                    onClick={handleCloseRequest}
+                  />
+                ) : (
+                  <Button
+                    type="text"
+                    icon={<UnlockOutlined style={{ fontSize: "1.5rem" }} />}
+                    onClick={handleCloseRequest}
+                  />
+                )}
+              </Tooltip>
+            </div>
+          )}
+
           <Divider orientation="left" orientationMargin="0">
             {eachCourse}
           </Divider>
@@ -150,6 +211,7 @@ function ChargesList(props: DepartamentChargesListProps) {
                     subjectOfferTeachers={charge.teachers}
                     subjectOfferId={charge.id}
                     handleRequest={handleRequest}
+                    chargeClosed={charge.closed}
                   />
                 }
                 key={charge.id}
@@ -193,9 +255,10 @@ function ChargesList(props: DepartamentChargesListProps) {
                           description={teacher.email}
                         />
                         <ChargesRequestListActionsWrapper>
-                          {(shouldRenderAdminsRemoveButton ||
+                          {(shouldRenderAdminsButtons ||
                             (shouldRenderTeachersCancelButton &&
-                              teacher.id === user.id)) && (
+                              teacher.id === user.id &&
+                              !charge.closed)) && (
                             <Tooltip
                               title={<FormattedMessage id="exclude.request" />}
                             >

@@ -18,7 +18,10 @@
     "sub-chief": "Sub-Chefe",
     "unique": "Única",
     "cancel":  "Cancelar",
-    "exclude.request":  "Excluir Solicitação"
+    "exclude.request":  "Excluir Solicitação", 
+    "offers.open":  "Desbloquear Edição de Ofertas",
+    "offers.close":  "Bloquear Edição de Ofertas",
+    "offers.closed":  "Edição de oferta bloqueada"
 
   }
 }

@@ -1,4 +1,4 @@
-import { getRepository } from "typeorm";
+import { In, getRepository } from "typeorm";
 import SubjectOffer from "@models/subjectOffer.model";
 
 export default class SubjectOfferRepository {
@@ -49,5 +49,30 @@ export default class SubjectOfferRepository {
     const repository = getRepository(SubjectOffer);
 
     return repository.save(subjectOffer);
+  }
+
+  async findOne(ids: number) {
+    const repository = getRepository(SubjectOffer);
+
+    return repository.findOne(ids);
+  }
+
+  async closeSubjectsByPeriod(
+    subjectsIds: number[],
+    periodId: number,
+    close: boolean
+  ) {
+    const repository = getRepository(SubjectOffer);
+
+    const query = repository
+      .createQueryBuilder("course")
+      .update()
+      .set({ closed: close })
+      .where({
+        id: In(subjectsIds),
+        periodOId: periodId,
+      });
+
+    return query.execute();
   }
 }

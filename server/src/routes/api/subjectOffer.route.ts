@@ -21,4 +21,12 @@ subjectOfferRoutes
   .route("/:offerUid/delete")
   .post(expressCallback(MakeSubjectOfferController().deleteRequest));
 
+subjectOfferRoutes
+  .route("/:offerUid")
+  .patch(expressCallback(MakeSubjectOfferController().update));
+
+subjectOfferRoutes
+  .route("/offers/close-all")
+  .patch(expressCallback(MakeSubjectOfferController().close));
+
 export default subjectOfferRoutes;

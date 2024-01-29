@@ -31,6 +31,7 @@ export interface ISubjectOffer {
   teachingPlanApproved: boolean;
   subject: ISubject;
   teachers: IUser[];
+  closed: boolean;
 }
 
 interface ISubject {
