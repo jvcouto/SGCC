@@ -7,7 +7,10 @@ import {
   requestSubjectOffer,
   updateSubjectOffer,
   closeSubjectOffer,
+  getOfferTeachers,
 } from "@useCases/subjectOffer";
+import Logger from "@utils/logger";
+import MissingParameterError from "@errors/missingParameter.error";
 
 export default function MakeSubjectOfferController() {
   const create = async (httpRequest: Partial<Request>) => {
@@ -45,16 +48,30 @@ export default function MakeSubjectOfferController() {
   };
 
   const close = async (httpRequest: Partial<Request>) => {
-    console.log("opa");
     await closeSubjectOffer.execute(httpRequest.body);
 
     return { status: HTTP_STATUS_CODES.OK };
   };
+
+  const getTeachers = async (httpRequest: Partial<Request>) => {
+    const { params } = httpRequest;
+
+    if (!params?.offerId) {
+      const errorMessage = "Missing subject offer parameter";
+      Logger.info(errorMessage);
+      throw new MissingParameterError(errorMessage);
+    }
+    const data = await getOfferTeachers.execute(Number(params.offerId));
+
+    return { status: HTTP_STATUS_CODES.OK, data };
+  };
+
   return Object.freeze({
     create,
     request,
     deleteRequest,
     update,
     close,
+    getTeachers,
   });
 }

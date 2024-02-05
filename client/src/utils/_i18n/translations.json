@@ -21,7 +21,7 @@
     "exclude.request":  "Excluir Solicitação", 
     "offers.open":  "Desbloquear Edição de Ofertas",
     "offers.close":  "Bloquear Edição de Ofertas",
-    "offers.closed":  "Edição de oferta bloqueada"
-
+    "offers.closed":  "Edição de oferta bloqueada",
+    "offer.teachers": "Disponível em breve"
   }
 }

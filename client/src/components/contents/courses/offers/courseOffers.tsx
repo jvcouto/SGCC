@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FormInstance, List, Space, Tag, message } from "antd";
+import { Button, FormInstance, List, Space, Tag, Tooltip, message } from "antd";
 
+import { FormattedMessage } from "react-intl";
 import ISubject, {
   ISubjectOffer,
 } from "../../../../types/apiResponses/subject";
@@ -10,6 +11,7 @@ import SubjectOfferForm, {
 import api from "../../../../services/request.service";
 import { usePeriod } from "../../../../contexts/periodContext";
 import ICourse from "../../../../types/apiResponses/course";
+import OfferTeachersModal from "./offerTeachersModal/offerTeacherModal";
 
 export interface ISubjectOfferList {
   id: number;
@@ -18,6 +20,7 @@ export interface ISubjectOfferList {
   optionalSubject: boolean;
   semester: number;
   places: number;
+  closed: boolean;
 }
 
 interface ISubjectOffersProps {
@@ -30,6 +33,8 @@ function SubjectOffers(props: ISubjectOffersProps) {
 
   const { selectedPeriod } = usePeriod();
   const [courseOffers, setCouseOffers] = useState<ISubjectOfferList[]>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTeacherOffers, setSelectedTeacherOffer] = useState<number>();
 
   useEffect(() => {
     api
@@ -39,16 +44,19 @@ function SubjectOffers(props: ISubjectOffersProps) {
       .then((response) => {
         const courseResponse = response.data.data;
         setCouseOffers(
-          courseResponse.subjects.reduce((acc, e) => {
-            if (e.offers) {
-              const subjectOfferParsed = e.offers.map((each) => ({
-                subjectName: e.name,
-                optionalSubject: e.optionalSubject,
-                id: each.id,
-                class: each.class,
-                semester: e.semester,
-                places: each.places,
-              }));
+          courseResponse.subjects.reduce((acc, eachSubject) => {
+            if (eachSubject.offers) {
+              const subjectOfferParsed = eachSubject.offers.map(
+                (eachOffer) => ({
+                  subjectName: eachSubject.name,
+                  optionalSubject: eachSubject.optionalSubject,
+                  id: eachOffer.id,
+                  class: eachOffer.class,
+                  semester: eachSubject.semester,
+                  places: eachOffer.places,
+                  closed: eachOffer.closed,
+                })
+              );
               return [...acc, ...subjectOfferParsed];
             }
             return acc;
@@ -80,6 +88,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
             subjectName: newSubjectOffer.subject.name,
             semester: newSubjectOffer.subject.semester,
             places: newSubjectOffer.places,
+            closed: newSubjectOffer.closed,
           })),
         ]);
       })
@@ -126,6 +135,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
             subjectName: newSubjectOffer.subject.name,
             semester: newSubjectOffer.subject.semester,
             places: newSubjectOffer.places,
+            closed: newSubjectOffer.closed,
           },
         ]);
 
@@ -143,6 +153,11 @@ function SubjectOffers(props: ISubjectOffersProps) {
             break;
         }
       });
+  };
+
+  const handleTeachersModal = (offerId: number) => {
+    setSelectedTeacherOffer(offerId);
+    setIsModalOpen(true);
   };
 
   return (
@@ -165,6 +180,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
               <b>Disciplina</b>
             </div>
             <Space size="large">
+              <b>Professores</b>
               <b>Turma</b>
               <b>Vagas</b>
               <b>Tipo</b>
@@ -177,7 +193,23 @@ function SubjectOffers(props: ISubjectOffersProps) {
           <List.Item>
             <>
               {subjectOffer.subjectName}
-              <Space size="small">
+              <Space size="middle">
+                <Tooltip
+                  title={
+                    !subjectOffer.closed ? (
+                      <FormattedMessage id="offer.teachers" />
+                    ) : undefined
+                  }
+                >
+                  <Button
+                    type="link"
+                    onClick={() => handleTeachersModal(subjectOffer.id)}
+                    disabled={!subjectOffer.closed}
+                  >
+                    Professores
+                  </Button>
+                </Tooltip>
+
                 <Tag color="blue">
                   {subjectOffer.class === "unique"
                     ? "Única"
@@ -195,6 +227,13 @@ function SubjectOffers(props: ISubjectOffersProps) {
           </List.Item>
         )}
       />
+      {setIsModalOpen && (
+        <OfferTeachersModal
+          setIsModalOpen={setIsModalOpen}
+          offerId={selectedTeacherOffers}
+          open={isModalOpen}
+        />
+      )}
     </>
   );
 }

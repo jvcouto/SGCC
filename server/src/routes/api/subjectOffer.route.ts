@@ -29,4 +29,8 @@ subjectOfferRoutes
   .route("/offers/close-all")
   .patch(expressCallback(MakeSubjectOfferController().close));
 
+subjectOfferRoutes
+  .route("/:offerId/teachers")
+  .get(expressCallback(MakeSubjectOfferController().getTeachers));
+
 export default subjectOfferRoutes;

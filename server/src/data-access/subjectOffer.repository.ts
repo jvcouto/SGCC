@@ -51,10 +51,10 @@ export default class SubjectOfferRepository {
     return repository.save(subjectOffer);
   }
 
-  async findOne(ids: number) {
+  async findOne(id: number) {
     const repository = getRepository(SubjectOffer);
 
-    return repository.findOne(ids);
+    return repository.findOne(id);
   }
 
   async closeSubjectsByPeriod(
@@ -74,5 +74,13 @@ export default class SubjectOfferRepository {
       });
 
     return query.execute();
+  }
+
+  async getSubjectOfferTeachers(id: number) {
+    const repository = getRepository(SubjectOffer);
+
+    return repository.findOne(id, {
+      relations: ["teachers"],
+    });
   }
 }
