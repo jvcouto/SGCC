@@ -1,7 +1,7 @@
 import User from "@models/user.model";
 import { UserQueryOpts } from "@useCases/users/list";
 import { MAX_TAKE_ITEMS } from "@utils/constants/paginationOptions";
-import { FindManyOptions, In, Like, getRepository } from "typeorm";
+import { FindManyOptions, Like, getRepository } from "typeorm";
 
 export default class UserRepository {
   async findOne(value: string, key: string = "id") {
@@ -35,7 +35,6 @@ export default class UserRepository {
   async bulkUpdate(users: User[]) {
     const userRepository = getRepository(User);
 
-    console.log(users);
     return userRepository.save(users);
   }
 

@@ -1,5 +1,11 @@
 import { In, getRepository } from "typeorm";
 import SubjectOffer from "@models/subjectOffer.model";
+import { UserRoles } from "@utils/constants/userRoles";
+import { IUser } from "src/interfaces/user.interface";
+import {
+  DEFAULT_PAGE_SIZE,
+  MAX_TAKE_ITEMS,
+} from "@utils/constants/paginationOptions";
 
 export default class SubjectOfferRepository {
   async save(subjectOffer: SubjectOffer) {
@@ -65,7 +71,7 @@ export default class SubjectOfferRepository {
     const repository = getRepository(SubjectOffer);
 
     const query = repository
-      .createQueryBuilder("course")
+      .createQueryBuilder()
       .update()
       .set({ closed: close })
       .where({
@@ -82,5 +88,33 @@ export default class SubjectOfferRepository {
     return repository.findOne(id, {
       relations: ["teachers"],
     });
+  }
+
+  async find({ query, user }: { query: any; user: IUser }) {
+    const repository = getRepository(SubjectOffer);
+
+    const queryBuilder = repository
+      .createQueryBuilder("subjectOffer")
+      .leftJoinAndSelect("subjectOffer.teachers", "teachers")
+      .leftJoinAndSelect("subjectOffer.subject", "subject");
+
+    if (query.period) {
+      queryBuilder.andWhere("subjectOffer.period = :periodId", {
+        periodId: query.period,
+      });
+    }
+
+    if (user.userRoles.includes(UserRoles.TEACHER)) {
+      queryBuilder.andWhere("teachers.id = :alias", { alias: user.id });
+    }
+
+    if (query.page) {
+      queryBuilder.skip(query.page * DEFAULT_PAGE_SIZE);
+      queryBuilder.take(DEFAULT_PAGE_SIZE);
+    } else {
+      queryBuilder.take(MAX_TAKE_ITEMS);
+    }
+
+    return queryBuilder.getManyAndCount();
   }
 }

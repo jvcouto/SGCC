@@ -8,9 +8,11 @@ import {
   updateSubjectOffer,
   closeSubjectOffer,
   getOfferTeachers,
+  listSubjectOffers,
 } from "@useCases/subjectOffer";
 import Logger from "@utils/logger";
 import MissingParameterError from "@errors/missingParameter.error";
+import { IUser } from "src/interfaces/user.interface";
 
 export default function MakeSubjectOfferController() {
   const create = async (httpRequest: Partial<Request>) => {
@@ -66,6 +68,23 @@ export default function MakeSubjectOfferController() {
     return { status: HTTP_STATUS_CODES.OK, data };
   };
 
+  const list = async (httpRequest: Partial<Request>) => {
+    const [data, count] = await listSubjectOffers.execute(
+      httpRequest.user as IUser,
+      httpRequest.query
+    );
+
+    return {
+      status: HTTP_STATUS_CODES.OK,
+      data,
+      meta: {
+        total: count,
+        page: Number(httpRequest.query?.page),
+        pageSize: httpRequest.query?.page_size,
+      },
+    };
+  };
+
   return Object.freeze({
     create,
     request,
@@ -73,5 +92,6 @@ export default function MakeSubjectOfferController() {
     update,
     close,
     getTeachers,
+    list,
   });
 }

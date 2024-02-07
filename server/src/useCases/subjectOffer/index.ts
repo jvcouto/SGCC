@@ -5,6 +5,7 @@ import DeleteSubjectRequest from "./deleteSubjectRequest";
 import UpdateSubjectOffer from "./update";
 import CloseOffers from "./closeOffers";
 import GetOfferTeachers from "./getTeachers";
+import List from "./list";
 
 const subjectOfferRepository = new SubjectOfferRepository();
 
@@ -20,6 +21,8 @@ const closeSubjectOffer = new CloseOffers(subjectOfferRepository);
 
 const getOfferTeachers = new GetOfferTeachers(subjectOfferRepository);
 
+const listSubjectOffers = new List(subjectOfferRepository);
+
 export {
   createSubjectOffer,
   requestSubjectOffer,
@@ -27,4 +30,5 @@ export {
   updateSubjectOffer,
   closeSubjectOffer,
   getOfferTeachers,
+  listSubjectOffers,
 };

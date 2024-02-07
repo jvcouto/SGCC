@@ -21,6 +21,11 @@ const SYSTEM_PAGES = Object.freeze({
     path: "/dashboard/settings/email",
     key: "config",
   },
+  "my-subjects": {
+    label: "Minhas disciplinas",
+    path: "/dashboard/my-subjects",
+    key: "mysubjects",
+  },
 });
 
 const getSelectedKey = (path: string) => {
@@ -48,6 +53,7 @@ const getRolePages = (userRoles: number[]) => {
 
   if (userRoles.includes(USER_ROLES.TEACHER)) {
     pages.add(SYSTEM_PAGES.departaments);
+    pages.add(SYSTEM_PAGES["my-subjects"]);
   }
 
   if (userRoles.includes(USER_ROLES.COLLEGE_MEMBER)) {

@@ -29,8 +29,8 @@ export interface ISubjectOffer {
   places: number;
   teachingPlan: any; // TODO
   teachingPlanApproved: boolean;
-  subject: ISubject;
-  teachers: IUser[];
+  subject?: ISubject;
+  teachers?: IUser[];
   closed: boolean;
 }
 
