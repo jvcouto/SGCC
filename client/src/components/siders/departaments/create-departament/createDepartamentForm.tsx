@@ -82,14 +82,17 @@ function CreateDepartamentModal({
         </Tooltip>
 
         <Form.Item name="admin" label="Chefe">
+          {/* @ts-ignore */}
           <PersonSelect placeholder="Selecione o chefe" />
         </Form.Item>
 
         <Form.Item name="viceAdmin" label="Vice Chefe">
+          {/* @ts-ignore */}
           <PersonSelect placeholder="Selecione o vice chefe" />
         </Form.Item>
 
         <Form.Item name="secretary" label="Secretário">
+          {/* @ts-ignore */}
           <PersonSelect placeholder="Selecione o secretário" />
         </Form.Item>
       </Form>

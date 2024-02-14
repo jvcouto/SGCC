@@ -211,7 +211,7 @@ function ChargesList(props: DepartamentChargesListProps) {
                     subjectOfferTeachers={charge.teachers}
                     subjectOfferId={charge.id}
                     handleRequest={handleRequest}
-                    chargeClosed={charge.closed}
+                    chargeClosed={charge.closed || offersClosed}
                   />
                 }
                 key={charge.id}
