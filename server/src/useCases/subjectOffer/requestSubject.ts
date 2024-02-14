@@ -7,6 +7,7 @@ import SubjectOfferRepository from "@dataAccess/subjectOffer.repository";
 import DuplicatedEntityError from "@errors/duplicatedEntity.error";
 import { IUser } from "src/interfaces/user.interface";
 import EntityNotFound from "@errors/entityNotFound.error";
+import OperationNotAllowed from "@errors/operationNotAllowed";
 
 export default class RequestSubjectOffer {
   constructor(private readonly repository: SubjectOfferRepository) {}
@@ -22,6 +23,12 @@ export default class RequestSubjectOffer {
       const errorMessage = "Offer not found!";
       Logger.error(errorMessage);
       throw new EntityNotFound(errorMessage);
+    }
+
+    if (subjectOfferFound.closed) {
+      const errorMessage = "Offer closed!";
+      Logger.error(errorMessage);
+      throw new OperationNotAllowed(errorMessage);
     }
 
     const subjectOfferRequest = Object.assign(new SubjectOffer(), {
