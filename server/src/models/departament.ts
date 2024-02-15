@@ -19,17 +19,17 @@ class Departament extends AbstractBaseModel {
 
   @OneToMany(
     () => DepartamentAdmin,
-    (departamentAdmin) => departamentAdmin.departament,
+    (departamentAdmin: DepartamentAdmin) => departamentAdmin.departament,
     {
       cascade: true,
     }
   )
   admins!: DepartamentAdmin[];
 
-  @OneToMany(() => User, (user) => user.departament)
+  @OneToMany(() => User, (user: User) => user.departament)
   teachers!: User[];
 
-  @OneToMany(() => Subject, (subject) => subject.departament)
+  @OneToMany(() => Subject, (subject: Subject) => subject.departament)
   subjects!: Subject[];
 }
 

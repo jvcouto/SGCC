@@ -58,9 +58,10 @@ class SubjectOffer extends AbstractBaseModel {
 
   @OneToMany(
     () => SubjectApprovalHistory,
-    (subjectApprovalHistory) => subjectApprovalHistory.subjectOffer
+    (subjectApprovalHistory: SubjectApprovalHistory) =>
+      subjectApprovalHistory.subjectOffer
   )
-  subjectApprovalHistory!: SubjectOffer;
+  subjectApprovalHistory!: SubjectApprovalHistory[];
 
   @ManyToMany(() => User)
   @JoinTable()

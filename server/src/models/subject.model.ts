@@ -49,7 +49,9 @@ class Subject extends AbstractBaseModel {
   optionalSubject!: boolean;
 
   @IsNotEmpty()
-  @ManyToOne(() => Course, (course) => course.subjects, { nullable: false })
+  @ManyToOne(() => Course, (course: Course) => course.subjects, {
+    nullable: false,
+  })
   course!: Course;
 
   @IsNotEmpty()
@@ -58,7 +60,10 @@ class Subject extends AbstractBaseModel {
   })
   departament!: Departament;
 
-  @OneToMany(() => SubjectOffer, (subjectOffer) => subjectOffer.subject)
+  @OneToMany(
+    () => SubjectOffer,
+    (subjectOffer: SubjectOffer) => subjectOffer.subject
+  )
   offers!: SubjectOffer[];
 }
 

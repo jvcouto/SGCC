@@ -21,7 +21,7 @@ class SubjectApprovalHistory extends AbstractBaseModel {
 
   @ManyToOne(
     () => SubjectOffer,
-    (subjectOffer) => subjectOffer.subjectApprovalHistory
+    (subjectOffer: SubjectOffer) => subjectOffer.subjectApprovalHistory
   )
   subjectOffer!: SubjectOffer;
 }

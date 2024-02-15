@@ -28,16 +28,20 @@ class Course extends AbstractBaseModel {
   @Column({ type: "enum", enum: DayShift })
   shift!: string;
 
-  @ManyToMany(() => User, (user) => user.colleges)
+  @ManyToMany(() => User, (user: User) => user.colleges)
   @JoinTable()
   collegeMembers!: User[];
 
-  @OneToMany(() => CourseAdmin, (courseAdmin) => courseAdmin.course, {
-    cascade: true,
-  })
+  @OneToMany(
+    () => CourseAdmin,
+    (courseAdmin: CourseAdmin) => courseAdmin.course,
+    {
+      cascade: true,
+    }
+  )
   admins!: CourseAdmin[];
 
-  @OneToMany(() => Subject, (subject) => subject.course)
+  @OneToMany(() => Subject, (subject: Subject) => subject.course)
   subjects!: Subject[];
 }
 

@@ -57,19 +57,25 @@ class User {
   @Column({ name: "fisrt_login", default: true })
   firstLogin!: boolean;
 
-  @ManyToMany(() => Course, (course) => course.collegeMembers)
+  @ManyToMany(() => Course, (course: Course) => course.collegeMembers)
   colleges!: Course[];
 
-  @OneToMany(() => CourseAdmins, (courseAdmin) => courseAdmin.user)
+  @OneToMany(
+    () => CourseAdmins,
+    (courseAdmin: CourseAdmins) => courseAdmin.user
+  )
   courseAdmin!: CourseAdmins[];
 
   @OneToMany(
     () => DepartamentAdmin,
-    (departamentAdmin) => departamentAdmin.user
+    (departamentAdmin: DepartamentAdmin) => departamentAdmin.user
   )
   departamentAdmin!: DepartamentAdmin[];
 
-  @ManyToOne(() => Departament, (departament) => departament.teachers)
+  @ManyToOne(
+    () => Departament,
+    (departament: Departament) => departament.teachers
+  )
   departament!: Departament;
 }
 

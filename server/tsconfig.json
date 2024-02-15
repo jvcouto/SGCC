@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2019",                                  
-    "lib": ["es2019"],                                                                       
-    "experimentalDecorators": true,                   
-    "emitDecoratorMetadata": true,                    
-    "module": "commonjs",
-    "rootDir": "./src",                                                      
+    "target": "ES2021",
+    "experimentalDecorators": true,    
+    "emitDecoratorMetadata": true,
+    "module": "CommonJS",
+    "rootDir": "./src",  
     "baseUrl": ".",
     "paths": {
       "@controllers/*": ["./src/controllers/*"],
@@ -16,21 +15,21 @@
       "@dataAccess/*": ["./src/data-access/*"],
       "@errors/*": ["./src/errors/*"]
     },
-    "typeRoots": [  
-        "./node-modules/@types/",
-        "./src/@types/"
+    "typeRoots": [
+        "./node-modules/@types",
+        "./src/@types"
     ],
-    "types": ["reflect-metadata", "jest", "@types/jest"],
+    "types": [],
     "resolveJsonModule": true,
-    "moduleResolution": "node",              
-    "allowJs": true,                                  
-    "outDir": "./dist/",                                   
-    "removeComments": true,                           
-    "esModuleInterop": true,                             
-    "forceConsistentCasingInFileNames": true,            
-    "strict": true,                                      
+    "moduleResolution": "node",
+    "allowJs": true,
+    "outDir": "./dist/",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "skipLibCheck": true,
-    "sourceMap": true                              
+    "sourceMap": true 
   },
   "include": [
     "src/**/*", "src/tests/**/*.ts"
