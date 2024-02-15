@@ -19,11 +19,11 @@
         "./node-modules/@types",
         "./src/@types"
     ],
-    "types": [],
+    "types": ["jest", "@types/jest"],
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "allowJs": true,
-    "outDir": "./dist/",
+    "outDir": "./dist",
     "removeComments": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -32,7 +32,7 @@
     "sourceMap": true 
   },
   "include": [
-    "src/**/*", "src/tests/**/*.ts"
+    "src/**/*"
   ],
   "exclude": ["node_modules", "dist"]
 }
