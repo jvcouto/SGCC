@@ -1,8 +1,5 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable max-len */
-import { pathsToModuleNameMapper } from "ts-jest";
 import { compilerOptions } from "./tsconfig.json";
-
+import { pathsToModuleNameMapper } from "ts-jest";
 
 export default {
   coverageProvider: "v8",
@@ -10,7 +7,5 @@ export default {
     prefix: "<rootDir>",
   }),
   preset: "ts-jest",
-  roots: [
-    "<rootDir>/src"
-  ],
+  roots: ["<rootDir>/src"],
 };

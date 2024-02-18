@@ -16,10 +16,10 @@
       "@errors/*": ["./src/errors/*"]
     },
     "typeRoots": [
-        "./node-modules/@types",
-        "./src/@types"
+      "./node-modules/@types",
+      "./src/@types"
     ],
-    "types": ["jest", "@types/jest"],
+    "types": ["@types/jest"],
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "allowJs": true,
@@ -31,8 +31,6 @@
     "skipLibCheck": true,
     "sourceMap": true 
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
