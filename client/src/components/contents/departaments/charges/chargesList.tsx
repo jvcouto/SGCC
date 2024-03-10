@@ -197,11 +197,9 @@ function ChargesList(props: DepartamentChargesListProps) {
               </Tooltip>
             </div>
           )}
-
           <Divider orientation="left" orientationMargin="0">
             {eachCourse}
           </Divider>
-
           <Collapse collapsible="icon">
             {departamentChargesGrouped[eachCourse].map((charge) => (
               <Panel

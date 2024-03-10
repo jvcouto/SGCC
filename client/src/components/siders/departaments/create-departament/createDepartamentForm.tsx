@@ -8,7 +8,7 @@ import {
   message,
 } from "antd";
 import React from "react";
-import PersonSelect from "../../../_ui/userSelect";
+import ItemSelect, { EItemSearchTypes } from "../../../_ui/itemSelect";
 
 export interface IDepartamentFormValues {
   code: string;
@@ -83,17 +83,26 @@ function CreateDepartamentModal({
 
         <Form.Item name="admin" label="Chefe">
           {/* @ts-ignore */}
-          <PersonSelect placeholder="Selecione o chefe" />
+          <ItemSelect
+            placeholder="Selecione o chefe"
+            type={EItemSearchTypes.USER}
+          />
         </Form.Item>
 
         <Form.Item name="viceAdmin" label="Vice Chefe">
           {/* @ts-ignore */}
-          <PersonSelect placeholder="Selecione o vice chefe" />
+          <ItemSelect
+            placeholder="Selecione o vice chefe"
+            type={EItemSearchTypes.USER}
+          />
         </Form.Item>
 
         <Form.Item name="secretary" label="Secretário">
           {/* @ts-ignore */}
-          <PersonSelect placeholder="Selecione o secretário" />
+          <ItemSelect
+            placeholder="Selecione o secretário"
+            type={EItemSearchTypes.USER}
+          />
         </Form.Item>
       </Form>
     </Modal>

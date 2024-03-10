@@ -27,8 +27,6 @@ export interface ISubjectOffer {
   updatedAt: Date;
   class: string;
   places: number;
-  teachingPlan: any; // TODO
-  teachingPlanApproved: boolean;
   subject?: ISubject;
   teachers?: IUser[];
   closed: boolean;
@@ -49,6 +47,13 @@ interface ISubject {
   shortName: string;
   places: number;
   course?: ICourse;
+  curriculum: Date;
+  syllabus: string;
+  objective: string;
+  bibliography: string;
+  complementaryBibliography: string;
+  preRequisite: Array<ISubject>;
+  coRequisite: Array<ISubject>;
 }
 
 export default ISubject;

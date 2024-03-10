@@ -9,6 +9,9 @@ export default class CreateSubject {
   constructor(private readonly repository: SubjectRepository) {}
 
   async execute(subjectData: any) {
+    if (subjectData.curriculum)
+      subjectData.curriculum = new Date(subjectData.curriculum);
+
     const newSubjectData = Object.assign(new Subject(), subjectData);
 
     const errors = await validate(newSubjectData);

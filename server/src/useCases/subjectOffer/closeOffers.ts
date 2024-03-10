@@ -2,6 +2,7 @@ import Logger from "@utils/logger";
 
 import InternalServerError from "@errors/server.error";
 import SubjectOfferRepository from "@dataAccess/subjectOffer.repository";
+import MissingParameterError from "@errors/missingParameter.error";
 
 export default class CloseOffers {
   constructor(private readonly repository: SubjectOfferRepository) {}
@@ -12,6 +13,10 @@ export default class CloseOffers {
       periodId,
       close,
     }: { subjectsIds: number[]; periodId: number; close: boolean } = data;
+
+    if (!subjectsIds.length) {
+      throw new MissingParameterError("Subjects Ids is mandatory");
+    }
 
     try {
       return await this.repository.closeSubjectsByPeriod(

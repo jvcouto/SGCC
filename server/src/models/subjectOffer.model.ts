@@ -36,18 +36,6 @@ class SubjectOffer extends AbstractBaseModel {
   @Column({ nullable: true, default: null })
   places!: number;
 
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  @Column({ length: 128, nullable: true })
-  teachingPlan!: string;
-
-  @IsOptional()
-  @IsNotEmpty()
-  @IsBoolean()
-  @Column({ default: false })
-  teachingPlanApproved!: boolean;
-
   @IsNotEmpty()
   @ManyToOne(() => Period, { nullable: false })
   period!: Period;

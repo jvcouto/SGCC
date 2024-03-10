@@ -1,7 +1,7 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Space } from "antd";
 import React, { useState } from "react";
-import PersonSelect from "../../../../_ui/userSelect";
+import ItemSelect, { EItemSearchTypes } from "../../../../_ui/itemSelect";
 import { ContentAddButtonWrapper } from "../../../content.style";
 
 export interface ICollegeMembersFormValues {
@@ -64,7 +64,10 @@ function CollegeMemberForm(props: ICollegeMembersFormProps) {
                     ]}
                   >
                     {/* @ts-ignore */}
-                    <PersonSelect placeholder="Selecione um usuário" />
+                    <ItemSelect
+                      placeholder="Selecione um usuário"
+                      type={EItemSearchTypes.USER}
+                    />
                   </Form.Item>
                   <MinusCircleOutlined onClick={() => remove(name)} />
                 </Space.Compact>

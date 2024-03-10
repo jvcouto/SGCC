@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Collapse, Descriptions, FormInstance, message } from "antd";
+import {
+  Button,
+  Collapse,
+  Descriptions,
+  Divider,
+  FormInstance,
+  message,
+} from "antd";
 import ISubject from "../../../../types/apiResponses/subject";
 import SubjectForm, { ISubjectFormValues } from "./subject-form";
 import api from "../../../../services/request.service";
@@ -40,6 +47,17 @@ function SubjectsList(props: ICourseSubjects) {
       },
       shortName: values.shortName,
       places: values.places,
+      curriculum: values.curriculum.format(),
+      syllabus: values.syllabus,
+      objective: values.objective,
+      bibliography: values.bibliography,
+      complementaryBibliography: values.complementaryBibliography,
+      preRequisite: values.preRequisite?.map((e) => ({
+        id: e,
+      })),
+      coRequisite: values.coRequisite?.map((e) => ({
+        id: e,
+      })),
     };
     api
       .post(`/api/subjects`, newSubjetValue)
@@ -88,6 +106,36 @@ function SubjectsList(props: ICourseSubjects) {
               </Descriptions.Item>
               <Descriptions.Item label="Departamento">
                 {subject.departament.name}
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Divider />
+
+            <Descriptions title="Plano de ensino">
+              <Descriptions.Item label="Curriculo">
+                {new Date(subject.curriculum).getFullYear()}
+              </Descriptions.Item>
+              <Descriptions.Item label="Ementa">
+                {subject.syllabus}
+              </Descriptions.Item>
+              <Descriptions.Item label="Objectivo">
+                {subject.objective}
+              </Descriptions.Item>
+              <Descriptions.Item label="Bibliografia">
+                {subject.bibliography}
+              </Descriptions.Item>
+              <Descriptions.Item label="Bibliografia Complementar">
+                {subject.complementaryBibliography}
+              </Descriptions.Item>
+              <Descriptions.Item label="Pré Requisito">
+                {subject.preRequisite.length
+                  ? subject.preRequisite?.map((e) => e.name).join(", ")
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item label="Co Requisito">
+                {subject.coRequisite.length
+                  ? subject.coRequisite?.map((e) => e.name).join(", ")
+                  : "-"}
               </Descriptions.Item>
             </Descriptions>
           </Panel>

@@ -1,12 +1,27 @@
-import { Column, Entity, ManyToOne, OneToMany, Unique } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  Unique,
+} from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import {
+  IsBoolean,
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from "class-validator";
 import Course from "./course.model";
 import Departament from "./departament";
 import SubjectOffer from "./subjectOffer.model";
 
 @Entity("subject")
-@Unique(["name", "course"])
+@Unique(["name", "course"]) // curriculo
 class Subject extends AbstractBaseModel {
   @IsString()
   @IsNotEmpty()
@@ -47,6 +62,39 @@ class Subject extends AbstractBaseModel {
   @IsBoolean()
   @Column()
   optionalSubject!: boolean;
+
+  @ManyToMany(() => Subject)
+  @JoinTable()
+  preRequisite!: Subject[];
+
+  @ManyToMany(() => Subject)
+  @JoinTable()
+  coRequisite!: Subject[];
+
+  @IsNotEmpty()
+  @IsDate()
+  @Column()
+  curriculum!: Date;
+
+  @IsNotEmpty()
+  @IsString()
+  @Column()
+  syllabus!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Column()
+  objective!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Column()
+  bibliography!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Column()
+  complementaryBibliography!: string;
 
   @IsNotEmpty()
   @ManyToOne(() => Course, (course: Course) => course.subjects, {

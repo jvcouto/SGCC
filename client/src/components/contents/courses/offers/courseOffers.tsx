@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, FormInstance, List, Space, Tag, Tooltip, message } from "antd";
+import {
+  Button,
+  Empty,
+  FormInstance,
+  List,
+  Space,
+  Tag,
+  Tooltip,
+  message,
+} from "antd";
 
 import { FormattedMessage } from "react-intl";
 import ISubject, {
@@ -189,6 +198,14 @@ function SubjectOffers(props: ISubjectOffersProps) {
           </div>
         }
         dataSource={courseOffers}
+        locale={{
+          emptyText: (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Não há disciplinas ofertadas"
+            />
+          ),
+        }}
         renderItem={(subjectOffer: ISubjectOfferList) => (
           <List.Item>
             <>
