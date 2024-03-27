@@ -1,6 +1,7 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
 import { IsNotEmpty, IsString } from "class-validator";
+import SubjectOffer from "./subjectOffer.model";
 
 @Entity("teaching_plan")
 class TeachingPlan extends AbstractBaseModel {
@@ -28,6 +29,10 @@ class TeachingPlan extends AbstractBaseModel {
   @IsString()
   @Column()
   serviceHours!: string;
+
+  @OneToOne(() => SubjectOffer)
+  @JoinColumn()
+  subjectOffer!: SubjectOffer;
 }
 
 export default TeachingPlan;

@@ -6,6 +6,7 @@ import UpdateSubjectOffer from "./update";
 import CloseOffers from "./closeOffers";
 import GetOfferTeachers from "./getTeachers";
 import List from "./list";
+import FindOneSubjectOffer from "./findOne";
 
 const subjectOfferRepository = new SubjectOfferRepository();
 
@@ -23,6 +24,8 @@ const getOfferTeachers = new GetOfferTeachers(subjectOfferRepository);
 
 const listSubjectOffers = new List(subjectOfferRepository);
 
+const findOneOffer = new FindOneSubjectOffer(subjectOfferRepository);
+
 export {
   createSubjectOffer,
   requestSubjectOffer,
@@ -31,4 +34,5 @@ export {
   closeSubjectOffer,
   getOfferTeachers,
   listSubjectOffers,
+  findOneOffer,
 };

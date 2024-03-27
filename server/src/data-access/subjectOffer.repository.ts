@@ -96,7 +96,8 @@ export default class SubjectOfferRepository {
     const queryBuilder = repository
       .createQueryBuilder("subjectOffer")
       .leftJoinAndSelect("subjectOffer.teachers", "teachers")
-      .leftJoinAndSelect("subjectOffer.subject", "subject");
+      .leftJoinAndSelect("subjectOffer.subject", "subject")
+      .where("subjectOffer.closed = :value", { value: true });
 
     if (query.period) {
       queryBuilder.andWhere("subjectOffer.period = :periodId", {
@@ -105,7 +106,7 @@ export default class SubjectOfferRepository {
     }
 
     if (user.userRoles.includes(UserRoles.TEACHER)) {
-      queryBuilder.andWhere("teachers.id = :alias", { alias: user.id });
+      queryBuilder.andWhere("teachers.id = :userId", { userId: user.id });
     }
 
     if (query.page) {
@@ -116,5 +117,27 @@ export default class SubjectOfferRepository {
     }
 
     return queryBuilder.getManyAndCount();
+  }
+
+  async findOneWithTeachingPlan(offerId: number, user: IUser) {
+    const repository = getRepository(SubjectOffer);
+
+    return repository.findOne(offerId, {
+      where: {
+        closed: 1,
+        ...(user.userRoles.includes(UserRoles.TEACHER)
+          ? {
+              teacherId: user.id,
+            }
+          : {}),
+      },
+      relations: [
+        "teachingPlan",
+        "subject",
+        "subject.course",
+        "subject.coRequisite",
+        "subject.preRequisite",
+      ],
+    });
   }
 }

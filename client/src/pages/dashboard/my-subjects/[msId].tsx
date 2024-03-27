@@ -7,9 +7,16 @@ import SecondLayout from "../../../components/layouts/secondLayout";
 import api from "../../../services/request.service";
 
 import MySubjectsSider from "../../../components/siders/mySubjects/mySubjectsSider";
+import { ISubjectOffer } from "../../../types/apiResponses/subject";
+import MySubject from "../../../components/contents/mySubjects/mySubject";
 
-function MySubjectsPage() {
-  return <div>teste</div>;
+interface IMySubjectOfferPageProps {
+  subject: ISubjectOffer;
+}
+function MySubjectsPage(props: IMySubjectOfferPageProps) {
+  const { subject } = props;
+
+  return <MySubject subjectOffer={subject} />;
 }
 
 MySubjectsPage.getLayout = function getLayout(page: ReactElement) {
@@ -39,5 +46,7 @@ export async function getServerSideProps(ctx: any) {
   // eslint-disable-next-line @typescript-eslint/dot-notation
   api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-  return { props: {} };
+  const { data } = await api.get(`/api/subjectOffer/${params.msId}`);
+
+  return { props: { subject: data.data } };
 }

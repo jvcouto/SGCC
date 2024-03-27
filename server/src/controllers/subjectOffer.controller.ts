@@ -9,6 +9,7 @@ import {
   closeSubjectOffer,
   getOfferTeachers,
   listSubjectOffers,
+  findOneOffer,
 } from "@useCases/subjectOffer";
 import Logger from "@utils/logger";
 import MissingParameterError from "@errors/missingParameter.error";
@@ -85,6 +86,18 @@ export default function MakeSubjectOfferController() {
     };
   };
 
+  const findOne = async (httpRequest: Partial<Request>) => {
+    const data = await findOneOffer.execute(
+      httpRequest.params?.id as unknown as number,
+      httpRequest.user as IUser
+    );
+
+    return {
+      status: HTTP_STATUS_CODES.OK,
+      data,
+    };
+  };
+
   return Object.freeze({
     create,
     request,
@@ -93,5 +106,6 @@ export default function MakeSubjectOfferController() {
     close,
     getTeachers,
     list,
+    findOne,
   });
 }

@@ -4,6 +4,7 @@ import InvalidAttributeError from "@errors/invalidAttribute.error";
 import InternalServerError from "@errors/server.error";
 import Subject from "@models/subject.model";
 import SubjectRepository from "@dataAccess/subject.repository";
+import DuplicatedEntityError from "@errors/duplicatedEntity.error";
 
 export default class CreateSubject {
   constructor(private readonly repository: SubjectRepository) {}
@@ -26,6 +27,12 @@ export default class CreateSubject {
       const newSubject = await this.repository.save(newSubjectData);
       return await this.repository.findOne(newSubject.id);
     } catch (error: any) {
+      if (error.routine === "_bt_check_unique") {
+        Logger.error(error.message);
+        throw new DuplicatedEntityError(
+          "Subject already exists for this course and curriculum year"
+        );
+      }
       Logger.error(error.message);
       throw new InternalServerError("Error on subject creation");
     }

@@ -37,4 +37,8 @@ subjectOfferRoutes
   .route("/")
   .get(expressCallback(MakeSubjectOfferController().list));
 
+subjectOfferRoutes
+  .route("/:id")
+  .get(expressCallback(MakeSubjectOfferController().findOne));
+
 export default subjectOfferRoutes;

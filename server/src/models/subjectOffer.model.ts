@@ -1,10 +1,12 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   Unique,
 } from "typeorm";
 import AbstractBaseModel from "./abstractBase.model";
@@ -19,6 +21,7 @@ import {
 } from "class-validator";
 import Subject from "./subject.model";
 import SubjectApprovalHistory from "./subjectApprovalHistory.model";
+import TeachingPlan from "./teachingPlan.model";
 
 @Entity("subject_offer")
 @Unique(["class", "subject", "period"])
@@ -60,6 +63,9 @@ class SubjectOffer extends AbstractBaseModel {
   @IsNotEmpty()
   @Column({ nullable: false, default: false })
   closed!: boolean;
+
+  @OneToOne(() => TeachingPlan, (teachingPlan) => teachingPlan.subjectOffer)
+  teachingPlan!: TeachingPlan;
 }
 
 export default SubjectOffer;

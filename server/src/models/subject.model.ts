@@ -21,7 +21,7 @@ import Departament from "./departament";
 import SubjectOffer from "./subjectOffer.model";
 
 @Entity("subject")
-@Unique(["name", "course"]) // curriculo
+@Unique(["name", "course", "curriculum"])
 class Subject extends AbstractBaseModel {
   @IsString()
   @IsNotEmpty()

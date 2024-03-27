@@ -1,3 +1,5 @@
+import { ITeachingPlan } from "./teachingPlan";
+
 interface IDepartament {
   id: number;
   name: string;
@@ -30,6 +32,7 @@ export interface ISubjectOffer {
   subject?: ISubject;
   teachers?: IUser[];
   closed: boolean;
+  teachingPlan: ITeachingPlan;
 }
 
 interface ISubject {
