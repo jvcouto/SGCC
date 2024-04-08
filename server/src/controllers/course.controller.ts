@@ -5,6 +5,7 @@ import {
   listCourses,
   updateCourse,
   offerAllCourseRequiredSubjects,
+  courseOffersPDF,
 } from "@useCases/course";
 
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
@@ -57,11 +58,21 @@ export default function MakeCourseController() {
     return { status: HTTP_STATUS_CODES.CREATED, data: subjectOffers };
   };
 
+  const downloadCourseOffersPDF = async (httpRequest: Partial<Request>) => {
+    const data = await courseOffersPDF.execute(
+      Number(httpRequest.params?.id),
+      httpRequest.query
+    );
+
+    return { status: HTTP_STATUS_CODES.OK, data: data };
+  };
+
   return Object.freeze({
     create,
     list,
     findOne,
     update,
     offerAllRequiredSubjects,
+    downloadCourseOffersPDF,
   });
 }

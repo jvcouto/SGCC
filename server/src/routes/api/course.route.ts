@@ -14,4 +14,8 @@ courseRoutes
   .route("/:id/offerRequired")
   .post(expressCallback(MakeCourseController().offerAllRequiredSubjects));
 
+courseRoutes
+  .route("/:id/download/pdf")
+  .get(expressCallback(MakeCourseController().downloadCourseOffersPDF));
+
 export default courseRoutes;

@@ -1,10 +1,10 @@
 import GenericCustomError from "@errors/abstractCustom.error";
 import HTTP_STATUS_CODES from "@utils/constants/httpStatusCodes";
 import Logger from "@utils/logger";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export default (controller: CallableFunction) =>
-  (req: Request, res: Response) => {
+  (req: Request, res: Response, next: NextFunction) => {
     const httpRequest = {
       body: req.body,
       query: req.query,
@@ -29,6 +29,18 @@ export default (controller: CallableFunction) =>
 
     controller(httpRequest)
       .then((response: { status: number; data: any; meta: any }) => {
+        if (httpRequest.path.includes("download/pdf")) {
+          res.setHeader(
+            "Content-disposition",
+            `attachment; filename=${new Date().toISOString()}.pdf`
+          );
+          res.setHeader("Content-type", "application/pdf");
+          const { data: docData } = response;
+          docData.pipe(res);
+          docData.end();
+          res.status(response.status);
+          return next();
+        }
         res.set("Content-Type", "application/json");
         const body = {
           data: response.data,
