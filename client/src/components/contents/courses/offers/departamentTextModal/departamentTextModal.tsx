@@ -8,6 +8,7 @@ import { ISubjectOffer } from "../../../../../types/apiResponses/subject";
 import IDepartament from "../../../../../types/apiResponses/departament";
 import DepartamentAdminRole from "../../../../../utils/constants/adminRoles";
 import IPeriod from "../../../../../types/apiResponses/periods";
+import { useAuth } from "../../../../../contexts/authContext";
 
 interface IDepartamentTextModalProps {
   selectedCourse: number;
@@ -17,7 +18,7 @@ interface IDepartamentTextModalProps {
 
 interface IOffersByDepartament {
   [k: string]: {
-    offers: Array<ISubjectOffer & { subjectName: string }>;
+    offers: Array<ISubjectOffer>;
     departament: IDepartament;
   };
 }
@@ -32,6 +33,7 @@ function DepartamentTextModal(props: IDepartamentTextModalProps) {
   const [selectedPeriodName, setSelectedPeriodName] = useState<string>();
 
   const { selectedPeriod } = usePeriod();
+  const { user } = useAuth();
 
   useEffect(() => {
     api
@@ -49,7 +51,7 @@ function DepartamentTextModal(props: IDepartamentTextModalProps) {
                 ...acc[currentSubjectDepName].offers,
                 ...curr.offers.map((e) => ({
                   ...e,
-                  subjectName: curr.name,
+                  subject: curr,
                 })),
               ];
               return acc;
@@ -58,7 +60,7 @@ function DepartamentTextModal(props: IDepartamentTextModalProps) {
             acc[currentSubjectDepName] = {
               offers: [...curr.offers].map((e) => ({
                 ...e,
-                subjectName: curr.name,
+                subject: curr,
               })),
               departament: curr.departament,
             };
@@ -126,16 +128,31 @@ function DepartamentTextModal(props: IDepartamentTextModalProps) {
             } o oferecimento de docentes para lecionar as unidades
             curriculares do curso de Graduação em Ciência da Computação, para o
             período ${selectedPeriodName}.`}
-
             <br />
             <br />
-
-            {offersByDepartament[seletedDepartament]?.offers.map((e) => (
+            <span>
+              OBS.: Disciplinas que na lista abaixo ocorrem repetidamente
+              indicam a existência de mais de uma turma para a mesma.
+            </span>
+            <br />
+            <br />
+            Segue abaixo a lista das disciplinas solicidatas:
+            <br />
+            <br />
+            {offersByDepartament[seletedDepartament]?.offers.map((e, idx) => (
               <>
-                <span>{e.subjectName}</span>
+                <span>
+                  {idx + 1}. {e.subject.name} - CH {e.subject.workload} -
+                  {e.subject.semester} Periodo
+                </span>
                 <br />
               </>
             ))}
+            <br />
+            <br />
+            Atenciosamente,
+            <br />
+            {user.name}
           </div>
         )}
       </div>
