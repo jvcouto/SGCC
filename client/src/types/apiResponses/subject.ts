@@ -4,6 +4,15 @@ interface IDepartament {
   id: number;
   name: string;
   code: string;
+  teachers?: IUser[];
+  admins?: IAdmins[];
+  subjects?: ISubject[];
+}
+
+interface IAdmins {
+  id: number;
+  adminRole: string;
+  user?: IUser;
 }
 
 interface IUser {

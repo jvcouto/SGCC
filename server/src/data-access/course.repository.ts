@@ -32,6 +32,8 @@ export default class CourseRepository {
       .leftJoinAndSelect("admins.user", "user")
       .leftJoinAndSelect("course.subjects", "subjects")
       .leftJoinAndSelect("subjects.departament", "departament")
+      .leftJoinAndSelect("departament.admins", "departamentAdmins")
+      .leftJoinAndSelect("departamentAdmins.user", "departamentAdminsUser")
       .leftJoinAndSelect("subjects.preRequisite", "preRequisite")
       .leftJoinAndSelect("subjects.coRequisite", "coRequisite")
       .leftJoinAndSelect(

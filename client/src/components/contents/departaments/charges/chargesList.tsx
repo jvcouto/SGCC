@@ -231,7 +231,7 @@ function ChargesList(props: DepartamentChargesListProps) {
                   </Descriptions.Item>
                 </Descriptions>
                 <Divider orientation="left" orientationMargin="0">
-                  Professores Solicitantes
+                  Professores
                 </Divider>
                 <List
                   itemLayout="horizontal"
@@ -240,7 +240,7 @@ function ChargesList(props: DepartamentChargesListProps) {
                     emptyText: (
                       <Empty
                         image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description="Não há professores solicitantes"
+                        description="Não há professores"
                       />
                     ),
                   }}

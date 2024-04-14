@@ -6,9 +6,9 @@ interface IDepartament {
   id: number;
   name: string;
   code: string;
-  teachers: IUser[];
-  admins: IAdmins[];
-  subjects: ISubject[];
+  teachers?: IUser[];
+  admins?: IAdmins[];
+  subjects?: ISubject[];
 }
 
 export default IDepartament;

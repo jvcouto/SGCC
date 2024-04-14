@@ -21,6 +21,11 @@ import api from "../../../../services/request.service";
 import { usePeriod } from "../../../../contexts/periodContext";
 import ICourse from "../../../../types/apiResponses/course";
 import OfferTeachersModal from "./offerTeachersModal/offerTeacherModal";
+import DepartamentTextModal from "./departamentTextModal/departamentTextModal";
+import {
+  CurseOfferButtonsHeader,
+  LeftHeaderButton,
+} from "./courseOffers.style";
 
 export interface ISubjectOfferList {
   id: number;
@@ -44,6 +49,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
   const [courseOffers, setCouseOffers] = useState<ISubjectOfferList[]>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTeacherOffers, setSelectedTeacherOffer] = useState<number>();
+  const [textModalOpen, setTextModalOpen] = useState(false);
 
   useEffect(() => {
     api
@@ -171,11 +177,30 @@ function SubjectOffers(props: ISubjectOffersProps) {
 
   return (
     <>
-      <SubjectOfferForm
-        courseSubjects={subjectsInfo}
-        onSubmit={onSubmit}
-        handleAddRequiredSubjets={handleAddRequiredSubjets}
-      />
+      <CurseOfferButtonsHeader>
+        <LeftHeaderButton
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            width: "100%",
+          }}
+        >
+          <Button
+            onClick={() => {
+              setTextModalOpen(true);
+            }}
+            type="primary"
+          >
+            Gerar Texto de ofertas
+          </Button>
+        </LeftHeaderButton>
+
+        <SubjectOfferForm
+          courseSubjects={subjectsInfo}
+          onSubmit={onSubmit}
+          handleAddRequiredSubjets={handleAddRequiredSubjets}
+        />
+      </CurseOfferButtonsHeader>
       <List
         header={
           <div
@@ -244,13 +269,18 @@ function SubjectOffers(props: ISubjectOffersProps) {
           </List.Item>
         )}
       />
-      {setIsModalOpen && (
-        <OfferTeachersModal
-          setIsModalOpen={setIsModalOpen}
-          offerId={selectedTeacherOffers}
-          open={isModalOpen}
-        />
-      )}
+
+      <OfferTeachersModal
+        setIsModalOpen={setIsModalOpen}
+        offerId={selectedTeacherOffers}
+        open={isModalOpen}
+      />
+
+      <DepartamentTextModal
+        setIsModalOpen={setTextModalOpen}
+        selectedCourse={selectedCourse}
+        open={textModalOpen}
+      />
     </>
   );
 }
