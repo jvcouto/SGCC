@@ -24,7 +24,12 @@ import { ISubjectOffer } from "../../../../types/apiResponses/subject";
 import ChargeListHeader from "./chargesListHeader";
 import USER_ROLES from "../../../../utils/constants/userRoles";
 import { useAuth } from "../../../../contexts/authContext";
-import { ChargesRequestListActionsWrapper } from "./chargeList.style";
+import {
+  ChargesButtonsHeader,
+  ChargesRequestListActionsWrapper,
+  LeftHeaderButton,
+} from "./chargeList.style";
+import CourseTextModal from "./courseTextModal/courseTextModal";
 
 const { Panel } = Collapse;
 
@@ -49,6 +54,8 @@ function ChargesList(props: DepartamentChargesListProps) {
   const shouldRenderAdminsButtons =
     user?.roles.includes(USER_ROLES.SYSTEM_ADMIN) ||
     user?.roles.includes(USER_ROLES.DEPARTAMENT_ADMIN);
+
+  const [textModalOpen, setTextModalOpen] = useState(false);
 
   const [departamentChargesGrouped, setDepartamentChargesGrouped] =
     useState<IOffersGroupedByCourse>();
@@ -173,7 +180,23 @@ function ChargesList(props: DepartamentChargesListProps) {
       {Object.keys(departamentChargesGrouped ?? {}).map((eachCourse) => (
         <>
           {shouldRenderAdminsButtons && (
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <ChargesButtonsHeader>
+              <LeftHeaderButton
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  width: "100%",
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setTextModalOpen(true);
+                  }}
+                  type="primary"
+                >
+                  Gerar texto encargos
+                </Button>
+              </LeftHeaderButton>
               <Tooltip
                 title={
                   <FormattedMessage
@@ -195,7 +218,7 @@ function ChargesList(props: DepartamentChargesListProps) {
                   />
                 )}
               </Tooltip>
-            </div>
+            </ChargesButtonsHeader>
           )}
           <Divider orientation="left" orientationMargin="0">
             {eachCourse}
@@ -283,6 +306,12 @@ function ChargesList(props: DepartamentChargesListProps) {
           </Collapse>
         </>
       ))}
+
+      <CourseTextModal
+        departamentId={departamentId}
+        setIsModalOpen={setTextModalOpen}
+        open={textModalOpen}
+      />
     </>
   );
 }

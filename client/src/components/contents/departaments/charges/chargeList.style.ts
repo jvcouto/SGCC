@@ -13,4 +13,19 @@ export const ChargesRequestListActionsWrapper = styled.div`
   gap: 1rem;
 `;
 
-export default { ChargesListHeaderWrapper };
+export const ChargesButtonsHeader = styled.div`
+  display: flex;
+  justify-content: "flex-end";
+`;
+
+export const LeftHeaderButton = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+`;
+
+export default {
+  ChargesListHeaderWrapper,
+  ChargesButtonsHeader,
+  LeftHeaderButton,
+};

@@ -31,6 +31,7 @@ function DepartamentTextModal(props: IDepartamentTextModalProps) {
 
   const [seletedDepartament, setSelectedDepartament] = useState<string>();
   const [selectedPeriodName, setSelectedPeriodName] = useState<string>();
+  const [selectedCourseName, setSeletedCourseName] = useState<string>();
 
   const { selectedPeriod } = usePeriod();
   const { user } = useAuth();
@@ -78,6 +79,13 @@ function DepartamentTextModal(props: IDepartamentTextModalProps) {
         const periodReponse = response.data.data;
         setSelectedPeriodName(periodReponse.code);
       });
+
+    api
+      .get<{ data: ICourse }>(`api/courses/${selectedCourse}`)
+      .then((response) => {
+        const courseResponse = response.data.data;
+        setSeletedCourseName(courseResponse.name);
+      });
   }, [selectedCourse, selectedPeriod]);
 
   const handleDepartamentChange = (e: RadioChangeEvent) => {
@@ -122,8 +130,8 @@ function DepartamentTextModal(props: IDepartamentTextModalProps) {
               offersByDepartament[seletedDepartament].departament.admins.find(
                 (e) => e.adminRole === DepartamentAdminRole.CHIEF
               ).user.name
-            }, A Coordenadoria do
-            Curso de Ciência da Computação solicita ao ${
+            }, a Coordenadoria do
+            Curso de ${selectedCourseName} solicita ao ${
               offersByDepartament[seletedDepartament].departament.name
             } o oferecimento de docentes para lecionar as unidades
             curriculares do curso de Graduação em Ciência da Computação, para o

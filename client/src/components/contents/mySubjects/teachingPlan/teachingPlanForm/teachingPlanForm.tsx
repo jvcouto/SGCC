@@ -43,6 +43,7 @@ function TeachingPlanForm(props: ITeachingPlanFormProps) {
         setTeachingPlan(newTeachingPlan);
 
         form.resetFields();
+        setEnableForm(false);
       })
       .catch(() => {
         message.error("Algo deu errado, tente novamente!");

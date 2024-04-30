@@ -23,6 +23,8 @@ export default class DepartamentRepository {
       .leftJoinAndSelect("admins.user", "user")
       .leftJoinAndSelect("departament.subjects", "subjects")
       .leftJoinAndSelect("subjects.course", "course")
+      .leftJoinAndSelect("course.admins", "courseAdmins")
+      .leftJoinAndSelect("courseAdmins.user", "courseAdminsUser")
       .leftJoinAndSelect(
         "subjects.offers",
         "offers",
