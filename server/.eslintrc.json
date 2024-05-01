@@ -45,5 +45,5 @@
           }
         }
     },
-    "ignorePatterns": ["jest.config.ts"]
+    "ignorePatterns": ["jest.config.ts", "ormconfig.js"]
 }

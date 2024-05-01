@@ -26,6 +26,7 @@ import {
   CurseOfferButtonsHeader,
   LeftHeaderButton,
 } from "./courseOffers.style";
+import AddCourseOfferModal from "./offer-form/addCourseOfferModal";
 
 export interface ISubjectOfferList {
   id: number;
@@ -178,13 +179,7 @@ function SubjectOffers(props: ISubjectOffersProps) {
   return (
     <>
       <CurseOfferButtonsHeader>
-        <LeftHeaderButton
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            width: "100%",
-          }}
-        >
+        <LeftHeaderButton>
           <Button
             onClick={() => {
               setTextModalOpen(true);

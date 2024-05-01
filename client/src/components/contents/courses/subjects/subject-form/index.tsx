@@ -361,7 +361,7 @@ function SubjectForm(props: ICollegeFormProps) {
         </Col>
       </Row>
       <Row>
-        <Col span={20} style={{ textAlign: "right", paddingBottom: "2rem" }}>
+        <Col span={18} style={{ textAlign: "right", paddingBottom: "2rem" }}>
           <Button
             type="primary"
             danger

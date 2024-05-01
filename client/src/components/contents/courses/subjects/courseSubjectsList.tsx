@@ -128,12 +128,12 @@ function SubjectsList(props: ICourseSubjects) {
                 {subject.complementaryBibliography}
               </Descriptions.Item>
               <Descriptions.Item label="Pré Requisito">
-                {subject.preRequisite.length
+                {subject.preRequisite?.length
                   ? subject.preRequisite?.map((e) => e.name).join(", ")
                   : "-"}
               </Descriptions.Item>
               <Descriptions.Item label="Co Requisito">
-                {subject.coRequisite.length
+                {subject.coRequisite?.length
                   ? subject.coRequisite?.map((e) => e.name).join(", ")
                   : "-"}
               </Descriptions.Item>
