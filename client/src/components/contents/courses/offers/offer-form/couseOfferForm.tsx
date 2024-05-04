@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Input, InputNumber, Select } from "antd";
+import { Button } from "antd";
 
 import { FormInstance } from "antd/es/form/Form";
 import { ContentAddButtonWrapper } from "../../../content.style";

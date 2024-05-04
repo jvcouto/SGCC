@@ -14,9 +14,7 @@ import { FormattedMessage } from "react-intl";
 import ISubject, {
   ISubjectOffer,
 } from "../../../../types/apiResponses/subject";
-import SubjectOfferForm, {
-  ISubjectOfferFormValues,
-} from "./offer-form/couseOfferForm";
+import SubjectOfferForm from "./offer-form/couseOfferForm";
 import api from "../../../../services/request.service";
 import { usePeriod } from "../../../../contexts/periodContext";
 import ICourse from "../../../../types/apiResponses/course";
@@ -26,7 +24,7 @@ import {
   CurseOfferButtonsHeader,
   LeftHeaderButton,
 } from "./courseOffers.style";
-import AddCourseOfferModal from "./offer-form/addCourseOfferModal";
+import { ISubjectOfferFormValues } from "./offer-form/addCourseOfferModal";
 
 export interface ISubjectOfferList {
   id: number;
