@@ -20,6 +20,7 @@ const config = {
         entitiesDir: "src/models",
     },
     ssl: false,
+    url: process.env.DB_URL,
 };
 class Database {
     static async createConnection() {
