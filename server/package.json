@@ -10,7 +10,8 @@
     "start": "cd dist && node index.js",
     "typeorm": "yarn ts-node ./node_modules/typeorm/cli.js",
     "db:reset": "yarn typeorm schema:drop && yarn typeorm schema:sync && yarn typeorm migration:run",
-    "db:reset:populate": "yarn db:reset && ts-node -r tsconfig-paths/register src/database/dataset/populateApply.ts"
+    "db:reset:populate": "yarn db:reset && ts-node -r tsconfig-paths/register src/database/dataset/populateApply.ts",
+    "vercel-build": "schema:sync"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
