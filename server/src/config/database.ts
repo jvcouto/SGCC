@@ -15,6 +15,7 @@ const config = {
     migrationsDir: "src/database/migrations",
     entitiesDir: "src/models",
   },
+  ssl: false,
 } as ConnectionOptions;
 
 class Database {

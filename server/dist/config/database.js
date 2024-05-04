@@ -19,6 +19,7 @@ const config = {
         migrationsDir: "src/database/migrations",
         entitiesDir: "src/models",
     },
+    ssl: false,
 };
 class Database {
     static async createConnection() {
