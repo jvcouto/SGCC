@@ -1,0 +1,33 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.findOneOffer = exports.listSubjectOffers = exports.getOfferTeachers = exports.closeSubjectOffer = exports.updateSubjectOffer = exports.deleteSubjectRequest = exports.requestSubjectOffer = exports.createSubjectOffer = void 0;
+const subjectOffer_repository_1 = __importDefault(require("../../data-access/subjectOffer.repository"));
+const create_1 = __importDefault(require("./create"));
+const requestSubject_1 = __importDefault(require("./requestSubject"));
+const deleteSubjectRequest_1 = __importDefault(require("./deleteSubjectRequest"));
+const update_1 = __importDefault(require("./update"));
+const closeOffers_1 = __importDefault(require("./closeOffers"));
+const getTeachers_1 = __importDefault(require("./getTeachers"));
+const list_1 = __importDefault(require("./list"));
+const findOne_1 = __importDefault(require("./findOne"));
+const subjectOfferRepository = new subjectOffer_repository_1.default();
+const createSubjectOffer = new create_1.default(subjectOfferRepository);
+exports.createSubjectOffer = createSubjectOffer;
+const requestSubjectOffer = new requestSubject_1.default(subjectOfferRepository);
+exports.requestSubjectOffer = requestSubjectOffer;
+const deleteSubjectRequest = new deleteSubjectRequest_1.default(subjectOfferRepository);
+exports.deleteSubjectRequest = deleteSubjectRequest;
+const updateSubjectOffer = new update_1.default(subjectOfferRepository);
+exports.updateSubjectOffer = updateSubjectOffer;
+const closeSubjectOffer = new closeOffers_1.default(subjectOfferRepository);
+exports.closeSubjectOffer = closeSubjectOffer;
+const getOfferTeachers = new getTeachers_1.default(subjectOfferRepository);
+exports.getOfferTeachers = getOfferTeachers;
+const listSubjectOffers = new list_1.default(subjectOfferRepository);
+exports.listSubjectOffers = listSubjectOffers;
+const findOneOffer = new findOne_1.default(subjectOfferRepository);
+exports.findOneOffer = findOneOffer;
+//# sourceMappingURL=index.js.map
