@@ -7,7 +7,7 @@ import OfferAllRequiredSubjects from "./offerRequiredSubjects";
 import SubjectRepository from "@dataAccess/subject.repository";
 import SubjectOfferRepository from "@dataAccess/subjectOffer.repository";
 import CourseOffersPDF from "./downloadCourseOffers";
-import PDFService from "src/services/pdf.service";
+import PDFService from "../../services/pdf.service";
 
 const courseRepository = new CourseRepository();
 const subjectRepository = new SubjectRepository();
