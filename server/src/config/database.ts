@@ -16,6 +16,11 @@ const config = {
     entitiesDir: "src/models",
   },
   url: process.env.DB_URL,
+  extra: {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  },
 } as ConnectionOptions;
 
 class Database {
