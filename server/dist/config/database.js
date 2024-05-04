@@ -19,7 +19,6 @@ const config = {
         migrationsDir: "src/database/migrations",
         entitiesDir: "src/models",
     },
-    ssl: false,
     url: process.env.DB_URL,
 };
 class Database {
