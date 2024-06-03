@@ -10,7 +10,7 @@ const config = {
   database: process.env.DB_DATABASE ?? "postgres",
   entities:
     process.env.NODE_ENV === "PROD"
-      ? [__dirname + `/models/*.js`]
+      ? [__dirname + `dist/models/*.js`]
       : ["src/models/*.ts"],
   migrations: ["src/database/migrations/*.ts"],
   synchronize: true,
