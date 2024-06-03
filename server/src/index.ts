@@ -17,8 +17,8 @@ app.use("/", routes);
 const startServer = async (server: Express) => {
   await db.createConnection();
 
-  server.listen(process.env.NODE_PORT, () => {
-    Logger.info(`Escutando na porta: ${process.env.NODE_PORT}`);
+  server.listen(process.env.NODE_PORT ?? 3001, () => {
+    Logger.info(`Escutando na porta: ${process.env.NODE_PORT ?? 3001}`);
   });
 
   return server;

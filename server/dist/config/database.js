@@ -12,7 +12,7 @@ const config = {
     username: process.env.DB_USER ?? "postgres",
     password: process.env.DB_PASSWORD ?? "postgres",
     database: process.env.DB_DATABASE ?? "postgres",
-    entities: ["src/models/*.ts"],
+    entities: process.env.NODE_ENV === "PROD" ? [`**/models/*.js`] : ["src/models/*.ts"],
     migrations: ["src/database/migrations/*.ts"],
     synchronize: true,
     cli: {
@@ -20,11 +20,13 @@ const config = {
         entitiesDir: "src/models",
     },
     url: process.env.DB_URL,
-    extra: {
-        ssl: {
-            rejectUnauthorized: false,
-        },
-    },
+    extra: process.env.NODE_ENV === "PROD"
+        ? {
+            ssl: {
+                rejectUnauthorized: false,
+            },
+        }
+        : {},
 };
 class Database {
     static async createConnection() {

@@ -40,8 +40,8 @@ app.use(express_1.default.json());
 app.use("/", routes_1.default);
 const startServer = async (server) => {
     await database_1.default.createConnection();
-    server.listen(process.env.NODE_PORT, () => {
-        logger_1.default.info(`Escutando na porta: ${process.env.NODE_PORT}`);
+    server.listen(process.env.NODE_PORT ?? 3001, () => {
+        logger_1.default.info(`Escutando na porta: ${process.env.NODE_PORT ?? 3001}`);
     });
     return server;
 };
