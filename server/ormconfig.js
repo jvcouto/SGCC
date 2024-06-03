@@ -7,7 +7,7 @@ module.exports = {
     username: process.env.DB_USER ?? "postgres",
     password:  process.env.DB_PASSWORD ?? "postgres",
     database:  process.env.DB_DATABASE ?? "postgres",
-    entities: process.env.NODE_ENV === 'PROD' ? [`models/*.js`] : ["src/models/*.ts"],
+    entities: process.env.NODE_ENV === 'PROD' ? [__dirname + `/models/*.js`] : ["src/models/*.ts"],
     migrations: ["src/database/migrations/*.ts"],
     synchronize: true,
     cli: {
