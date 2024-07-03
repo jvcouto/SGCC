@@ -64,6 +64,10 @@ const getRolePages = (userRoles: number[]) => {
     pages.add(SYSTEM_PAGES.courses);
   }
 
+  if (userRoles.includes(USER_ROLES.DEPARTAMENT_ADMIN)) {
+    pages.add(SYSTEM_PAGES.departaments);
+  }
+
   pages.add(SYSTEM_PAGES.settings);
 
   return pages;

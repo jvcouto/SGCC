@@ -10,6 +10,8 @@ import AddButtonWrapper from "../../_ui/styles/siderAddButton.style";
 import CreateDepartamentModal, {
   IDepartamentFormValues,
 } from "./create-departament/createDepartamentForm";
+import { useAuth } from "../../../contexts/authContext";
+import USER_ROLES from "../../../utils/constants/userRoles";
 
 interface IDepartament {
   id: number;
@@ -23,6 +25,8 @@ function DepartamentSider() {
   const [data, setData] = useState<IDepartament[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
+
+  const { user } = useAuth();
 
   const [formOpen, setformOpen] = useState(false);
 
@@ -140,18 +144,20 @@ function DepartamentSider() {
           overflow: "auto",
         }}
       >
-        <AddButtonWrapper>
-          <Button
-            style={{
-              width: "90%",
-            }}
-            type="primary"
-            size="large"
-            onClick={handleAddButton}
-          >
-            Adicionar Departamento
-          </Button>
-        </AddButtonWrapper>
+        {user.roles.includes(USER_ROLES.SYSTEM_ADMIN) && (
+          <AddButtonWrapper>
+            <Button
+              style={{
+                width: "90%",
+              }}
+              type="primary"
+              size="large"
+              onClick={handleAddButton}
+            >
+              Adicionar Departamento
+            </Button>
+          </AddButtonWrapper>
+        )}
         <InfiniteScroll
           dataLength={data.length}
           next={loadMoreData}

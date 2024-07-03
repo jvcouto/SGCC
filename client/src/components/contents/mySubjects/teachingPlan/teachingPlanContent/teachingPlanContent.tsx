@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Descriptions } from "antd";
 import Title from "antd/lib/typography/Title";
 import { ITeachingPlan } from "../../../../../types/apiResponses/teachingPlan";
@@ -16,31 +16,35 @@ function TeachingPlanContent(props: ITeachingPlanContent) {
 
   const [teachingPlan, setTeachingPlan] = useState(teachingPlanInfo);
 
+  useEffect(() => {
+    setTeachingPlan(teachingPlanInfo);
+  }, [subjectOfferId]);
+
   return (
     <TeachingPlanContentWrapper>
       <Title level={5}>Plano da Oferta</Title>
-      {teachingPlanInfo ? (
+      {teachingPlan ? (
         <>
           <ContentAddButtonWrapper>
             <Button onClick={() => {}} type="link">
               Editar
             </Button>
           </ContentAddButtonWrapper>
-          <Descriptions layout="vertical">
+          <Descriptions layout="vertical" bordered column={1}>
             <Descriptions.Item label="Conteúdo">
-              {teachingPlanInfo.content}
+              {teachingPlan.content}
             </Descriptions.Item>
             <Descriptions.Item label="Métodologia">
-              {teachingPlanInfo.methodology}
+              {teachingPlan.methodology}
             </Descriptions.Item>
             <Descriptions.Item label="Critério de avaliação">
-              {teachingPlanInfo.ratingCriteria}
+              {teachingPlan.ratingCriteria}
             </Descriptions.Item>
             <Descriptions.Item label="Horário de Atendimento">
-              {teachingPlanInfo.serviceHours}
+              {teachingPlan.serviceHours}
             </Descriptions.Item>
             <Descriptions.Item label="Substitutiva">
-              {teachingPlanInfo.substitute}
+              {teachingPlan.substitute}
             </Descriptions.Item>
           </Descriptions>
         </>

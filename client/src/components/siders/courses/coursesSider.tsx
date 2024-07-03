@@ -19,6 +19,8 @@ import CreateCourseModal, {
   ICreateCourseFormValues,
 } from "./create-course/createCourseForm";
 import ICourse from "../../../types/apiResponses/course";
+import USER_ROLES from "../../../utils/constants/userRoles";
+import { useAuth } from "../../../contexts/authContext";
 
 function CourseSider() {
   const router = useRouter();
@@ -27,6 +29,8 @@ function CourseSider() {
   const [data, setData] = useState<ICourse[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
+
+  const { user } = useAuth();
 
   const [formOpen, setformOpen] = useState(false);
 
@@ -145,18 +149,20 @@ function CourseSider() {
           overflow: "auto",
         }}
       >
-        <AddButtonWrapper>
-          <Button
-            style={{
-              width: "90%",
-            }}
-            type="primary"
-            size="large"
-            onClick={handleAddButton}
-          >
-            Adicionar Curso
-          </Button>
-        </AddButtonWrapper>
+        {user.roles.includes(USER_ROLES.SYSTEM_ADMIN) && (
+          <AddButtonWrapper>
+            <Button
+              style={{
+                width: "90%",
+              }}
+              type="primary"
+              size="large"
+              onClick={handleAddButton}
+            >
+              Adicionar Curso
+            </Button>
+          </AddButtonWrapper>
+        )}
         <InfiniteScroll
           dataLength={data.length}
           next={loadMoreData}

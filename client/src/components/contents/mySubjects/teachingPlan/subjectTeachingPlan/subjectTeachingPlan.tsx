@@ -9,7 +9,12 @@ interface ITeachingPlanContent {
 function SubjectTeachingPlan(props: ITeachingPlanContent) {
   const { subject } = props;
   return (
-    <Descriptions title="Plano de ensino da disciplina" layout="vertical">
+    <Descriptions
+      title="Plano de ensino da disciplina"
+      bordered
+      column={1}
+      style={{ width: "100%" }}
+    >
       <Descriptions.Item label="Curriculo">
         {new Date(subject.curriculum).getFullYear()}
       </Descriptions.Item>

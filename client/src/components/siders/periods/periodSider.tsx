@@ -19,6 +19,8 @@ import CreatePeriodModal, {
   PeriodFormValues,
 } from "./create-period/createPeriodForm";
 import IPeriod from "../../../types/apiResponses/periods";
+import { useAuth } from "../../../contexts/authContext";
+import USER_ROLES from "../../../utils/constants/userRoles";
 
 function PeriodSider() {
   const router = useRouter();
@@ -27,6 +29,8 @@ function PeriodSider() {
   const [data, setData] = useState<IPeriod[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
+
+  const { user } = useAuth();
 
   const [formOpen, setformOpen] = useState(false);
 
@@ -108,18 +112,20 @@ function PeriodSider() {
           height: "100%",
         }}
       >
-        <AddButtonWrapper>
-          <Button
-            style={{
-              width: "90%",
-            }}
-            type="primary"
-            size="large"
-            onClick={handleAddButton}
-          >
-            Adicionar Período
-          </Button>
-        </AddButtonWrapper>
+        {user.roles.includes(USER_ROLES.SYSTEM_ADMIN) && (
+          <AddButtonWrapper>
+            <Button
+              style={{
+                width: "90%",
+              }}
+              type="primary"
+              size="large"
+              onClick={handleAddButton}
+            >
+              Adicionar Período
+            </Button>
+          </AddButtonWrapper>
+        )}
         <InfiniteScroll
           dataLength={data.length}
           next={loadMoreData}

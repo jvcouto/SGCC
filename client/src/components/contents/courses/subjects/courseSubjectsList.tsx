@@ -111,14 +111,14 @@ function SubjectsList(props: ICourseSubjects) {
 
             <Divider />
 
-            <Descriptions title="Plano de ensino">
+            <Descriptions title="Plano de ensino" bordered column={1}>
               <Descriptions.Item label="Curriculo">
                 {new Date(subject.curriculum).getFullYear()}
               </Descriptions.Item>
               <Descriptions.Item label="Ementa">
                 {subject.syllabus}
               </Descriptions.Item>
-              <Descriptions.Item label="Objectivo">
+              <Descriptions.Item label="Objetivo">
                 {subject.objective}
               </Descriptions.Item>
               <Descriptions.Item label="Bibliografia">
