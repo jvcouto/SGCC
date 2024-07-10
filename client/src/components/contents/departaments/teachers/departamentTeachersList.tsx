@@ -6,6 +6,8 @@ import AddUserBulk, {
   ICollegeMembersFormValues,
 } from "../../courses/college/college-members-form/collegeMembersForm";
 import api from "../../../../services/request.service";
+import { useAuth } from "../../../../contexts/authContext";
+import USER_ROLES from "../../../../utils/constants/userRoles";
 
 interface IDepartamentTeachers {
   departamentId: number;
@@ -17,6 +19,12 @@ function TeachersList(props: IDepartamentTeachers) {
 
   const [teachersList, setTeachersList] = useState(teachersInfo);
 
+  const { user } = useAuth();
+
+  const shouldRenderAddButton =
+    user?.roles.includes(USER_ROLES.SYSTEM_ADMIN) ||
+    user?.roles.includes(USER_ROLES.DEPARTAMENT_ADMIN);
+
   useEffect(() => {
     setTeachersList(teachersInfo);
   }, [departamentId]);
@@ -27,7 +35,7 @@ function TeachersList(props: IDepartamentTeachers) {
     }
 
     const patchValues = {
-      ids: values.users.map((user) => user.user),
+      ids: values.users.map((eachUSer) => eachUSer.user),
       data: {
         departament: departamentId,
       },
@@ -46,7 +54,7 @@ function TeachersList(props: IDepartamentTeachers) {
 
   return (
     <>
-      <AddUserBulk onSubmit={onSubmit} />
+      {shouldRenderAddButton && <AddUserBulk onSubmit={onSubmit} />}
       <List
         itemLayout="horizontal"
         dataSource={teachersList}
