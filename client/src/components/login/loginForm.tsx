@@ -16,7 +16,7 @@ function Login(props: HomeProps) {
   return (
     <S.LoginBox>
       <div className="box-top-login">
-        <Image src="/logo.png" height="200" width="260" layout="fixed" />
+        <Image src="/logo.png" height="160" width="160" layout="fixed" />
       </div>
 
       <S.form
