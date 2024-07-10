@@ -51,8 +51,8 @@ function MainLayout({ children }) {
           padding: "0px 0px",
         }}
       >
-        <div>
-          <Image src="/logo.png" height="60" width="80" layout="fixed" />
+        <div style={{ padding: "0.5rem 0.5rem" }}>
+          <Image src="/logo.png" height="50" width="50" layout="fixed" />
         </div>
 
         <Menu
