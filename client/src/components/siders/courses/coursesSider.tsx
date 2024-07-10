@@ -149,7 +149,7 @@ function CourseSider() {
           overflow: "auto",
         }}
       >
-        {user.roles.includes(USER_ROLES.SYSTEM_ADMIN) && (
+        {user?.roles.includes(USER_ROLES.SYSTEM_ADMIN) && (
           <AddButtonWrapper>
             <Button
               style={{
