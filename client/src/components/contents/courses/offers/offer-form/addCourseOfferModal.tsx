@@ -67,7 +67,7 @@ function AddCourseOfferModal(props: IAddCourseOfferModalProps) {
             form.resetFields();
           }}
           autoComplete="off"
-          style={{ width: "50%" }}
+          style={{ width: "100%" }}
         >
           <Form.Item
             name="subject"
