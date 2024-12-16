@@ -1,7 +1,7 @@
 import { Router } from "express";
 import expressCallback from "../utils/expressCallback";
 import MakeSubjectOfferController from "@controllers/subjectOffer.controller";
-import MakeSubjectApprovalHistoryController from "@controllers/subjectApprovalHistory";
+import MakeSubjectApprovalHistoryController from "@controllers/subjectApprovalHistory.controller";
 
 const subjectOfferRoutes = Router();
 

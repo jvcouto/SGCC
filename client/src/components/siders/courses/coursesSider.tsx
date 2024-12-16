@@ -110,7 +110,7 @@ function CourseSider() {
       });
 
     api
-      .post<{ data }>("api/courses", newCourseData)
+      .post("api/courses", newCourseData)
       .then((response) => {
         const { data: newCourse } = response.data;
         message.success("Curso criado com sucesso!");

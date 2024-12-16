@@ -32,6 +32,15 @@ interface ICourse {
   updatedAt: string;
 }
 
+export interface ISubjectApprovalHistory {
+  id: number;
+  comment: string;
+  approve: boolean;
+  evaluator: IUser;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ISubjectOffer {
   id: number;
   createdAt: Date;
@@ -42,6 +51,7 @@ export interface ISubjectOffer {
   teachers?: IUser[];
   closed: boolean;
   teachingPlan: ITeachingPlan;
+  subjectApprovalHistory: ISubjectApprovalHistory[];
 }
 
 interface ISubject {

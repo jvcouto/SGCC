@@ -23,6 +23,7 @@ import api from "../../../services/request.service";
 import ICourse from "../../../types/apiResponses/course";
 
 import PageContent from "../../../styles/content.style";
+import PlanEvaluation from "../../../components/contents/courses/planEvaluation/planEvaluation";
 
 interface CoursePageProps {
   course: ICourse;
@@ -87,7 +88,7 @@ function CoursesPage(props: CoursePageProps) {
         </span>
       ),
       key: "item-6",
-      children: <div>Avaliações Aqui</div>,
+      children: <PlanEvaluation selectedCourse={course.id} />,
     },
   ];
 

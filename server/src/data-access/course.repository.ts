@@ -42,6 +42,13 @@ export default class CourseRepository {
         query?.period && `offers.period.id = ${query.period}`
       )
       .leftJoinAndSelect("offers.period", "period")
+      .leftJoinAndSelect("offers.teachers", "teachers")
+      .leftJoinAndSelect("offers.teachingPlan", "teachingPlan")
+      .leftJoinAndSelect(
+        "offers.subjectApprovalHistory",
+        "subjectApprovalHistory"
+      )
+      .leftJoinAndSelect("subjectApprovalHistory.evaluator", "evaluator")
       .where("course.id = :id", { id: id });
 
     return queryrun.getOne();
