@@ -51,6 +51,7 @@ export default class CourseRepository {
       .leftJoinAndSelect("subjectApprovalHistory.evaluator", "evaluator")
       .where("course.id = :id", { id: id });
 
+    console.log(queryrun.getSql());
     return queryrun.getOne();
   }
 
