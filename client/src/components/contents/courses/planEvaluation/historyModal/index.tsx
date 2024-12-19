@@ -11,11 +11,12 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import TextArea from "antd/lib/input/TextArea";
-import { maxBy } from "lodash";
+import { isNil, maxBy } from "lodash";
 import dayjs from "dayjs";
 import { ITeachingPlan } from "../../../../../types/apiResponses/teachingPlan";
 import { ISubjectApprovalHistory } from "../../../../../types/apiResponses/subject";
 import api from "../../../../../services/request.service";
+import RejectComment from "./historyModal.style";
 
 export interface ISubjectOfferList {
   id: number;
@@ -147,25 +148,30 @@ function HistoryModal(props: HistoryModalProps) {
       <Divider orientation="left">Comentários</Divider>
 
       <div>
-        {!maxBy(approvalHistory, "createdAt")?.approve && (
-          <Comment
-            author={maxBy(approvalHistory, "createdAt")?.evaluator.name}
-            avatar={
-              <Avatar
-                src="https://joeschmoe.io/api/v1/random"
-                alt={maxBy(approvalHistory, "createdAt")?.evaluator.name}
+        {!isNil(maxBy(approvalHistory, "createdAt")?.approve) &&
+          !maxBy(approvalHistory, "createdAt")?.approve && (
+            <RejectComment>
+              <Comment
+                style={{ backgroundColor: "transparent" }}
+                // author={maxBy(approvalHistory, "createdAt")?.evaluator.name}
+                author="Colegiado"
+                avatar={
+                  <Avatar
+                    src="https://joeschmoe.io/api/v1/random"
+                    alt={maxBy(approvalHistory, "createdAt")?.evaluator.name}
+                  />
+                }
+                content={<p>{maxBy(approvalHistory, "createdAt")?.comment}</p>}
+                // datetime={
+                //   <span>
+                //     {dayjs(
+                //       maxBy(approvalHistory, "createdAt")?.createdAt
+                //     ).format("DD/MM/YYYY - HH:mm:ss")}
+                //   </span>
+                // }
               />
-            }
-            content={<p>{maxBy(approvalHistory, "createdAt")?.comment}</p>}
-            datetime={
-              <span>
-                {dayjs(maxBy(approvalHistory, "createdAt")?.createdAt).format(
-                  "DD/MM/YYYY - HH:mm:ss"
-                )}
-              </span>
-            }
-          />
-        )}
+            </RejectComment>
+          )}
       </div>
 
       <Divider orientation="left">Ações</Divider>
