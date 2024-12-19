@@ -121,7 +121,9 @@ function PlanEvaluation(props: IPlanEvaluationProps) {
                       <h3>Professores:</h3>
                       {e?.teachers?.map((teacher) => (
                         <span>
-                          <b>Nome:</b> {teacher.name}, <b>Email:</b>
+                          <b>Nome: </b> {teacher.name}
+                          <br />
+                          <b>Email: </b>
                           {teacher.email}
                         </span>
                       ))}
